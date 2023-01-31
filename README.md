@@ -1,8 +1,8 @@
 # Assignment A2: Mesh Generator
 
-  - Author #1 [email@mcmaster.ca]
-  - Author #2 [email@mcmaster.ca]
-  - Author #3 [email@mcmaster.ca]
+  - Dylan Garner [garned3@mcmaster.ca]
+  - Harman Bassi [bassih3@mcmaster.ca]
+  - Matthew Bradbury [bradbm1@mcmaster.ca]
 
 ## How to run the product
 
