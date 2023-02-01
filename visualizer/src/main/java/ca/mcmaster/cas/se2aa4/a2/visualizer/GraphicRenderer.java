@@ -1,5 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.visualizer;
 
+import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
@@ -9,7 +10,10 @@ import java.awt.Stroke;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.util.List;
+
+import javax.sound.sampled.Line;
 
 public class GraphicRenderer {
 
@@ -26,6 +30,11 @@ public class GraphicRenderer {
             Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, THICKNESS, THICKNESS);
             canvas.fill(point);
             canvas.setColor(old);
+        }
+        for(Structs.Segment s: aMesh.getSegmentsList()){
+            int v1 = s.getV1Idx();
+            int v2 = s.getV2Idx();
+            canvas.draw(new Line2D.Double(aMesh.getVertices(v1).getX(), aMesh.getVertices(v1).getY(),aMesh.getVertices(v2).getX(),aMesh.getVertices(v2).getY()));
         }
     }
 
