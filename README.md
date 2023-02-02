@@ -70,6 +70,6 @@ When you develop features and enrich the product, remember that you have first t
 
 | Id | Feature title | Who? | Start | End | Status |
 |:--:|---------------|------|-------|-----|--------|
-| F01   |  Draw Segments Between Vertices             |      |       |     |        |
+| F01   |  Draw Segments Between Vertices             |  Matthew and Dylan    |   01/02/23    | 02/02/23    |  D      |
 
 
