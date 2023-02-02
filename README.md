@@ -11,7 +11,7 @@ _This section needs to be edited to reflect how the user can interact with thefe
 ## Commands to run the project
 mvn package
 java -jar generator/target/2aa4.mesh.generator-jar-with-dependencies.jar generator/sample.mesh
-java -jar visualizer/target/2aa4.mesh.visualizer-jar-with-dependencies.jar generator/sample.mesh sample.svg
+java -jar visualizer/target/2aa4.mesh.visualizer-jar-with-dependencies.jar generator/sample.mesh visualizer/sample.svg
 
 ### Installation instructions
 
