@@ -8,6 +8,11 @@
 
 _This section needs to be edited to reflect how the user can interact with thefeature released in your project_
 
+## Commands to run the project
+mvn package
+java -jar generator/target/2aa4.mesh.generator-jar-with-dependencies.jar generator/sample.mesh
+java -jar visualizer/target/2aa4.mesh.visualizer-jar-with-dependencies.jar generator/sample.mesh sample.svg
+
 ### Installation instructions
 
 This product is handled by Maven, as a multi-module project. We assume here that you have cloned the project in a directory named `A2`
