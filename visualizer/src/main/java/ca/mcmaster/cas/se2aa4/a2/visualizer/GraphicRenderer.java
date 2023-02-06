@@ -35,6 +35,8 @@ public class GraphicRenderer {
         for(Structs.Segment s: aMesh.getSegmentsList()){
             int v1 = s.getV1Idx();
             int v2 = s.getV2Idx();
+            System.out.println(extractColor(aMesh.getVertices(v1).getPropertiesList()));
+            canvas.setColor(averageColor(aMesh.getVertices(v1).getPropertiesList(), aMesh.getVertices(v2).getPropertiesList()));
             canvas.draw(new Line2D.Double(aMesh.getVertices(v1).getX(), aMesh.getVertices(v1).getY(),aMesh.getVertices(v2).getX(),aMesh.getVertices(v2).getY()));
         }
     }
@@ -54,6 +56,35 @@ public class GraphicRenderer {
         int green = Integer.parseInt(raw[1]);
         int blue = Integer.parseInt(raw[2]);
         return new Color(red, green, blue);
+    }
+    private Color averageColor(List<Property> properties1, List<Property> properties2 ){
+        String val1 = null;
+        String val2 = null;
+        for(Property p: properties1) {
+            if (p.getKey().equals("rgb_color")) {
+                System.out.println(p.getValue());
+                val1 = p.getValue();
+            }
+        }
+        for (Property p :properties2){
+            if (p.getKey().equals("rgb_color")) {
+                System.out.println(p.getValue());
+                val2 = p.getValue();
+            }
+        }
+
+        String[] raw = val1.split(",");
+        int red = Integer.parseInt(raw[0]);
+        int green = Integer.parseInt(raw[1]);
+        int blue = Integer.parseInt(raw[2]);
+
+        raw=val2.split(",");
+        red = (red+Integer.parseInt(raw[0]))/2;
+        green = (green+Integer.parseInt(raw[1]))/2;
+        blue = (green+Integer.parseInt(raw[2]))/2;
+
+        return new Color (red,green,blue);
+
     }
 
 }
