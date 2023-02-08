@@ -70,5 +70,5 @@ When you develop features and enrich the product, remember that you have first t
 
 | Id | Feature title | Who? | Start | End | Status |
 |:--:|---------------|------|-------|-----|--------|
-| F01   |  Draw Segments Between Vertices with color being average of vertices |  Matthew and Dylan    |  01/02/23  | 02/02/23 | D |
+| F01   |  Draw Segments Between Vertices with color being average of vertices |  Matthew, Dylan, Harman    |  01/02/23  | 08/02/23 | D |
 
