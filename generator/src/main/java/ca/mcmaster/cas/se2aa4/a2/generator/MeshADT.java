@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeshADT {
-
-
+    List<Polygon> PolygonList = new ArrayList<Polygon>();
 
     public void createPolygons(){
         //fill polygon arraylist with consecutive segments

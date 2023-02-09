@@ -50,7 +50,7 @@ public class DotGen {
             
             
         }
-        for(int x=2; x<vertices.size()-3;x+=4){
+        for(int x=2; x<vertices.size()-3;x+=4){//vertical lines
             int v1 = x;
             int v2 = x+1;
             int v3 = x+2;
@@ -67,7 +67,7 @@ public class DotGen {
         }
 
         int v2 = height/square_size*2 +2;
-        for (int x=1; x<vertices.size()-1; x+=2){
+        for (int x=1; x<vertices.size()-1; x+=2){//horizontal lines
             int v1 = x;
             
             if(vertices.get(x).getX()==width){
