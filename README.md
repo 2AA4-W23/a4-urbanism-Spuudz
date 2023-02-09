@@ -71,4 +71,8 @@ When you develop features and enrich the product, remember that you have first t
 | Id | Feature title | Who? | Start | End | Status |
 |:--:|---------------|------|-------|-----|--------|
 | F01   |  Draw Segments Between Vertices with color being average of vertices |  Matthew, Dylan, Harman    |  01/02/23  | 08/02/23 | D |
+| F02   |  Creating Mesh ADT | TBD |  |  | P |
+| F03   | Producing full meshes | TBD |  |  | P |
+| F04   | Playing with rendering (color and thickness for polygons) | TBD | | | P | 
+| F05   | Visualization Mode | TBD | | | P |
 
