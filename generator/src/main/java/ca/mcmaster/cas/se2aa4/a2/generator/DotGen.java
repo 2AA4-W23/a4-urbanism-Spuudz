@@ -37,9 +37,6 @@ public class DotGen {
                 vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y).build());
                 vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y+square_size).build());
                 vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y+square_size).build());
-                
-
-
             }
         }
 
@@ -55,11 +52,11 @@ public class DotGen {
             segments.add(Structs.Segment.newBuilder().setV1Idx(v3).setV2Idx(v4).build());
             
             
-            System.out.println(vertices.get(v4).getY());
+            /*System.out.println(vertices.get(v4).getY());
             if(vertices.get(v4).getY()+square_size<height){
                 indexOrderVertical.add(v4);
                 indexOrderVertical.add(v4+1);
-            }
+            }*/
             
             
 
@@ -69,12 +66,15 @@ public class DotGen {
             index.add(v4);
             
         }
+
+
         int differenceOdd=3+4*((height/square_size)-((height/square_size)/2)-1); //difference between left and right lines in terms of index
         int differenceEven = 2*(((height/square_size)-((height/square_size)/2)-1))-1;
         int y=1;
         int counter=0;
         int columns=0;
         int tempSegmentSize=segments.size()-3;
+
         for(int x=2; x<vertices.size()-3;x+=4){//vertical lines
             int v1 = x;
             int v2 = x+1;
@@ -110,6 +110,25 @@ public class DotGen {
             }
 
         }
+        
+        List<Integer> newPoly2 = new ArrayList<Integer>();
+        tempSegmentSize += 3;
+        for(int x=0; x<vertices.size()-3;x+=4){
+            int v4 = x+3;
+            System.out.println(tempSegmentSize);
+            if(vertices.get(v4).getY()+square_size<height){
+                newPoly2.add(v4);
+                newPoly2.add(tempSegmentSize);
+                newPoly2.add(tempSegmentSize+1);
+                newPoly2.add(v4+1);
+            }else{
+                tempSegmentSize -= 2;
+            }
+            tempSegmentSize += 2;
+
+        }
+        System.out.println(newPoly2);
+
         int v2 = height/square_size*2 +2;
 
         for (int x=1; x<vertices.size()-1; x+=2){//horizontal lines
@@ -124,7 +143,21 @@ public class DotGen {
 
             
         }
-        System.out.println(indexOrderHorizontal);
+
+        List<Integer> newPoly3 = new ArrayList<Integer>();
+        int repVal = height/square_size*2;
+        for(int x=0; x< indexOrderHorizontal.size(); x+=2,tempSegmentSize++){
+            newPoly3.add(indexOrderHorizontal.get(x));
+            newPoly3.add(tempSegmentSize);
+            newPoly3.add(indexOrderHorizontal.get(x+1));
+            newPoly3.add(tempSegmentSize+1);
+            if((x+2)%repVal == 0){
+                tempSegmentSize ++;
+            }
+
+        }
+        System.out.println(newPoly3);
+        
 
         // Distribute colors randomly. Vertices are immutable, need to enrich them
         ArrayList<Vertex> verticesWithColors = new ArrayList<>();
@@ -146,6 +179,7 @@ public class DotGen {
         for(int i = 0; i < index.size(); i+=4){
             PolygonList.add(Polygon.newBuilder().addSegmentIdxs(index.get(i)).addSegmentIdxs(index.get(i+1)).addSegmentIdxs(index.get(i+2)).addSegmentIdxs(index.get(i+3)).build());
         }
+        
 
 
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
