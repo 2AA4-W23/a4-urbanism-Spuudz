@@ -1,5 +1,6 @@
 import ca.mcmaster.cas.se2aa4.a2.generator.DotGen;
 import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
+import ca.mcmaster.cas.se2aa4.a2.generator.MeshADT;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
 import java.io.IOException;

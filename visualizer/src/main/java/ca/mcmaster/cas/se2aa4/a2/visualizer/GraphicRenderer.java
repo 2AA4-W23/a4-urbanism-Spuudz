@@ -4,6 +4,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
+import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 
 import java.awt.Graphics2D;
 import java.awt.Stroke;
@@ -15,6 +16,9 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.sound.sampled.Line;
+
+import org.apache.batik.ext.awt.geom.Polygon2D;
+import org.apache.batik.ext.awt.geom.Polyline2D;
 
 public class GraphicRenderer {
 
@@ -32,12 +36,34 @@ public class GraphicRenderer {
             canvas.fill(point);
             canvas.setColor(old);
         }
-        for(Structs.Segment s: aMesh.getSegmentsList()){
+/*         for(Structs.Segment s: aMesh.getSegmentsList()){
             int v1 = s.getV1Idx();
             int v2 = s.getV2Idx();
             System.out.println(extractColor(aMesh.getVertices(v1).getPropertiesList()));
             canvas.setColor(averageColor(aMesh.getVertices(v1).getPropertiesList(), aMesh.getVertices(v2).getPropertiesList()));
             canvas.draw(new Line2D.Double(aMesh.getVertices(v1).getX(), aMesh.getVertices(v1).getY(),aMesh.getVertices(v2).getX(),aMesh.getVertices(v2).getY()));
+        } */
+        for (Structs.Polygon p : aMesh.getPolygonsList()){
+            int i1 = p.getSegmentIdxs(0);
+            int i2 = p.getSegmentIdxs(1);
+            int i3 = p.getSegmentIdxs(2);
+            int i4 = p.getSegmentIdxs(3);
+
+            Structs.Segment s1 = aMesh.getSegments(i1);
+            Structs.Segment s2 = aMesh.getSegments(i2);
+            Structs.Segment s3 = aMesh.getSegments(i3);
+            Structs.Segment s4 = aMesh.getSegments(i4);
+
+            canvas.setColor(averageColor(aMesh.getVertices(s1.getV1Idx()).getPropertiesList(), aMesh.getVertices(s1.getV2Idx()).getPropertiesList()));
+            canvas.setColor(averageColor(aMesh.getVertices(s2.getV1Idx()).getPropertiesList(), aMesh.getVertices(s2.getV2Idx()).getPropertiesList()));
+            canvas.setColor(averageColor(aMesh.getVertices(s3.getV1Idx()).getPropertiesList(), aMesh.getVertices(s3.getV2Idx()).getPropertiesList()));
+            canvas.setColor(averageColor(aMesh.getVertices(s4.getV1Idx()).getPropertiesList(), aMesh.getVertices(s4.getV2Idx()).getPropertiesList()));
+
+            canvas.draw(new Line2D.Double(aMesh.getVertices(s1.getV1Idx()).getX(), aMesh.getVertices(s1.getV1Idx()).getY(), aMesh.getVertices(s1.getV2Idx()).getX(), aMesh.getVertices(s1.getV2Idx()).getY()));
+            canvas.draw(new Line2D.Double(aMesh.getVertices(s2.getV1Idx()).getX(), aMesh.getVertices(s2.getV1Idx()).getY(), aMesh.getVertices(s2.getV2Idx()).getX(), aMesh.getVertices(s2.getV2Idx()).getY()));
+            canvas.draw(new Line2D.Double(aMesh.getVertices(s3.getV1Idx()).getX(), aMesh.getVertices(s3.getV1Idx()).getY(), aMesh.getVertices(s3.getV2Idx()).getX(), aMesh.getVertices(s3.getV2Idx()).getY()));
+            canvas.draw(new Line2D.Double(aMesh.getVertices(s4.getV1Idx()).getX(), aMesh.getVertices(s4.getV1Idx()).getY(), aMesh.getVertices(s4.getV2Idx()).getX(), aMesh.getVertices(s4.getV2Idx()).getY()));
+
         }
     }
 
