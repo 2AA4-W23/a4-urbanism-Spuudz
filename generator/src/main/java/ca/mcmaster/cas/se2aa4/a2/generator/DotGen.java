@@ -49,6 +49,11 @@ public class DotGen {
             segments.add(Structs.Segment.newBuilder().setV1Idx(v1).setV2Idx(v3).build());
             segments.add(Structs.Segment.newBuilder().setV1Idx(v2).setV2Idx(v4).build());
             segments.add(Structs.Segment.newBuilder().setV1Idx(v3).setV2Idx(v4).build());
+
+            index.add(v1);
+            index.add(v2);
+            index.add(v3);
+            index.add(v4);
             
         }
         for(int x=2; x<vertices.size()-3;x+=4){//vertical lines
