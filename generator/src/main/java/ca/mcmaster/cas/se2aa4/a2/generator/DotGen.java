@@ -13,6 +13,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.SegmentOrBuilder;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
+import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 
 public class DotGen {
 
@@ -23,6 +24,8 @@ public class DotGen {
     public Mesh generate() {
         List<Vertex> vertices = new ArrayList<>();
         List<Structs.Segment> segments = new ArrayList<>();
+        List<Polygon> PolygonList = new ArrayList<Polygon>();
+        List<Integer> index = new ArrayList<Integer>();
         int count = 0;
         int temp = 0;
         List<Integer> indexOrderVertical = new ArrayList<Integer>();
@@ -57,6 +60,11 @@ public class DotGen {
             }
             
             
+
+            index.add(v1);
+            index.add(v2);
+            index.add(v3);
+            index.add(v4);
             
         }
         System.out.println(indexOrderVertical);
@@ -136,8 +144,12 @@ public class DotGen {
             //System.out.println(v.getY());
         }
 
+        for(int i = 0; i < index.size(); i+=4){
+            PolygonList.add(Polygon.newBuilder().addSegmentIdxs(index.get(i)).addSegmentIdxs(index.get(i+1)).addSegmentIdxs(index.get(i+2)).addSegmentIdxs(index.get(i+3)).build());
+        }
 
-        return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).build();
+
+        return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
     }
 
 }
