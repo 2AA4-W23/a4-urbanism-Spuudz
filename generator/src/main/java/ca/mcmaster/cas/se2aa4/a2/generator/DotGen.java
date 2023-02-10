@@ -16,8 +16,8 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
 public class DotGen {
 
-    private final int width = 500;
-    private final int height = 500;
+    private final int width = 100;
+    private final int height = 100;
     private final int square_size = 20;
 
     public Mesh generate() {
@@ -25,6 +25,8 @@ public class DotGen {
         List<Structs.Segment> segments = new ArrayList<>();
         int count = 0;
         int temp = 0;
+        List<Integer> indexOrderVertical = new ArrayList<Integer>();
+        List<Integer> indexOrderHorizontal = new ArrayList<Integer>();
         // Create all the vertices
         for(int x = 0; x <= width; x += 2*square_size) {
             for(int y = 0; y <= height; y += 2*square_size) {
@@ -32,6 +34,8 @@ public class DotGen {
                 vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y).build());
                 vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y+square_size).build());
                 vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y+square_size).build());
+                
+
 
             }
         }
@@ -46,27 +50,61 @@ public class DotGen {
             segments.add(Structs.Segment.newBuilder().setV1Idx(v1).setV2Idx(v3).build());
             segments.add(Structs.Segment.newBuilder().setV1Idx(v2).setV2Idx(v4).build());
             segments.add(Structs.Segment.newBuilder().setV1Idx(v3).setV2Idx(v4).build());
-
+            
+            indexOrderVertical.add(v4);
+            if(vertices.get(v3).getY()<height){
+                indexOrderVertical.add(v4+1);
+            }
+            
             
             
         }
+        System.out.println(indexOrderVertical);
+        int differenceOdd=3+4*((height/square_size)-((height/square_size)/2)-1); //diference between left and right lines in terms of index
+        int differenceEven = 2*(((height/square_size)-((height/square_size)/2)-1))-1;
+        int y=1;
+        int counter=0;
+        int columns=0;
+        int tempSegmentSize=segments.size()-3;
+        System.out.println(tempSegmentSize);
         for(int x=2; x<vertices.size()-3;x+=4){//vertical lines
             int v1 = x;
             int v2 = x+1;
             int v3 = x+2;
             int v4 = x+3;
             double end = vertices.get(v1).getY();
-            System.out.println(end);
+            //System.out.println(end);
+
+            if(tempSegmentSize>=(x+differenceOdd)){
+                if(y==1){
+                    indexOrderHorizontal.add(x);
+                    indexOrderHorizontal.add(x+differenceOdd);
+                    indexOrderHorizontal.add(segments.size()+1-2*columns);
+                    indexOrderHorizontal.add(segments.size() + differenceEven+1-2*columns);
+                }else if(y!=1){
+                    indexOrderHorizontal.add(x);
+                    indexOrderHorizontal.add(x+differenceOdd);
+                    
+                }
+            }
+            System.out.println(segments.size() + differenceEven+1-2*columns);
+            segments.add(Structs.Segment.newBuilder().setV1Idx(v1).setV2Idx(v3).build());
+            segments.add(Structs.Segment.newBuilder().setV1Idx(v2).setV2Idx(v4).build());
+            if(vertices.get(v4).getY()+square_size==height){
+                y=0;
+                columns++;
+            }else{
+                y=1;
+            }
+            counter++;
+                
             if((int)end==height){
                 continue;
             }
-            segments.add(Structs.Segment.newBuilder().setV1Idx(v1).setV2Idx(v3).build());
-            segments.add(Structs.Segment.newBuilder().setV1Idx(v2).setV2Idx(v4).build());
-            
 
         }
-
         int v2 = height/square_size*2 +2;
+
         for (int x=1; x<vertices.size()-1; x+=2){//horizontal lines
             int v1 = x;
             
@@ -75,7 +113,11 @@ public class DotGen {
             }
             segments.add(Structs.Segment.newBuilder().setV1Idx(v1).setV2Idx(v2).build());
             v2+=2;
+            
+
+            
         }
+        System.out.println(indexOrderHorizontal);
 
         // Distribute colors randomly. Vertices are immutable, need to enrich them
         ArrayList<Vertex> verticesWithColors = new ArrayList<>();
@@ -90,8 +132,8 @@ public class DotGen {
             verticesWithColors.add(colored);
         }
         for(Vertex v : vertices){
-            System.out.println(v.getX());
-            System.out.println(v.getY());
+           // System.out.println(v.getX());
+            //System.out.println(v.getY());
         }
 
 
