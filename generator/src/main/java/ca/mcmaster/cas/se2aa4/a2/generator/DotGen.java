@@ -54,8 +54,10 @@ public class DotGen {
             segments.add(Structs.Segment.newBuilder().setV1Idx(v2).setV2Idx(v4).build());
             segments.add(Structs.Segment.newBuilder().setV1Idx(v3).setV2Idx(v4).build());
             
-            indexOrderVertical.add(v4);
-            if(vertices.get(v3).getY()<height){
+            
+            System.out.println(vertices.get(v4).getY());
+            if(vertices.get(v4).getY()+square_size<height){
+                indexOrderVertical.add(v4);
                 indexOrderVertical.add(v4+1);
             }
             
@@ -67,14 +69,12 @@ public class DotGen {
             index.add(v4);
             
         }
-        System.out.println(indexOrderVertical);
-        int differenceOdd=3+4*((height/square_size)-((height/square_size)/2)-1); //diference between left and right lines in terms of index
+        int differenceOdd=3+4*((height/square_size)-((height/square_size)/2)-1); //difference between left and right lines in terms of index
         int differenceEven = 2*(((height/square_size)-((height/square_size)/2)-1))-1;
         int y=1;
         int counter=0;
         int columns=0;
         int tempSegmentSize=segments.size()-3;
-        System.out.println(tempSegmentSize);
         for(int x=2; x<vertices.size()-3;x+=4){//vertical lines
             int v1 = x;
             int v2 = x+1;
@@ -95,7 +95,6 @@ public class DotGen {
                     
                 }
             }
-            System.out.println(segments.size() + differenceEven+1-2*columns);
             segments.add(Structs.Segment.newBuilder().setV1Idx(v1).setV2Idx(v3).build());
             segments.add(Structs.Segment.newBuilder().setV1Idx(v2).setV2Idx(v4).build());
             if(vertices.get(v4).getY()+square_size==height){
