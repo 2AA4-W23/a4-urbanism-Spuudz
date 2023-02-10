@@ -17,8 +17,8 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 
 public class DotGen {
 
-    private final int width = 100;
-    private final int height = 100;
+    private final int width = 500;
+    private final int height = 500;
     private final int square_size = 20;
 
     public Mesh generate() {
@@ -26,8 +26,6 @@ public class DotGen {
         List<Structs.Segment> segments = new ArrayList<>();
         List<Polygon> PolygonList = new ArrayList<Polygon>();
         List<Integer> index = new ArrayList<Integer>();
-        int count = 0;
-        int temp = 0;
         List<Integer> indexOrderVertical = new ArrayList<Integer>();
         List<Integer> indexOrderHorizontal = new ArrayList<Integer>();
         // Create all the vertices
@@ -51,19 +49,11 @@ public class DotGen {
             segments.add(Structs.Segment.newBuilder().setV1Idx(v2).setV2Idx(v4).build());
             segments.add(Structs.Segment.newBuilder().setV1Idx(v3).setV2Idx(v4).build());
             
-            
-            /*System.out.println(vertices.get(v4).getY());
-            if(vertices.get(v4).getY()+square_size<height){
-                indexOrderVertical.add(v4);
-                indexOrderVertical.add(v4+1);
-            }*/
-            
-            
-
+            //adding indices of original mesh
             index.add(v1);
             index.add(v2);
-            index.add(v3);
             index.add(v4);
+            index.add(v3);
             
         }
 
@@ -74,15 +64,12 @@ public class DotGen {
         int counter=0;
         int columns=0;
         int tempSegmentSize=segments.size()-3;
-
-        for(int x=2; x<vertices.size()-3;x+=4){//vertical lines
+        for(int x=2; x<vertices.size()-2;x+=4){//vertical lines
             int v1 = x;
             int v2 = x+1;
             int v3 = x+2;
             int v4 = x+3;
             double end = vertices.get(v1).getY();
-            //System.out.println(end);
-
             if(tempSegmentSize>=(x+differenceOdd)){
                 if(y==1){
                     indexOrderHorizontal.add(x);
@@ -95,6 +82,10 @@ public class DotGen {
                     
                 }
             }
+                            
+            if((int)end==height){
+                continue;
+            }
             segments.add(Structs.Segment.newBuilder().setV1Idx(v1).setV2Idx(v3).build());
             segments.add(Structs.Segment.newBuilder().setV1Idx(v2).setV2Idx(v4).build());
             if(vertices.get(v4).getY()+square_size==height){
@@ -103,60 +94,57 @@ public class DotGen {
             }else{
                 y=1;
             }
-            counter++;
-                
-            if((int)end==height){
-                continue;
+            if(vertices.get(v4).getX()==width){
+                counter++;
+            }
+            if(counter==(height/square_size)/2){
+                break;
             }
 
+
         }
-        
-        List<Integer> newPoly2 = new ArrayList<Integer>();
+
         tempSegmentSize += 3;
-        for(int x=0; x<vertices.size()-3;x+=4){
+        for(int x=0; x<vertices.size()-3;x+=4){ 
             int v4 = x+3;
-            System.out.println(tempSegmentSize);
             if(vertices.get(v4).getY()+square_size<height){
-                newPoly2.add(v4);
-                newPoly2.add(tempSegmentSize);
-                newPoly2.add(tempSegmentSize+1);
-                newPoly2.add(v4+1);
+                index.add(v4);
+                index.add(tempSegmentSize);
+                index.add(tempSegmentSize+1);
+                index.add(v4+1);
             }else{
                 tempSegmentSize -= 2;
             }
             tempSegmentSize += 2;
 
         }
-        System.out.println(newPoly2);
+
 
         int v2 = height/square_size*2 +2;
-
-        for (int x=1; x<vertices.size()-1; x+=2){//horizontal lines
+        int flip=1;
+        for (int x=1,i=0; x<vertices.size(); x+=2){//horizontal lines
             int v1 = x;
-            
             if(vertices.get(x).getX()==width){
+                v2+=2;
                 continue;
             }
             segments.add(Structs.Segment.newBuilder().setV1Idx(v1).setV2Idx(v2).build());
             v2+=2;
-            
-
-            
-        }
-
-        List<Integer> newPoly3 = new ArrayList<Integer>();
-        int repVal = height/square_size*2;
-        for(int x=0; x< indexOrderHorizontal.size(); x+=2,tempSegmentSize++){
-            newPoly3.add(indexOrderHorizontal.get(x));
-            newPoly3.add(tempSegmentSize);
-            newPoly3.add(indexOrderHorizontal.get(x+1));
-            newPoly3.add(tempSegmentSize+1);
-            if((x+2)%repVal == 0){
-                tempSegmentSize ++;
+            if(flip%2==0){//every time flip is even a new square is finished so we add the proper indices
+                
+                index.add(segments.size()-2);
+                index.add(indexOrderHorizontal.get(i));
+                
+                index.add(segments.size()-1);
+                index.add(indexOrderHorizontal.get(i+1));
+                i+=2;
             }
+            flip++;
+            
 
+            
         }
-        System.out.println(newPoly3);
+
         
 
         // Distribute colors randomly. Vertices are immutable, need to enrich them
@@ -172,11 +160,18 @@ public class DotGen {
             verticesWithColors.add(colored);
         }
         for(Vertex v : vertices){
-           // System.out.println(v.getX());
+            // System.out.println(v.getX());
             //System.out.println(v.getY());
         }
 
         for(int i = 0; i < index.size(); i+=4){
+            /* 
+            System.out.println("Individual polygon segment indexes: "+index.get(i)+" "+index.get(i+1)+" "+index.get(i+2)+" "+index.get(i+3));
+            System.out.println("X v1: "+vertices.get(segments.get(index.get(i)).getV1Idx()).getX()+"Y v1: "+vertices.get(segments.get(index.get(i)).getV1Idx()).getY()+"X v2: "+vertices.get(segments.get(index.get(i)).getV2Idx()).getX()+"Y v2: "+vertices.get(segments.get(index.get(i)).getV2Idx()).getY());
+            System.out.println("X v1: "+vertices.get(segments.get(index.get(i+1)).getV1Idx()).getX()+"Y v1: "+vertices.get(segments.get(index.get(i+1)).getV1Idx()).getY()+"X v2: "+vertices.get(segments.get(index.get(i+1)).getV2Idx()).getX()+"Y v2: "+vertices.get(segments.get(index.get(i+1)).getV2Idx()).getY());
+            System.out.println("X v1: "+vertices.get(segments.get(index.get(i+2)).getV1Idx()).getX()+"Y v1: "+vertices.get(segments.get(index.get(i+2)).getV1Idx()).getY()+"X v2: "+vertices.get(segments.get(index.get(i+2)).getV2Idx()).getX()+"Y v2: "+vertices.get(segments.get(index.get(i+2)).getV2Idx()).getY());
+            System.out.println("X v1: "+vertices.get(segments.get(index.get(i+3)).getV1Idx()).getX()+"Y v1: "+vertices.get(segments.get(index.get(i+3)).getV1Idx()).getY()+"X v2: "+vertices.get(segments.get(index.get(i+3)).getV2Idx()).getX()+"Y v2: "+vertices.get(segments.get(index.get(i+3)).getV2Idx()).getY());
+            */
             PolygonList.add(Polygon.newBuilder().addSegmentIdxs(index.get(i)).addSegmentIdxs(index.get(i+1)).addSegmentIdxs(index.get(i+2)).addSegmentIdxs(index.get(i+3)).build());
         }
         

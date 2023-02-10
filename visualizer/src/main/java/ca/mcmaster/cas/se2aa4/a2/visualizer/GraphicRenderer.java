@@ -55,14 +55,20 @@ public class GraphicRenderer {
             Structs.Segment s4 = aMesh.getSegments(i4);
 
             canvas.setColor(averageColor(aMesh.getVertices(s1.getV1Idx()).getPropertiesList(), aMesh.getVertices(s1.getV2Idx()).getPropertiesList()));
-            canvas.setColor(averageColor(aMesh.getVertices(s2.getV1Idx()).getPropertiesList(), aMesh.getVertices(s2.getV2Idx()).getPropertiesList()));
-            canvas.setColor(averageColor(aMesh.getVertices(s3.getV1Idx()).getPropertiesList(), aMesh.getVertices(s3.getV2Idx()).getPropertiesList()));
-            canvas.setColor(averageColor(aMesh.getVertices(s4.getV1Idx()).getPropertiesList(), aMesh.getVertices(s4.getV2Idx()).getPropertiesList()));
-
             canvas.draw(new Line2D.Double(aMesh.getVertices(s1.getV1Idx()).getX(), aMesh.getVertices(s1.getV1Idx()).getY(), aMesh.getVertices(s1.getV2Idx()).getX(), aMesh.getVertices(s1.getV2Idx()).getY()));
+
+            canvas.setColor(averageColor(aMesh.getVertices(s2.getV1Idx()).getPropertiesList(), aMesh.getVertices(s2.getV2Idx()).getPropertiesList()));
             canvas.draw(new Line2D.Double(aMesh.getVertices(s2.getV1Idx()).getX(), aMesh.getVertices(s2.getV1Idx()).getY(), aMesh.getVertices(s2.getV2Idx()).getX(), aMesh.getVertices(s2.getV2Idx()).getY()));
+
+            canvas.setColor(averageColor(aMesh.getVertices(s3.getV1Idx()).getPropertiesList(), aMesh.getVertices(s3.getV2Idx()).getPropertiesList()));
             canvas.draw(new Line2D.Double(aMesh.getVertices(s3.getV1Idx()).getX(), aMesh.getVertices(s3.getV1Idx()).getY(), aMesh.getVertices(s3.getV2Idx()).getX(), aMesh.getVertices(s3.getV2Idx()).getY()));
+
+            canvas.setColor(averageColor(aMesh.getVertices(s4.getV1Idx()).getPropertiesList(), aMesh.getVertices(s4.getV2Idx()).getPropertiesList()));
             canvas.draw(new Line2D.Double(aMesh.getVertices(s4.getV1Idx()).getX(), aMesh.getVertices(s4.getV1Idx()).getY(), aMesh.getVertices(s4.getV2Idx()).getX(), aMesh.getVertices(s4.getV2Idx()).getY()));
+            
+            
+            
+            
 
         }
     }
