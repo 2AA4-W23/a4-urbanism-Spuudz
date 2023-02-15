@@ -17,8 +17,8 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 
 public class DotGen {
 
-    private final int width = 100;
-    private final int height = 100;
+    private final int width = 500;
+    private final int height = 500;
     private final int square_size = 20;
 
     public Mesh generate() {
@@ -198,6 +198,9 @@ public class DotGen {
             //System.out.println(v.getY());
         }
 
+        int centCounter = vertices.size();
+        int vertBefore = vertices.size();
+        ArrayList<Vertex> centroids = new ArrayList<>();
         for(int i = 0; i < index.size(); i+=4){
             /* 
             System.out.println("Individual polygon segment indexes: "+index.get(i)+" "+index.get(i+1)+" "+index.get(i+2)+" "+index.get(i+3));
@@ -206,8 +209,51 @@ public class DotGen {
             System.out.println("X v1: "+vertices.get(segments.get(index.get(i+2)).getV1Idx()).getX()+"Y v1: "+vertices.get(segments.get(index.get(i+2)).getV1Idx()).getY()+"X v2: "+vertices.get(segments.get(index.get(i+2)).getV2Idx()).getX()+"Y v2: "+vertices.get(segments.get(index.get(i+2)).getV2Idx()).getY());
             System.out.println("X v1: "+vertices.get(segments.get(index.get(i+3)).getV1Idx()).getX()+"Y v1: "+vertices.get(segments.get(index.get(i+3)).getV1Idx()).getY()+"X v2: "+vertices.get(segments.get(index.get(i+3)).getV2Idx()).getX()+"Y v2: "+vertices.get(segments.get(index.get(i+3)).getV2Idx()).getY());
             */
-            PolygonList.add(Polygon.newBuilder().addSegmentIdxs(index.get(i)).addSegmentIdxs(index.get(i+1)).addSegmentIdxs(index.get(i+2)).addSegmentIdxs(index.get(i+3)).build());
+            double xVal = 0;
+            double yVal = 0;
+
+            for (int j = 0; j < 4; j++) {
+                xVal += vertices.get(segments.get(index.get(i)).getV1Idx()).getX() ;
+                xVal += vertices.get(segments.get(index.get(i)).getV2Idx()).getX();
+
+                yVal = vertices.get(segments.get(index.get(i)).getV1Idx()).getY() ;
+                yVal += vertices.get(segments.get(index.get(i)).getV2Idx()).getY();
+            }
+
+            xVal = xVal/8.0;
+            yVal = yVal/2.0 + square_size/2;
+
+            vertices.add(Vertex.newBuilder().setX((double) xVal).setY((double) yVal).build());
+            PolygonList.add(Polygon.newBuilder().addSegmentIdxs(index.get(i)).addSegmentIdxs(index.get(i+1)).addSegmentIdxs(index.get(i+2)).addSegmentIdxs(index.get(i+3)).setCentroidIdx(centCounter).build());
+            centCounter++;
         }
+    
+        // Distribute colors randomly. Vertices are immutable, need to enrich them
+        /*ArrayList<Vertex> centroidsColors = new ArrayList<>();
+        for(Vertex c: centroids){
+            int red = 0;
+            int green = 0;
+            int blue = 0;
+            
+            String colorCode = red + "," + green + "," + blue;
+            Property color = Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
+            Vertex colored = Vertex.newBuilder(c).addProperties(color).build();
+            centroidsColors.add(colored);
+        }*/
+
+        for (int i = vertBefore; i < centCounter; i++) {
+            int red = 0;
+            int green = 0;
+            int blue = 0;
+            
+            String colorCode = red + "," + green + "," + blue;
+            Property color = Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
+            Vertex colored = Vertex.newBuilder(vertices.get(i)).addProperties(color).build();
+            verticesWithColors.add(colored);
+        }
+
+
+
         
         
         System.out.println(index);
@@ -215,6 +261,8 @@ public class DotGen {
         //System.out.println(index);
         //System.out.println(index.size());
         System.out.println(indexOrderHorizontal);
+
+
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
     }
 
