@@ -186,10 +186,10 @@ public class MeshADT {
             double yVal = 0;
 
             for (int j = 0; j < 4; j++) {
-                xVal += vertices.get(segments.get(segmentIndices.get(i)).getV1Idx()).getX() ;
+                xVal += vertices.get(segments.get(segmentIndices.get(i)).getV1Idx()).getX();
                 xVal += vertices.get(segments.get(segmentIndices.get(i)).getV2Idx()).getX();
 
-                yVal = vertices.get(segments.get(segmentIndices.get(i)).getV1Idx()).getY() ;
+                yVal = vertices.get(segments.get(segmentIndices.get(i)).getV1Idx()).getY();
                 yVal += vertices.get(segments.get(segmentIndices.get(i)).getV2Idx()).getY();
             }
 
