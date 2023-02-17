@@ -73,6 +73,6 @@ When you develop features and enrich the product, remember that you have first t
 | F01   |  Draw Segments Between Vertices with color being average of vertices |  Matthew, Dylan, Harman    |  01/02/23  | 08/02/23 | D |
 | F02   |  Creating Mesh ADT | Matthew, Dylan | 09/02/23 | 15/02/23 | 15/02/23 | D |
 | F03   | Producing full meshes | TBD |  |  | P |
-| F04   | Playing with rendering (color and thickness for polygons) | TBD | | | P | 
+| F04   | Playing with rendering (color and thickness for polygons) | Matthew | 17/02/23 | 17/02/23 | D | 
 | F05   | Visualization Mode | Matthew | 17/02/23 | | S |
 
