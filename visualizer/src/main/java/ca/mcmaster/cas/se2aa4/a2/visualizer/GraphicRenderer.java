@@ -71,6 +71,7 @@ public class GraphicRenderer {
 
     private Color extractColor(List<Property> properties, String cmdArg) {
         String val = null;
+        String cnt = null;
         for(Property p: properties) {
             if (p.getKey().equals("rgb_color")) {
                 System.out.println(p.getValue());
@@ -86,6 +87,9 @@ public class GraphicRenderer {
                     }
                 }
             }
+            if(p.getKey().equals("centroid")){
+                cnt = p.getValue();
+            }
         }
         if (val == null)
             return Color.BLACK;
@@ -93,8 +97,12 @@ public class GraphicRenderer {
         int red = Integer.parseInt(raw[0]);
         int green = Integer.parseInt(raw[1]);
         int blue = Integer.parseInt(raw[2]);
-
-        return new Color(red, green, blue);
+        if(cnt.equals("False")){
+            return new Color(red, green, blue);
+        }
+        else{
+            return new Color(red, green, blue,0);
+        }
     }
     private Color averageColor(List<Property> properties1, List<Property> properties2, String cmdArg){
         String val1 = null;
