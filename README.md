@@ -74,5 +74,5 @@ When you develop features and enrich the product, remember that you have first t
 | F02   |  Creating Mesh ADT | Matthew, Dylan | 09/02/23 | 15/02/23 | 15/02/23 | D |
 | F03   | Producing full meshes | TBD |  |  | P |
 | F04   | Playing with rendering (color and thickness for polygons) | TBD | | | P | 
-| F05   | Visualization Mode | TBD | | | P |
+| F05   | Visualization Mode | Matthew | 17/02/23 | | S |
 
