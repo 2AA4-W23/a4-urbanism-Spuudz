@@ -28,10 +28,11 @@ public class MeshADT {
     private void generateVertices(){
         for(int x = 0; x <= width; x += 2*square_size) {
             for(int y = 0; y <= height; y += 2*square_size) {
-                vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y).build());
-                vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y).build());
-                vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y+square_size).build());
-                vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y+square_size).build());
+                Property centroid = Property.newBuilder().setKey("centroid").setValue("False").build();
+                vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y).addProperties(centroid).build());
+                vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y).addProperties(centroid).build());
+                vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y+square_size).addProperties(centroid).build());
+                vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y+square_size).addProperties(centroid).build());
             }
         }
     }
@@ -208,7 +209,8 @@ public class MeshADT {
             
             String colorCode = red + "," + green + "," + blue;
             Property color = Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
-            Vertex colored = Vertex.newBuilder(vertices.get(i)).addProperties(color).build();
+            Property centroid = Property.newBuilder().setKey("centroid").setValue("True").build();
+            Vertex colored = Vertex.newBuilder(vertices.get(i)).addProperties(color).addProperties(centroid).build();
             verticesWithColors.add(colored);
         }
     }

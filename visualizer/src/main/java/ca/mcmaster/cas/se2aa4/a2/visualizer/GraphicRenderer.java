@@ -27,31 +27,14 @@ public class GraphicRenderer {
         canvas.setColor(Color.BLACK);
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
-        int counter = 0;
         for (Vertex v: aMesh.getVerticesList()) {
             double centre_x = v.getX() - (THICKNESS/2.0d);
             double centre_y = v.getY() - (THICKNESS/2.0d);
             Color old = canvas.getColor();
-
-
-            if(cmdArg.equals("-X")){
-                if (counter < aMesh.getVerticesCount() - aMesh.getPolygonsCount()){
-                    canvas.setColor(Color.BLACK);
-                }
-                else if(counter >= aMesh.getVerticesCount() - aMesh.getPolygonsCount()){
-                    canvas.setColor(Color.RED);
-                }
-            }
-            else{
-                canvas.setColor(extractColor(v.getPropertiesList()));
-            }
-
-
-
+            canvas.setColor(extractColor(v.getPropertiesList(), cmdArg));
             Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, THICKNESS, THICKNESS);
             canvas.fill(point);
             canvas.setColor(old);
-            counter++;
         }
 /*         for(Structs.Segment s: aMesh.getSegmentsList()){
             int v1 = s.getV1Idx();
@@ -72,46 +55,36 @@ public class GraphicRenderer {
             Structs.Segment s3 = aMesh.getSegments(i3);
             Structs.Segment s4 = aMesh.getSegments(i4);
             
-            if(cmdArg.equals("-X")){
-                canvas.setColor(Color.BLACK);
-            }
-            else {
-                canvas.setColor(averageColor(aMesh.getVertices(s1.getV1Idx()).getPropertiesList(), aMesh.getVertices(s1.getV2Idx()).getPropertiesList()));
-            }
+            canvas.setColor(averageColor(aMesh.getVertices(s1.getV1Idx()).getPropertiesList(), aMesh.getVertices(s1.getV2Idx()).getPropertiesList(), cmdArg));
             canvas.draw(new Line2D.Double(aMesh.getVertices(s1.getV1Idx()).getX(), aMesh.getVertices(s1.getV1Idx()).getY(), aMesh.getVertices(s1.getV2Idx()).getX(), aMesh.getVertices(s1.getV2Idx()).getY()));
 
-            if(cmdArg.equals("-X")){
-                canvas.setColor(Color.BLACK);
-            }
-            else {
-                canvas.setColor(averageColor(aMesh.getVertices(s2.getV1Idx()).getPropertiesList(), aMesh.getVertices(s2.getV2Idx()).getPropertiesList()));
-            }
+            canvas.setColor(averageColor(aMesh.getVertices(s2.getV1Idx()).getPropertiesList(), aMesh.getVertices(s2.getV2Idx()).getPropertiesList(), cmdArg));
             canvas.draw(new Line2D.Double(aMesh.getVertices(s2.getV1Idx()).getX(), aMesh.getVertices(s2.getV1Idx()).getY(), aMesh.getVertices(s2.getV2Idx()).getX(), aMesh.getVertices(s2.getV2Idx()).getY()));
 
-            if(cmdArg.equals("-X")){
-                canvas.setColor(Color.BLACK);
-            }
-            else {
-                canvas.setColor(averageColor(aMesh.getVertices(s3.getV1Idx()).getPropertiesList(), aMesh.getVertices(s3.getV2Idx()).getPropertiesList()));
-            }
+            canvas.setColor(averageColor(aMesh.getVertices(s3.getV1Idx()).getPropertiesList(), aMesh.getVertices(s3.getV2Idx()).getPropertiesList(), cmdArg));
             canvas.draw(new Line2D.Double(aMesh.getVertices(s3.getV1Idx()).getX(), aMesh.getVertices(s3.getV1Idx()).getY(), aMesh.getVertices(s3.getV2Idx()).getX(), aMesh.getVertices(s3.getV2Idx()).getY()));
 
-            if(cmdArg.equals("-X")){
-                canvas.setColor(Color.BLACK);
-            }
-            else {
-                canvas.setColor(averageColor(aMesh.getVertices(s4.getV1Idx()).getPropertiesList(), aMesh.getVertices(s4.getV2Idx()).getPropertiesList()));
-            }
+            canvas.setColor(averageColor(aMesh.getVertices(s4.getV1Idx()).getPropertiesList(), aMesh.getVertices(s4.getV2Idx()).getPropertiesList(), cmdArg));
             canvas.draw(new Line2D.Double(aMesh.getVertices(s4.getV1Idx()).getX(), aMesh.getVertices(s4.getV1Idx()).getY(), aMesh.getVertices(s4.getV2Idx()).getX(), aMesh.getVertices(s4.getV2Idx()).getY()));
         }
     }
 
-    private Color extractColor(List<Property> properties) {
+    private Color extractColor(List<Property> properties, String cmdArg) {
         String val = null;
         for(Property p: properties) {
             if (p.getKey().equals("rgb_color")) {
                 System.out.println(p.getValue());
                 val = p.getValue();
+            }
+            if(cmdArg.equals("-X")){
+                if(p.getKey().equals("centroid")){
+                    if(p.getValue().equals("True")){
+                        return Color.RED;
+                    }
+                    else{
+                        return Color.BLACK;
+                    }
+                }
             }
         }
         if (val == null)
@@ -120,9 +93,10 @@ public class GraphicRenderer {
         int red = Integer.parseInt(raw[0]);
         int green = Integer.parseInt(raw[1]);
         int blue = Integer.parseInt(raw[2]);
+
         return new Color(red, green, blue);
     }
-    private Color averageColor(List<Property> properties1, List<Property> properties2 ){
+    private Color averageColor(List<Property> properties1, List<Property> properties2, String cmdArg){
         String val1 = null;
         String val2 = null;
         for(Property p: properties1) {
@@ -136,6 +110,10 @@ public class GraphicRenderer {
                 System.out.println(p.getValue());
                 val2 = p.getValue();
             }
+        }
+
+        if(cmdArg.equals("-X")){
+            return Color.BLACK;
         }
 
         String[] raw = val1.split(",");
