@@ -6,9 +6,17 @@ import java.util.List;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.*;
 import java.util.Random;
 
+import org.locationtech.jts.algorithm.ConvexHull;
+import org.locationtech.jts.geom.*;
+import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
+
 public class MeshADT {
+    GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(10.00));
+    List<Coordinate> pointCoordinates = new ArrayList<>();
+    List<Coordinate> randomCoords = new ArrayList<>();
     private final int width = 500;
     private final int height = 500;
+    Envelope boundary = new Envelope(0,width,0,height);
     private final int square_size = 20;
     private List<Polygon> PolygonList = new ArrayList<Polygon>();
     private List<Vertex> vertices = new ArrayList<>();
@@ -18,10 +26,13 @@ public class MeshADT {
     private List<Vertex> verticesWithColors = new ArrayList<>();
     
     public Mesh generate(){
-        generateVertices();
+        /*generateVertices();
         generateSegments();
+        hullGeneration();
         colorVertices();
-        polygonGenerator();
+        polygonGenerator();*/
+        
+        convert(randomGen(100));
 
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
     }
@@ -32,10 +43,62 @@ public class MeshADT {
                 vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y).build());
                 vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y+square_size).build());
                 vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y+square_size).build());
+                Coordinate coordinate = new Coordinate(x, y);
+                pointCoordinates.add(coordinate);
+                coordinate = new Coordinate(x+square_size, y);
+                pointCoordinates.add(coordinate);
+                coordinate = new Coordinate(x, y+square_size);
+                pointCoordinates.add(coordinate);
+                coordinate = new Coordinate(x+square_size, y+square_size);
+                pointCoordinates.add(coordinate);
             }
         }
+        System.out.println(pointCoordinates.size());
     }
+    
+    private void hullGeneration(){
+        VoronoiDiagramBuilder diagramBuilder = new VoronoiDiagramBuilder();
+        Coordinate[] points = new Coordinate [pointCoordinates.size()];
 
+        for(int i=0;i<pointCoordinates.size();i++){
+            points[i]=pointCoordinates.get(i);
+        }
+
+        int counter=0;
+        for(int i=0;i<pointCoordinates.size()-3;i+=4){
+            Coordinate[] sublist=new Coordinate[4];
+            sublist[0]=points[i];
+            sublist[1]=points[i+1];
+            sublist[2]=points[i+2];
+            sublist[3]=points[i+3];
+            ConvexHull hull = new ConvexHull(sublist, geometryFactory);
+            org.locationtech.jts.geom.Polygon newPoly = geometryFactory.createPolygon(hull.getConvexHull().getCoordinates());
+
+            counter++;
+            Double x=newPoly.getCentroid().getX();
+            
+        }
+        diagramBuilder.setSites(pointCoordinates);
+
+            Geometry polygonCollection = diagramBuilder.getDiagram(geometryFactory);
+
+            List<org.locationtech.jts.geom.Polygon> producedPolygons = new ArrayList<>();
+
+            if(polygonCollection instanceof GeometryCollection) {
+                
+                GeometryCollection geometryCollection = (GeometryCollection) polygonCollection;
+                
+                System.out.println("Produced polygon count: " + geometryCollection.getNumGeometries());
+                
+                for(int j = 0; j < geometryCollection.getNumGeometries(); j++) {
+                    
+                    org.locationtech.jts.geom.Polygon polygon = (org.locationtech.jts.geom.Polygon) geometryCollection.getGeometryN(j);
+                    
+                    producedPolygons.add(polygon);
+                }
+            }
+            System.out.println(producedPolygons);
+    }
     private void generateSegments(){
         //First for loop will create segments that create squares on every odd x & y square ie in 3x3 grid squares will be made (1,1), (3,1) etc
         for(int x = 0; x < vertices.size()-1;x+=4){
@@ -54,6 +117,7 @@ public class MeshADT {
             segmentIndices.add(v3);
             
         }
+
 
 
         int differenceOdd=3+4*((height/square_size)-((height/square_size)/2)-1); //difference between left and right lines in terms of inBetweenIndices
@@ -212,4 +276,93 @@ public class MeshADT {
             verticesWithColors.add(colored);
         }
     }
+
+    private List<org.locationtech.jts.geom.Polygon> randomGen(int numPolygons){
+        VoronoiDiagramBuilder diagramBuilder = new VoronoiDiagramBuilder();
+        Random rand = new Random();
+        Double x;
+        Double y;
+        Coordinate newCoord;
+        for (int i = 0; i < numPolygons; i++) { //generate random points
+            x=rand.nextDouble(width);
+            y=rand.nextDouble(height);
+            newCoord=new Coordinate(x,y);
+
+            randomCoords.add(newCoord);
+        }
+       
+        diagramBuilder.setSites(randomCoords); //set voronoi diagram coordinates
+
+        Geometry polygonCollection = diagramBuilder.getDiagram(geometryFactory); //generate voronoi diagram
+
+        List<org.locationtech.jts.geom.Polygon> producedPolygons = new ArrayList<>(); //list of produced polygons
+
+        if(polygonCollection instanceof GeometryCollection) {
+            
+            GeometryCollection geometryCollection = (GeometryCollection) polygonCollection;
+            
+            System.out.println("Produced polygon count: " + geometryCollection.getNumGeometries());
+            
+            for(int j = 0; j < geometryCollection.getNumGeometries(); j++) {
+                
+                org.locationtech.jts.geom.Polygon polygon = (org.locationtech.jts.geom.Polygon) geometryCollection.getGeometryN(j);
+                
+                producedPolygons.add(polygon);
+                
+            }
+
+        }
+        return producedPolygons;
+        
+
+    }
+
+    public void lloydRelaxation(List<org.locationtech.jts.geom.Polygon> producedPolygons){
+        int numRelax=10;
+        VoronoiDiagramBuilder diagramBuilder = new VoronoiDiagramBuilder();
+        diagramBuilder.setClipEnvelope(boundary);
+        for(int i=0;i<numRelax;i++){
+            int counter=0;
+
+            for(org.locationtech.jts.geom.Polygon polygon:producedPolygons){
+                Vertex newVertex = Vertex.newBuilder().setX((polygon.getCentroid().getX())).setY(polygon.getCentroid().getY()).build();
+                vertices.set(counter,newVertex);
+                counter++;
+            }
+            
+            diagramBuilder.setSites(randomCoords); //set voronoi diagram coordinates
+
+            Geometry polygonCollection = diagramBuilder.getDiagram(geometryFactory); //generate voronoi diagram
+
+            if(polygonCollection instanceof GeometryCollection) {
+                
+                GeometryCollection geometryCollection = (GeometryCollection) polygonCollection;
+                
+                System.out.println("Produced polygon count: " + geometryCollection.getNumGeometries());
+                
+                for(int j = 0; j < geometryCollection.getNumGeometries(); j++) {
+                    
+                    org.locationtech.jts.geom.Polygon polygon = (org.locationtech.jts.geom.Polygon) geometryCollection.getGeometryN(j);
+                    
+                    producedPolygons.set(j,polygon);
+                    
+                }
+
+            }
+            System.out.println(producedPolygons);
+            }
+        
+    }
+    public void neighborRelation(){
+
+    }
+
+    public void convert(List<org.locationtech.jts.geom.Polygon> producedPolygons){
+        for(org.locationtech.jts.geom.Polygon polygon:producedPolygons){
+            System.out.println(polygon.convexHull());
+
+
+        }
+    }
 }
+
