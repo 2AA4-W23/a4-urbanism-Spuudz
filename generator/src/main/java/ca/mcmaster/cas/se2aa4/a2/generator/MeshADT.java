@@ -39,7 +39,7 @@ public class MeshADT {
     private void generateVertices(){
         for(int x = 0; x <= width; x += 2*square_size) {
             for(int y = 0; y <= height; y += 2*square_size) {
-<<<<<<< HEAD
+                Property centroid = Property.newBuilder().setKey("centroid").setValue("False").build();
                 vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y).build());
                 vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y).build());
                 vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y+square_size).build());
@@ -52,13 +52,6 @@ public class MeshADT {
                 pointCoordinates.add(coordinate);
                 coordinate = new Coordinate(x+square_size, y+square_size);
                 pointCoordinates.add(coordinate);
-=======
-                Property centroid = Property.newBuilder().setKey("centroid").setValue("False").build();
-                vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y).addProperties(centroid).build());
-                vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y).addProperties(centroid).build());
-                vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y+square_size).addProperties(centroid).build());
-                vertices.add(Vertex.newBuilder().setX((double) x+square_size).setY((double) y+square_size).addProperties(centroid).build());
->>>>>>> 757018a77de6c1415cc6e0e3822794d8cc5159a5
             }
         }
         System.out.println(pointCoordinates.size());
@@ -258,10 +251,10 @@ public class MeshADT {
             double yVal = 0;
 
             for (int j = 0; j < 4; j++) {
-                xVal += vertices.get(segments.get(segmentIndices.get(i)).getV1Idx()).getX();
+                xVal += vertices.get(segments.get(segmentIndices.get(i)).getV1Idx()).getX() ;
                 xVal += vertices.get(segments.get(segmentIndices.get(i)).getV2Idx()).getX();
 
-                yVal = vertices.get(segments.get(segmentIndices.get(i)).getV1Idx()).getY();
+                yVal = vertices.get(segments.get(segmentIndices.get(i)).getV1Idx()).getY() ;
                 yVal += vertices.get(segments.get(segmentIndices.get(i)).getV2Idx()).getY();
             }
 
@@ -374,4 +367,5 @@ public class MeshADT {
         }
     }
 }
+
 
