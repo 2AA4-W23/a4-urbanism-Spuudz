@@ -34,7 +34,8 @@ public class MeshADT {
         
         convert(randomGen(100));
 
-        return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
+        //return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
+        return Mesh.newBuilder().addAllVertices(irregVertex).addAllSegments(irregSegments).addAllPolygons(irregPolygons).build();
     }
     private void generateVertices(){
         for(int x = 0; x <= width; x += 2*square_size) {
@@ -359,11 +360,38 @@ public class MeshADT {
 
     }
 
+    private List<Vertex> irregVertex = new ArrayList<>();
+    private List<Segment> irregSegments = new ArrayList<>();
+    private List<Polygon> irregPolygons = new ArrayList<>();
     public void convert(List<org.locationtech.jts.geom.Polygon> producedPolygons){
+        Double v1x, v1y;
+        List<Integer> polySides = new ArrayList<>();
+
         for(org.locationtech.jts.geom.Polygon polygon:producedPolygons){
-            System.out.println(polygon.convexHull());
+            Geometry line = polygon.convexHull();
+            System.out.println(line);
+            polySides.add(line.getNumPoints());
+            for (int i = 0; i < line.getNumPoints(); i++) {
+                v1x =  line.getCoordinates()[i].getX();
+                v1y = line.getCoordinates()[i].getY();
+                irregVertex.add(Vertex.newBuilder().setX((double) v1x).setY((double) v1y).build()); 
+                System.out.println("[" +v1x + "," + v1y + "]");
+            }
 
-
+        }
+        System.out.println(polySides);
+        for (int i = 0; i < irregVertex.size(); i+=2) {
+            irregSegments.add(Segment.newBuilder().setV1Idx(i).setV2Idx(i+1).build());
+        }
+        
+        int segCounter = 0;
+        for (int i = 0; i < polySides.size(); i++) {
+            Polygon tempPoly = Polygon.newBuilder().build();
+            for (int j = 0; j < polySides.get(i); j++) {
+                tempPoly = Polygon.newBuilder().addSegmentIdxs(segCounter).build();
+                segCounter++;
+            }
+            irregPolygons.add(tempPoly);
         }
     }
 }
