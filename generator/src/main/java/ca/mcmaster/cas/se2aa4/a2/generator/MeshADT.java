@@ -296,7 +296,7 @@ public class MeshADT {
     private List<org.locationtech.jts.geom.Polygon> squareGen(int numPolygons){
         VoronoiDiagramBuilder diagramBuilder = new VoronoiDiagramBuilder();
         diagramBuilder.setClipEnvelope(boundary);
-        int row = (int)Math.sqrt(120);
+        int row = (int)Math.sqrt(numPolygons);
         int squareSize = 20;
         Double x;
         Double y = 10.0;
