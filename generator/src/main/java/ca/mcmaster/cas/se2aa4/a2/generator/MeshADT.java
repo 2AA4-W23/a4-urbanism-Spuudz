@@ -7,13 +7,16 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.*;
 import java.util.Random;
 
 import org.locationtech.jts.algorithm.ConvexHull;
+import org.locationtech.jts.awt.PointShapeFactory.Square;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
+import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class MeshADT {
     GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(10.00));
     List<Coordinate> pointCoordinates = new ArrayList<>();
     List<Coordinate> randomCoords = new ArrayList<>();
+    List<Coordinate> squareCoords = new ArrayList<>();
     private final Double width = 500.0;
     private final Double height = 500.0;
     Envelope boundary = new Envelope(0,width,0,height);
@@ -35,7 +38,7 @@ public class MeshADT {
         colorVertices();
         polygonGenerator();*/
         
-        convert(lloydRelaxation(randomGen(100)));
+        convert(lloydRelaxation(squareGen(100)));
         colorVertices();
         //return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(irregSegments).addAllPolygons(irregPolygons).build();
@@ -282,6 +285,44 @@ public class MeshADT {
             verticesWithColors.add(colored);
         }
     }
+
+    //For generating the square grid
+    private List<org.locationtech.jts.geom.Polygon> squareGen(int numPolygons){
+        VoronoiDiagramBuilder diagramBuilder = new VoronoiDiagramBuilder();
+        diagramBuilder.setClipEnvelope(boundary);
+        int row = (int)Math.sqrt(120);
+        int squareSize = 20;
+        Double x;
+        Double y = 10.0;
+        Coordinate newCoord;
+        for (int i = 0; i < row; i++) { //generate points
+            x = 10.0;
+            for (int j = 0; j < row; j++) { //generate points
+                newCoord = new Coordinate(x,y);
+                System.out.println(newCoord);
+                squareCoords.add(newCoord);
+                x += squareSize;
+            }
+            y += squareSize;
+        }
+
+
+        List<org.locationtech.jts.geom.Polygon> producedPolygons = new ArrayList<>(); //list of produced polygons
+        GeometricShapeFactory shapeFactory = new GeometricShapeFactory();
+
+        for (int i = 0; i < squareCoords.size(); i++) {
+            shapeFactory.setNumPoints(4);
+            shapeFactory.setCentre(squareCoords.get(i));
+            shapeFactory.setWidth(squareSize);
+            shapeFactory.setHeight(squareSize);
+            producedPolygons.add(shapeFactory.createRectangle());
+        }
+
+        return producedPolygons;
+
+    }
+
+
 
     private List<org.locationtech.jts.geom.Polygon> randomGen(int numPolygons){
         VoronoiDiagramBuilder diagramBuilder = new VoronoiDiagramBuilder();
