@@ -9,7 +9,13 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         DotGen generator = new DotGen();
-        Mesh myMesh = generator.generate();
+        Mesh myMesh;
+        try {
+            myMesh = generator.generate(args[1], Integer.parseInt(args[2]),Integer.parseInt(args[3]));
+        } catch (Exception e) {
+            myMesh = generator.generate("Irregular", 100, 300);
+        }
+        
         MeshFactory factory = new MeshFactory();
         factory.write(myMesh, args[0]);
     }
