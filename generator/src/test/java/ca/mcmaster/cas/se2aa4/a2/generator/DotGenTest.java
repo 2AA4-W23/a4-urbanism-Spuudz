@@ -10,7 +10,7 @@ public class DotGenTest {
     @Test
     public void meshIsNotNull() {
         DotGen generator = new DotGen();
-        Structs.Mesh aMesh = generator.generate();
+        Structs.Mesh aMesh = generator.generate("Irregular", 100, 300);
         assertNotNull(aMesh);
     }
 

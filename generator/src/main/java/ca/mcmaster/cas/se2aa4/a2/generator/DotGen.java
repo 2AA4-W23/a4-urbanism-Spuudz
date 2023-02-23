@@ -22,8 +22,8 @@ public class DotGen {
     private final int height = 500;
     private final int square_size = 20;
     MeshADT mesh = new MeshADT();
-    public Mesh generate(){
-        return mesh.generate();
+    public Mesh generate(String gridType, int numPolygons, int numRelax){
+        return mesh.generate(gridType, numPolygons, numRelax);
     }
     
     

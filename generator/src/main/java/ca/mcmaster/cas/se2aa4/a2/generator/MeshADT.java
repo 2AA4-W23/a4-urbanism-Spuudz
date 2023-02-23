@@ -31,15 +31,15 @@ public class MeshADT {
     private List<Segment> irregSegments = new ArrayList<>();
     private List<Polygon> irregPolygons = new ArrayList<>();
     
-    public Mesh generate(){
+    public Mesh generate(String gridType, int numPolygons, int numRelax){
         /*generateVertices();
         generateSegments();
         hullGeneration();
         colorVertices();
         polygonGenerator();*/
         
-        convert(lloydRelaxation(squareGen(100)));
-        colorVertices();
+        convert(lloydRelaxation(randomGen(numPolygons), numRelax));
+        colorVertices(numPolygons);
         //return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(irregSegments).addAllPolygons(irregPolygons).build();
     }
@@ -234,16 +234,22 @@ public class MeshADT {
         }
 
     }
-    private void colorVertices(){
+    private void colorVertices(int numPolygons){
         Random bag = new Random();
+        Property centroid;
         for(Vertex v: irregVertex){
-            Property centroid = Property.newBuilder().setKey("centroid").setValue("False").build();
+            if (irregVertex.indexOf(v) < numPolygons){
+                centroid = Property.newBuilder().setKey("centroid").setValue("True").build();
+            }
+            else {
+                centroid = Property.newBuilder().setKey("centroid").setValue("False").build();
+            }
             int red = bag.nextInt(255);
             int green = bag.nextInt(255);
             int blue = bag.nextInt(255);
             String colorCode = red + "," + green + "," + blue;
             Property color = Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
-            Vertex colored = Vertex.newBuilder(v).addProperties(color).build();
+            Vertex colored = Vertex.newBuilder(v).addProperties(color).addProperties(centroid).build();
             verticesWithColors.add(colored);
         }
     }
@@ -358,8 +364,7 @@ public class MeshADT {
         return producedPolygons;
     }
 
-    public List<org.locationtech.jts.geom.Polygon> lloydRelaxation(List<org.locationtech.jts.geom.Polygon> producedPolygons){
-        int numRelax=300;
+    public List<org.locationtech.jts.geom.Polygon> lloydRelaxation(List<org.locationtech.jts.geom.Polygon> producedPolygons, int numRelax){
         VoronoiDiagramBuilder diagramBuilder = new VoronoiDiagramBuilder();
         diagramBuilder.setClipEnvelope(boundary);
         
