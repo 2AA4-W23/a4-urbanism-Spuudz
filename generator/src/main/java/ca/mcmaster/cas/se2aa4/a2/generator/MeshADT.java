@@ -314,21 +314,19 @@ public class MeshADT {
 
 
         List<org.locationtech.jts.geom.Polygon> producedPolygons = new ArrayList<>(); //list of produced polygons
-        GeometricShapeFactory shapeFactory = new GeometricShapeFactory();
+        GeometricShapeFactory squareGenFactory = new GeometricShapeFactory();
 
         for (int i = 0; i < squareCoords.size(); i++) {
-            shapeFactory.setNumPoints(4);
-            shapeFactory.setCentre(squareCoords.get(i));
-            shapeFactory.setWidth(squareSize);
-            shapeFactory.setHeight(squareSize);
-            producedPolygons.add(shapeFactory.createRectangle());
+            squareGenFactory.setNumPoints(4);
+            squareGenFactory.setCentre(squareCoords.get(i));
+            squareGenFactory.setWidth(squareSize);
+            squareGenFactory.setHeight(squareSize);
+            producedPolygons.add(squareGenFactory.createRectangle());
         }
 
         return producedPolygons;
 
     }
-
-
 
     private List<org.locationtech.jts.geom.Polygon> randomGen(int numPolygons){
         VoronoiDiagramBuilder diagramBuilder = new VoronoiDiagramBuilder();
@@ -398,6 +396,7 @@ public class MeshADT {
         }
         return producedPolygons;
     }
+
     public void neighborRelation(){
 
     }
@@ -446,6 +445,7 @@ public class MeshADT {
         System.out.println(segCounter);
         System.out.println(irregPolygons.size());
     }
+
 }
 
 
