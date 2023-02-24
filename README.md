@@ -75,7 +75,7 @@ Functional features that have been properly tested.
 | F03   | Producing full meshes | Dylan, Harman | 09/02/23 | 15/02/23 | D |
 | F04   | Playing with rendering (color and thickness for polygons) | Matthew | 17/02/23 | 17/02/23 | D | 
 | F05   | Visualization Mode | Matthew | 17/02/23 | | S |
-| F06   | Generate Irregular Grid | Dylan |2/20/23 |2/22/23 | D |
-| F07   | Compute Neighborhood Relations | Harman | 2/23/23 | | S |
+| F06   | Generate Irregular Grid | Dylan |20/02/23 |22/02/23 | D |
+| F07   | Compute Neighborhood Relations | Harman | 23/02/23 | | S |
 | F08   | Control Generation through Command Line | TBD | | | |
 
