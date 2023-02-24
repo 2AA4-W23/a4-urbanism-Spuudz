@@ -384,18 +384,22 @@ public class MeshADT {
         
         for(int i=0;i<numRelax;i++){
             int counter=0;
+            
             if(i==0){
                 for(org.locationtech.jts.geom.Polygon polygon:producedPolygons){
+                    Coordinate tempCord = new Coordinate(polygon.getCentroid().getX(),polygon.getCentroid().getY());
                     Vertex newVertex = Vertex.newBuilder().setX((polygon.getCentroid().getX())).setY(polygon.getCentroid().getY()).build();
                     irregVertex.add(newVertex);
+                    centerCoords.add(tempCord);
                     counter++;
                 }
             }else{
                 for(org.locationtech.jts.geom.Polygon polygon:producedPolygons){
+                    Coordinate tempCord = new Coordinate(polygon.getCentroid().getX(),polygon.getCentroid().getY());
                     Vertex newVertex = Vertex.newBuilder().setX((polygon.getCentroid().getX())).setY(polygon.getCentroid().getY()).build();
                     irregVertex.set(counter,newVertex);
-                    Coordinate tempCord = new Coordinate(polygon.getCentroid().getX(),polygon.getCentroid().getY());
-                    centerCoords.add(tempCord);
+                    
+                    centerCoords.set(counter,tempCord);
                     counter++;
                 }
             }
