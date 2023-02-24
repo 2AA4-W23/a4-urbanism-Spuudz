@@ -37,13 +37,13 @@ public class GraphicRenderer {
             canvas.fill(point);
             canvas.setColor(old);
         }
-/*         for(Structs.Segment s: aMesh.getSegmentsList()){
+        for(Structs.Segment s: aMesh.getSegmentsList()){
             int v1 = s.getV1Idx();
             int v2 = s.getV2Idx();
-            System.out.println(extractColor(aMesh.getVertices(v1).getPropertiesList()));
-            canvas.setColor(averageColor(aMesh.getVertices(v1).getPropertiesList(), aMesh.getVertices(v2).getPropertiesList()));
+            //System.out.println(extractColor(aMesh.getVertices(v1).getPropertiesList()));
+            //canvas.setColor(averageColor(aMesh.getVertices(v1).getPropertiesList(), aMesh.getVertices(v2).getPropertiesList()));
             canvas.draw(new Line2D.Double(aMesh.getVertices(v1).getX(), aMesh.getVertices(v1).getY(),aMesh.getVertices(v2).getX(),aMesh.getVertices(v2).getY()));
-        } */
+        } 
         for (Structs.Polygon p : aMesh.getPolygonsList()){
             /*int i1 = p.getSegmentIdxs(0);
             int i2 = p.getSegmentIdxs(1);

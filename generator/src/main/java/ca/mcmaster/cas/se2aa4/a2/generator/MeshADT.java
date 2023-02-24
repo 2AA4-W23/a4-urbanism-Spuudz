@@ -2,13 +2,17 @@ package ca.mcmaster.cas.se2aa4.a2.generator;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.*;
 import java.util.Random;
 
+import javax.sound.sampled.SourceDataLine;
+
 import org.locationtech.jts.algorithm.ConvexHull;
 import org.locationtech.jts.awt.PointShapeFactory.Square;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.triangulate.DelaunayTriangulationBuilder;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
@@ -17,6 +21,7 @@ public class MeshADT {
     List<Coordinate> pointCoordinates = new ArrayList<>();
     List<Coordinate> randomCoords = new ArrayList<>();
     List<Coordinate> squareCoords = new ArrayList<>();
+    List<Coordinate> centerCoords = new ArrayList<>();
     private final Double width = 500.0;
     private final Double height = 500.0;
     Envelope boundary = new Envelope(0,width,0,height);
@@ -38,10 +43,13 @@ public class MeshADT {
         colorVertices();
         polygonGenerator();*/
         
-        convert(lloydRelaxation(randomGen(numPolygons), numRelax));
+        List<org.locationtech.jts.geom.Polygon> polygonGen = lloydRelaxation(randomGen(numPolygons), numRelax);
+        convert(polygonGen);
         colorVertices(numPolygons);
+        neighborRelation();
         //return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
-        return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(irregSegments).addAllPolygons(irregPolygons).build();
+        return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(irregSegments).addAllPolygons(irregPolygons).addAllVertices(neighborVertex).addAllSegments(neighborSegments).build();
+        
     }
     private void generateVertices(){
         for(int x = 0; x <= width; x += 2*square_size) {
@@ -378,6 +386,8 @@ public class MeshADT {
                 for(org.locationtech.jts.geom.Polygon polygon:producedPolygons){
                     Vertex newVertex = Vertex.newBuilder().setX((polygon.getCentroid().getX())).setY(polygon.getCentroid().getY()).build();
                     irregVertex.set(counter,newVertex);
+                    Coordinate tempCord = new Coordinate(polygon.getCentroid().getX(),polygon.getCentroid().getY());
+                    centerCoords.add(tempCord);
                     counter++;
                 }
             }
@@ -387,7 +397,7 @@ public class MeshADT {
 
             if(polygonCollection instanceof GeometryCollection) {
                 GeometryCollection geometryCollection = (GeometryCollection) polygonCollection;
-                System.out.println("Produced polygon count: " + geometryCollection.getNumGeometries());
+                //System.out.println("Produced polygon count: " + geometryCollection.getNumGeometries());
                 for(int j = 0; j < geometryCollection.getNumGeometries(); j++) {
                     org.locationtech.jts.geom.Polygon polygon = (org.locationtech.jts.geom.Polygon) geometryCollection.getGeometryN(j);
                     producedPolygons.set(j,polygon);
@@ -397,8 +407,30 @@ public class MeshADT {
         return producedPolygons;
     }
 
-    public void neighborRelation(){
 
+    List<Vertex> neighborVertex = new ArrayList<>();
+    List<Segment> neighborSegments = new ArrayList<>();
+    public void neighborRelation(){
+        DelaunayTriangulationBuilder neighbor = new DelaunayTriangulationBuilder();
+        double vx,vy;
+        neighbor.setSites(centerCoords);
+        Geometry neighborTrig = neighbor.getTriangles(geometryFactory);
+        System.out.println("Neighbor:" + neighborTrig);
+        
+        for (int i = 0; i < neighborTrig.getNumPoints(); i++) {
+            vx = neighborTrig.getCoordinates()[i].getX();
+            vy = neighborTrig.getCoordinates()[i].getY();
+            Vertex newVertex= Vertex.newBuilder().setX((double) vx).setY((double) vy).build();
+            verticesWithColors.add(newVertex); 
+            //System.out.println("[" +vx + "," + vy + "]");
+            System.out.println(verticesWithColors.size());
+            int counter = 0;
+            if(i!=0){
+                irregSegments.add(Segment.newBuilder().setV1Idx(verticesWithColors.size()-1).setV2Idx(verticesWithColors.size()-2).build());
+                counter++;
+            }
+        }
+        
     }
 
 
@@ -408,7 +440,7 @@ public class MeshADT {
 
         for(org.locationtech.jts.geom.Polygon polygon:producedPolygons){
             Geometry line = polygon.convexHull();
-            System.out.println(line);
+            //System.out.println(line);
             polySides.add(line.getNumPoints());
             int counter=0;
             for (int i = 0; i < line.getNumPoints(); i++) {
@@ -421,14 +453,14 @@ public class MeshADT {
                     irregSegments.add(Segment.newBuilder().setV1Idx(irregVertex.size()-1).setV2Idx(irregVertex.size()-2).build());
                     counter++;
                 }
-                System.out.println(counter);
+                //System.out.println(counter);
             }
-            System.out.println(irregVertex.size());
-            System.out.println(irregSegments.size());
+            //System.out.println(irregVertex.size());
+            //System.out.println(irregSegments.size());
             
 
         }
-        System.out.println(irregSegments);
+        //System.out.println(irregSegments);
 
         
         int segCounter = 0;
@@ -438,12 +470,12 @@ public class MeshADT {
                 tempPoly = Polygon.newBuilder(tempPoly).addSegmentIdxs(segCounter).build();
                 segCounter++;
             }
-            System.out.println("segment list size "+tempPoly.getSegmentIdxsList().size());
+            //System.out.println("segment list size "+tempPoly.getSegmentIdxsList().size());
             tempPoly=Polygon.newBuilder(tempPoly).setCentroidIdx(i).build();
             irregPolygons.add(tempPoly);
         }
-        System.out.println(segCounter);
-        System.out.println(irregPolygons.size());
+        //System.out.println(segCounter);
+        //System.out.println(irregPolygons.size());
     }
 
 }
