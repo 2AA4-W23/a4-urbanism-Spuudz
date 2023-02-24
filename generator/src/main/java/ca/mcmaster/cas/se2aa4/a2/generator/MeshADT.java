@@ -43,10 +43,18 @@ public class MeshADT {
         colorVertices();
         polygonGenerator();*/
         
-        List<org.locationtech.jts.geom.Polygon> polygonGen = lloydRelaxation(randomGen(numPolygons), numRelax);
-        convert(polygonGen);
-        colorVertices(numPolygons);
-        neighborRelation();
+        if( gridType.equals("Irregular") ){
+            List<org.locationtech.jts.geom.Polygon> polygonGen = lloydRelaxation(randomGen(numPolygons), numRelax);
+            convert(polygonGen);
+            colorVertices(numPolygons);
+            neighborRelation();
+        }
+        else if(gridType.equals("Grid")){
+            List<org.locationtech.jts.geom.Polygon> polygonGen = lloydRelaxation(squareGen(numPolygons), numRelax);
+            convert(polygonGen);
+            colorVertices(numPolygons);
+            neighborRelation();
+        }
         //return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(irregSegments).addAllPolygons(irregPolygons).addAllVertices(neighborVertex).addAllSegments(neighborSegments).build();
         
