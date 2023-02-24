@@ -77,5 +77,5 @@ Functional features that have been properly tested.
 | F05   | Visualization Mode | Matthew | 17/02/23 | | S |
 | F06   | Generate Irregular Grid | Dylan |20/02/23 |22/02/23 | D |
 | F07   | Compute Neighborhood Relations | Harman | 23/02/23 | | S |
-| F08   | Control Generation through Command Line | TBD | | | |
+| F08   | Control Generation through Command Line | Matthew | 23/02/23 | | S |
 
