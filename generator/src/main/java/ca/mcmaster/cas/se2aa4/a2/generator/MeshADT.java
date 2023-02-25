@@ -2,15 +2,10 @@ package ca.mcmaster.cas.se2aa4.a2.generator;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.*;
 import java.util.Random;
 
-import javax.sound.sampled.SourceDataLine;
-
-import org.locationtech.jts.algorithm.ConvexHull;
-import org.locationtech.jts.awt.PointShapeFactory.Square;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.triangulate.DelaunayTriangulationBuilder;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
@@ -188,7 +183,6 @@ public class MeshADT {
         List<Vertex> neighborVertex = new ArrayList<>();
         DelaunayTriangulationBuilder neighbor = new DelaunayTriangulationBuilder();
         double vx,vy;
-        int temp = verticesWithColors.size();
         neighbor.setSites(centerCoords);
         Geometry neighborTrig = neighbor.getTriangles(geometryFactory);
         
@@ -287,7 +281,6 @@ public class MeshADT {
         for(org.locationtech.jts.geom.Polygon polygon:producedPolygons){
             Geometry line = polygon.convexHull();
             polySides.add(line.getNumPoints());
-            int counter=0;
             for (int i = 0; i < line.getNumPoints(); i++) {
                 v1x =  line.getCoordinates()[i].getX();
                 v1y = line.getCoordinates()[i].getY();
@@ -296,7 +289,6 @@ public class MeshADT {
 
                 if(i!=0){
                     irregSegments.add(Segment.newBuilder().setV1Idx(irregVertex.size()-1).setV2Idx(irregVertex.size()-2).build());
-                    counter++;
                 }
             }
             

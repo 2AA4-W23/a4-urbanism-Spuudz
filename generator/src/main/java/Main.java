@@ -1,6 +1,5 @@
 import ca.mcmaster.cas.se2aa4.a2.generator.DotGen;
 import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
-import ca.mcmaster.cas.se2aa4.a2.generator.MeshADT;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
 import java.io.IOException;
@@ -11,7 +10,7 @@ public class Main {
         DotGen generator = new DotGen();
         Mesh myMesh;
         if(args[1].equals("-h") || args[1].equals("--help")){
-            System.out.println("Please enter the information in the command line in the following order (with spaces in between): GridType PolygonNumber RelaxationLevel");
+            System.out.println("Please enter the information in the command line in the following order (with spaces in between): GridType(Grid or Irregular) PolygonNumber RelaxationLevel");
             System.out.println("If any information is missing, default values will be supplied");
         }
         else {
