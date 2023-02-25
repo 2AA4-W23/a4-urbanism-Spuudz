@@ -72,7 +72,10 @@ Functional features that have been properly tested.
 |:--:|---------------|------|-------|-----|--------|
 | F01   |  Draw Segments Between Vertices with color being average of vertices |  Matthew, Dylan, Harman    |  01/02/23  | 08/02/23 | D |
 | F02   |  Creating Mesh ADT | Matthew, Dylan | 09/02/23 | 15/02/23 | 15/02/23 | D |
-| F03   | Producing full meshes | TBD |  |  | P |
+| F03   | Producing full meshes | Dylan, Harman | 09/02/23 | 15/02/23 | D |
 | F04   | Playing with rendering (color and thickness for polygons) | Matthew | 17/02/23 | 17/02/23 | D | 
 | F05   | Visualization Mode | Matthew | 17/02/23 | | S |
+| F06   | Generate Irregular Grid | Dylan |20/02/23 |22/02/23 | D |
+| F07   | Compute Neighborhood Relations | Harman | 23/02/23 | | S |
+| F08   | Control Generation through Command Line | Matthew | 23/02/23 | | S |
 

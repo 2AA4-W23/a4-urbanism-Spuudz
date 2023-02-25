@@ -43,10 +43,18 @@ public class MeshADT {
         colorVertices();
         polygonGenerator();*/
         
-        List<org.locationtech.jts.geom.Polygon> polygonGen = lloydRelaxation(squareGen(9), numRelax);
-        neighborRelation();
-        convert(polygonGen);
-        colorVertices(numPolygons);
+        if( gridType.equals("Irregular") ){
+            List<org.locationtech.jts.geom.Polygon> polygonGen = lloydRelaxation(randomGen(numPolygons), numRelax);
+            convert(polygonGen);
+            colorVertices(numPolygons);
+            neighborRelation();
+        }
+        else if(gridType.equals("Grid")){
+            List<org.locationtech.jts.geom.Polygon> polygonGen = lloydRelaxation(squareGen(numPolygons), numRelax);
+            convert(polygonGen);
+            colorVertices(numPolygons);
+            neighborRelation();
+        }
         //return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(irregSegments).addAllPolygons(irregPolygons).addAllVertices(neighborVertex).addAllSegments(neighborSegments).build();
         
@@ -376,18 +384,22 @@ public class MeshADT {
         
         for(int i=0;i<numRelax;i++){
             int counter=0;
+            
             if(i==0){
                 for(org.locationtech.jts.geom.Polygon polygon:producedPolygons){
+                    Coordinate tempCord = new Coordinate(polygon.getCentroid().getX(),polygon.getCentroid().getY());
                     Vertex newVertex = Vertex.newBuilder().setX((polygon.getCentroid().getX())).setY(polygon.getCentroid().getY()).build();
                     irregVertex.add(newVertex);
+                    centerCoords.add(tempCord);
                     counter++;
                 }
             }else{
                 for(org.locationtech.jts.geom.Polygon polygon:producedPolygons){
+                    Coordinate tempCord = new Coordinate(polygon.getCentroid().getX(),polygon.getCentroid().getY());
                     Vertex newVertex = Vertex.newBuilder().setX((polygon.getCentroid().getX())).setY(polygon.getCentroid().getY()).build();
                     irregVertex.set(counter,newVertex);
-                    Coordinate tempCord = new Coordinate(polygon.getCentroid().getX(),polygon.getCentroid().getY());
-                    centerCoords.add(tempCord);
+                    
+                    centerCoords.set(counter,tempCord);
                     counter++;
                 }
             }
