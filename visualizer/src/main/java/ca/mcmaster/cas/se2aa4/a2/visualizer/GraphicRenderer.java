@@ -28,6 +28,24 @@ public class GraphicRenderer {
         canvas.setColor(Color.BLACK);
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
+        for (Structs.Polygon p : aMesh.getPolygonsList()){
+            /*int i1 = p.getSegmentIdxs(0);
+            int i2 = p.getSegmentIdxs(1);
+            int i3 = p.getSegmentIdxs(2);
+            int i4 = p.getSegmentIdxs(3);*/
+            int count=0;
+            for(int polySegmentIDX : p.getSegmentIdxsList()){
+                System.out.println(p.getSegmentIdxsList().size());
+                canvas.setColor(averageColor(aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV1Idx()).getPropertiesList(), aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV2Idx()).getPropertiesList(), cmdArg));
+                canvas.draw(new Line2D.Double(aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV1Idx()).getX(), aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV1Idx()).getY(), aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV2Idx()).getX(), aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV2Idx()).getY()));
+                count++;
+            }
+            if(cmdArg.equals("-X")){
+                for(int polyNeighborIDX : p.getNeighborIdxsList()){
+                    canvas.setColor(Color.LIGHT_GRAY);
+                    canvas.draw(new Line2D.Double(aMesh.getVertices(p.getCentroidIdx()).getX(), aMesh.getVertices(p.getCentroidIdx()).getY(), aMesh.getVertices(polyNeighborIDX).getX(), aMesh.getVertices(polyNeighborIDX).getY()));
+                }
+            }   
         for (Vertex v: aMesh.getVerticesList()) {
             double centre_x = v.getX() - (THICKNESS/2.0d);
             double centre_y = v.getY() - (THICKNESS/2.0d);
@@ -43,23 +61,7 @@ public class GraphicRenderer {
             //System.out.println(extractColor(aMesh.getVertices(v1).getPropertiesList()));
             //canvas.setColor(averageColor(aMesh.getVertices(v1).getPropertiesList(), aMesh.getVertices(v2).getPropertiesList()));
             //canvas.draw(new Line2D.Double(aMesh.getVertices(v1).getX(), aMesh.getVertices(v1).getY(),aMesh.getVertices(v2).getX(),aMesh.getVertices(v2).getY()));
-        } 
-        for (Structs.Polygon p : aMesh.getPolygonsList()){
-            /*int i1 = p.getSegmentIdxs(0);
-            int i2 = p.getSegmentIdxs(1);
-            int i3 = p.getSegmentIdxs(2);
-            int i4 = p.getSegmentIdxs(3);*/
-            int count=0;
-            for(int polySegmentIDX : p.getSegmentIdxsList()){
-                System.out.println(p.getSegmentIdxsList().size());
-                canvas.setColor(averageColor(aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV1Idx()).getPropertiesList(), aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV2Idx()).getPropertiesList(), cmdArg));
-                canvas.draw(new Line2D.Double(aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV1Idx()).getX(), aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV1Idx()).getY(), aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV2Idx()).getX(), aMesh.getVertices(aMesh.getSegments(polySegmentIDX).getV2Idx()).getY()));
-                count++;
-            }
-            for(int polyNeighborIDX : p.getNeighborIdxsList()){
-                canvas.setColor(Color.LIGHT_GRAY);
-                canvas.draw(new Line2D.Double(aMesh.getVertices(p.getCentroidIdx()).getX(), aMesh.getVertices(p.getCentroidIdx()).getY(), aMesh.getVertices(polyNeighborIDX).getX(), aMesh.getVertices(polyNeighborIDX).getY()));
-            }
+        }     
             System.out.println(count);
             /* 
             Structs.Segment s1 = aMesh.getSegments(i1);
