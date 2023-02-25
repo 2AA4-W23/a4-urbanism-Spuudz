@@ -336,7 +336,7 @@ public class MeshADT {
     private int findIndex(Vertex neighbor){
         for(int i = 0; i < irregPolygons.size(); i++){
             Polygon tempPoly = irregPolygons.get(i);
-            if(neighbor == irregVertex.get(tempPoly.getCentroidIdx())){
+            if(neighbor.equals(irregVertex.get(tempPoly.getCentroidIdx()))){
                 return i;
             }
         }
