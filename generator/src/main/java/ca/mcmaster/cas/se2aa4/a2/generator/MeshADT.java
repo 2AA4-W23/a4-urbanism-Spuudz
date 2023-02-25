@@ -244,17 +244,14 @@ public class MeshADT {
                         if(comp1x != sqaureSide || comp1y != sqaureSide){
                             tempPoly = irregPolygons.get(v1);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v2).build();
-                            irregPolygons.set(v1, tempPoly);
                         }
                         if(comp2x != sqaureSide || comp2y != sqaureSide){
                             tempPoly = irregPolygons.get(v2);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v3).build();
-                            irregPolygons.set(v1, tempPoly);
                         }
                         if(comp3x != sqaureSide || comp3y != sqaureSide){
                             tempPoly = irregPolygons.get(v3);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).build();
-                            irregPolygons.set(v1, tempPoly);
                         }
                     }
         
@@ -267,15 +264,12 @@ public class MeshADT {
 
                     tempPoly = irregPolygons.get(v1);
                     tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v2).addNeighborIdxs(v3).build();
-                    irregPolygons.set(v1, tempPoly);
 
                     tempPoly = irregPolygons.get(v2);
                     tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).addNeighborIdxs(v3).build();
-                    irregPolygons.set(v1, tempPoly);
 
                     tempPoly = irregPolygons.get(v3);
                     tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).addNeighborIdxs(v2).build();
-                    irregPolygons.set(v1, tempPoly);
  
                 }
             }
@@ -387,6 +381,8 @@ public class MeshADT {
             }
             //System.out.println("segment list size "+tempPoly.getSegmentIdxsList().size());
             tempPoly=Polygon.newBuilder(tempPoly).setCentroidIdx(i).build();
+
+            
             /*for (int j = 0; j < neighborVertex.size()-3; j+=4) {
                 if(neighborVertex.get(j) == irregVertex.get(tempPoly.getCentroidIdx())){
                     irregVertex.add(neighborVertex.get(j));
