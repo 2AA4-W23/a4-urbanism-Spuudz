@@ -43,10 +43,10 @@ public class MeshADT {
         colorVertices();
         polygonGenerator();*/
         
-        List<org.locationtech.jts.geom.Polygon> polygonGen = lloydRelaxation(randomGen(numPolygons), numRelax);
+        List<org.locationtech.jts.geom.Polygon> polygonGen = lloydRelaxation(squareGen(9), numRelax);
+        neighborRelation();
         convert(polygonGen);
         colorVertices(numPolygons);
-        neighborRelation();
         //return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).addAllPolygons(PolygonList).build();
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(irregSegments).addAllPolygons(irregPolygons).addAllVertices(neighborVertex).addAllSegments(neighborSegments).build();
         
@@ -413,6 +413,7 @@ public class MeshADT {
     public void neighborRelation(){
         DelaunayTriangulationBuilder neighbor = new DelaunayTriangulationBuilder();
         double vx,vy;
+        int temp = irregVertex.size();
         neighbor.setSites(centerCoords);
         Geometry neighborTrig = neighbor.getTriangles(geometryFactory);
         System.out.println("Neighbor:" + neighborTrig);
@@ -421,15 +422,16 @@ public class MeshADT {
             vx = neighborTrig.getCoordinates()[i].getX();
             vy = neighborTrig.getCoordinates()[i].getY();
             Vertex newVertex= Vertex.newBuilder().setX((double) vx).setY((double) vy).build();
-            verticesWithColors.add(newVertex); 
-            //System.out.println("[" +vx + "," + vy + "]");
-            System.out.println(verticesWithColors.size());
-            int counter = 0;
-            if(i!=0){
-                irregSegments.add(Segment.newBuilder().setV1Idx(verticesWithColors.size()-1).setV2Idx(verticesWithColors.size()-2).build());
-                counter++;
-            }
+            neighborVertex.add(newVertex); 
+            //System.out.println("Vertices: [" +vx + "," + vy + "]");
         }
+
+        /*for(int i = temp; i < irregVertex.size()-3; i+=4){
+            irregSegments.add(Segment.newBuilder().setV1Idx(i).setV2Idx(i+1).build());
+            irregSegments.add(Segment.newBuilder().setV1Idx(i+1).setV2Idx(i+2).build());
+            irregSegments.add(Segment.newBuilder().setV1Idx(i+2).setV2Idx(i+3).build());
+
+        }*/
         
     }
 
@@ -449,10 +451,10 @@ public class MeshADT {
                 Vertex newVertex= Vertex.newBuilder().setX((double) v1x).setY((double) v1y).build();
                 irregVertex.add(newVertex); 
                 //System.out.println("[" +v1x + "," + v1y + "]");
-                if(i!=0){
+                /*if(i!=0){
                     irregSegments.add(Segment.newBuilder().setV1Idx(irregVertex.size()-1).setV2Idx(irregVertex.size()-2).build());
                     counter++;
-                }
+                }*/
                 //System.out.println(counter);
             }
             //System.out.println(irregVertex.size());
@@ -472,10 +474,32 @@ public class MeshADT {
             }
             //System.out.println("segment list size "+tempPoly.getSegmentIdxsList().size());
             tempPoly=Polygon.newBuilder(tempPoly).setCentroidIdx(i).build();
+            for (int j = 0; j < neighborVertex.size()-3; j+=4) {
+                if(neighborVertex.get(j) == irregVertex.get(tempPoly.getCentroidIdx())){
+                    irregVertex.add(neighborVertex.get(j));
+                    irregVertex.add(neighborVertex.get(j+1));
+                    irregVertex.add(neighborVertex.get(j+2));
+                    tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(irregVertex.size()-1).addNeighborIdxs(irregVertex.size()-2).build();
+                }else if(neighborVertex.get(j+1) == irregVertex.get(tempPoly.getCentroidIdx())){
+                    irregVertex.add(neighborVertex.get(j));
+                    irregVertex.add(neighborVertex.get(j+1));
+                    irregVertex.add(neighborVertex.get(j+2));
+                    tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(irregVertex.size()-1).addNeighborIdxs(irregVertex.size()-3).build();
+                }else if(neighborVertex.get(j+2) == irregVertex.get(tempPoly.getCentroidIdx())){
+                    irregVertex.add(neighborVertex.get(j));
+                    irregVertex.add(neighborVertex.get(j+1));
+                    irregVertex.add(neighborVertex.get(j+2));
+                    tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(irregVertex.size()-2).addNeighborIdxs(irregVertex.size()-3).build();
+                }
+    
+            }
+
             irregPolygons.add(tempPoly);
         }
         //System.out.println(segCounter);
         //System.out.println(irregPolygons.size());
+
+
     }
 
 }
