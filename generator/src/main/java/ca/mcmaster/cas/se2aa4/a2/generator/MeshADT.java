@@ -429,17 +429,96 @@ public class MeshADT {
         int temp = verticesWithColors.size();
         neighbor.setSites(centerCoords);
         Geometry neighborTrig = neighbor.getTriangles(geometryFactory);
-        System.out.println("Neighbor:" + neighborTrig);
+        //System.out.println("Neighbor:" + neighborTrig);
         
         for (int i = 0; i < neighborTrig.getNumPoints(); i++) {
             vx = neighborTrig.getCoordinates()[i].getX();
             vy = neighborTrig.getCoordinates()[i].getY();
             Vertex newVertex= Vertex.newBuilder().setX((double) vx).setY((double) vy).build();
-            verticesWithColors.add(newVertex); 
+            neighborVertex.add(newVertex); 
             //System.out.println("Vertices: [" +vx + "," + vy + "]");
         }
 
-        if(gridType.equals("Grid")){
+ 
+        for(int i = 0; i < irregPolygons.size(); i++){
+            Polygon tempPoly = irregPolygons.get(i);
+            if(gridType.equals("Grid")){
+                for(int j = 0; j < neighborVertex.size(); j+=4){
+                    if(irregVertex.get(irregPolygons.get(i).getCentroidIdx()) == neighborVertex.get(j)){
+                        Double x1 = neighborVertex.get(j).getX();
+                        Double x2 = neighborVertex.get(j+1).getX();
+                        Double x3 = neighborVertex.get(j+2).getX();
+            
+                        Double y1 = neighborVertex.get(j).getY();
+                        Double y2 = neighborVertex.get(j+1).getY();
+                        Double y3 = neighborVertex.get(j+2).getY();
+            
+                        double comp1x = Math.abs(x1-x2);
+                        double comp1y = Math.abs(y1-y2);
+                        double comp2x = Math.abs(x2-x3);
+                        double comp2y = Math.abs(y2-y3);
+                        double comp3x = Math.abs(x1-x3);
+                        double comp3y = Math.abs(y1-y3);
+
+                        int v1 = findIndex(neighborVertex.get(j));
+                        int v2 = findIndex(neighborVertex.get(j+1));
+                        int v3 = findIndex(neighborVertex.get(j+2));
+        
+                        Double sqaureSide = (double) squareSize;
+                        if(comp1x != sqaureSide || comp1y != sqaureSide){
+                            tempPoly = irregPolygons.get(v1);
+                            tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v2).build();
+                        }
+                        if(comp2x != sqaureSide || comp2y != sqaureSide){
+                            tempPoly = irregPolygons.get(v2);
+                            tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v3).build();
+                        }
+                        if(comp3x != sqaureSide || comp3y != sqaureSide){
+                            tempPoly = irregPolygons.get(v3);
+                            tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).build();
+                        }
+                    }
+        
+                }
+            }else{
+                for (int j = 0; j < neighborVertex.size()-3; j+=4) {
+                    int v1 = findIndex(neighborVertex.get(j));
+                    int v2 = findIndex(neighborVertex.get(j+1));
+                    int v3 = findIndex(neighborVertex.get(j+2));
+
+                    tempPoly = irregPolygons.get(v1);
+                    tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v2).addNeighborIdxs(v3).build();
+
+                    tempPoly = irregPolygons.get(v2);
+                    tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).addNeighborIdxs(v3).build();
+
+                    tempPoly = irregPolygons.get(v3);
+                    tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).addNeighborIdxs(v2).build();
+ 
+                }
+            }
+
+        }
+            /*for (int j = 0; j < neighborVertex.size()-3; j+=4) {
+                if(neighborVertex.get(j) == irregVertex.get(tempPoly.getCentroidIdx())){
+                    irregVertex.add(neighborVertex.get(j));
+                    irregVertex.add(neighborVertex.get(j+1));
+                    irregVertex.add(neighborVertex.get(j+2));
+                    tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(irregVertex.size()-1).addNeighborIdxs(irregVertex.size()-2).build();
+                }else if(neighborVertex.get(j+1) == irregVertex.get(tempPoly.getCentroidIdx())){
+                    irregVertex.add(neighborVertex.get(j));
+                    irregVertex.add(neighborVertex.get(j+1));
+                    irregVertex.add(neighborVertex.get(j+2));
+                    tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(irregVertex.size()-1).addNeighborIdxs(irregVertex.size()-3).build();
+                }else if(neighborVertex.get(j+2) == irregVertex.get(tempPoly.getCentroidIdx())){
+                    irregVertex.add(neighborVertex.get(j));
+                    irregVertex.add(neighborVertex.get(j+1));
+                    irregVertex.add(neighborVertex.get(j+2));
+                    tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(irregVertex.size()-2).addNeighborIdxs(irregVertex.size()-3).build();
+                }
+            }*/
+
+        /*if(gridType.equals("Grid")){
             for(int i = temp; i < verticesWithColors.size()-3; i+=4){
                 Double x1 = verticesWithColors.get(i).getX();
                 Double x2 = verticesWithColors.get(i+1).getX();
@@ -474,10 +553,19 @@ public class MeshADT {
                 irregSegments.add(Segment.newBuilder().setV1Idx(i+1).setV2Idx(i+2).build());
                 irregSegments.add(Segment.newBuilder().setV1Idx(i+2).setV2Idx(i+3).build());
             }
-        }
-        
+        }*/
+   
     }
 
+    private int findIndex(Vertex neighbor){
+        for(int i = 0; i < irregPolygons.size(); i++){
+            Polygon tempPoly = irregPolygons.get(i);
+            if(neighbor == irregVertex.get(tempPoly.getCentroidIdx())){
+                return i;
+            }
+        }
+        return 0;
+    }
 
     public void convert(List<org.locationtech.jts.geom.Polygon> producedPolygons){
         Double v1x, v1y;
@@ -534,9 +622,7 @@ public class MeshADT {
                     irregVertex.add(neighborVertex.get(j+2));
                     tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(irregVertex.size()-2).addNeighborIdxs(irregVertex.size()-3).build();
                 }
-    
             }*/
-
             irregPolygons.add(tempPoly);
         }
         //System.out.println(segCounter);
