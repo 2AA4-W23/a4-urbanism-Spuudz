@@ -220,7 +220,7 @@ public class MeshADT {
             Polygon tempPoly = irregPolygons.get(i);
             if(gridType.equals("Grid")){
                 for(int j = 0; j < neighborVertex.size(); j+=4){
-                    if(irregVertex.get(irregPolygons.get(i).getCentroidIdx()) == neighborVertex.get(j)){
+                    if(irregVertex.get(irregPolygons.get(i).getCentroidIdx()).equals( neighborVertex.get(j))){
                         Double x1 = neighborVertex.get(j).getX();
                         Double x2 = neighborVertex.get(j+1).getX();
                         Double x3 = neighborVertex.get(j+2).getX();
@@ -242,16 +242,22 @@ public class MeshADT {
         
                         Double sqaureSide = (double) squareSize;
                         if(comp1x != sqaureSide || comp1y != sqaureSide){
+                            System.out.println("1");
                             tempPoly = irregPolygons.get(v1);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v2).build();
+                            irregPolygons.set(v1,tempPoly);
                         }
                         if(comp2x != sqaureSide || comp2y != sqaureSide){
+                            System.out.println("1");
                             tempPoly = irregPolygons.get(v2);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v3).build();
+                            irregPolygons.set(v2,tempPoly);
                         }
                         if(comp3x != sqaureSide || comp3y != sqaureSide){
+                            System.out.println("1");
                             tempPoly = irregPolygons.get(v3);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).build();
+                            irregPolygons.set(v3,tempPoly);
                         }
                     }
         
@@ -264,12 +270,15 @@ public class MeshADT {
 
                     tempPoly = irregPolygons.get(v1);
                     tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v2).addNeighborIdxs(v3).build();
+                    irregPolygons.set(v1,tempPoly);
 
                     tempPoly = irregPolygons.get(v2);
                     tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).addNeighborIdxs(v3).build();
+                    irregPolygons.set(v2,tempPoly);
 
                     tempPoly = irregPolygons.get(v3);
                     tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).addNeighborIdxs(v2).build();
+                    irregPolygons.set(v3,tempPoly);
  
                 }
             }
