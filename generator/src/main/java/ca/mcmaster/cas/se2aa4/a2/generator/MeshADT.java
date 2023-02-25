@@ -168,7 +168,7 @@ public class MeshADT {
                     counter++;
                 }
             }
-            diagramBuilder.setSites(randomCoords); //set voronoi diagram coordinates
+            diagramBuilder.setSites(centerCoords); //set voronoi diagram coordinates
             diagramBuilder.setClipEnvelope(boundary);
             Geometry polygonCollection = diagramBuilder.getDiagram(geometryFactory); //generate voronoi diagram
 
