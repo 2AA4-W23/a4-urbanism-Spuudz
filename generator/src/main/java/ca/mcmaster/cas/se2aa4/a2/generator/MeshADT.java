@@ -244,14 +244,17 @@ public class MeshADT {
                         if(comp1x != sqaureSide || comp1y != sqaureSide){
                             tempPoly = irregPolygons.get(v1);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v2).build();
+                            irregPolygons.set(v1, tempPoly);
                         }
                         if(comp2x != sqaureSide || comp2y != sqaureSide){
                             tempPoly = irregPolygons.get(v2);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v3).build();
+                            irregPolygons.set(v1, tempPoly);
                         }
                         if(comp3x != sqaureSide || comp3y != sqaureSide){
                             tempPoly = irregPolygons.get(v3);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).build();
+                            irregPolygons.set(v1, tempPoly);
                         }
                     }
         
@@ -264,12 +267,15 @@ public class MeshADT {
 
                     tempPoly = irregPolygons.get(v1);
                     tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v2).addNeighborIdxs(v3).build();
+                    irregPolygons.set(v1, tempPoly);
 
                     tempPoly = irregPolygons.get(v2);
                     tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).addNeighborIdxs(v3).build();
+                    irregPolygons.set(v1, tempPoly);
 
                     tempPoly = irregPolygons.get(v3);
                     tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).addNeighborIdxs(v2).build();
+                    irregPolygons.set(v1, tempPoly);
  
                 }
             }
@@ -336,7 +342,7 @@ public class MeshADT {
     private int findIndex(Vertex neighbor){
         for(int i = 0; i < irregPolygons.size(); i++){
             Polygon tempPoly = irregPolygons.get(i);
-            if(neighbor == irregVertex.get(tempPoly.getCentroidIdx())){
+            if(neighbor.equals(irregVertex.get(tempPoly.getCentroidIdx()))){
                 return i;
             }
         }
