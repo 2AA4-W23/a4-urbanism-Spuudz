@@ -46,6 +46,40 @@ public class GraphicRenderer {
             canvas.setColor(old);
         }    
     }
+    
+    private Color averageColor(List<Property> properties1, List<Property> properties2, String cmdArg){
+        String val1 = null;
+        String val2 = null;
+        for(Property p: properties1) {
+            if (p.getKey().equals("rgb_color")) {
+                System.out.println(p.getValue());
+                val1 = p.getValue();
+            }
+        }
+        for (Property p :properties2){
+            if (p.getKey().equals("rgb_color")) {
+                System.out.println(p.getValue());
+                val2 = p.getValue();
+            }
+        }
+
+        if(cmdArg.equals("-X")){
+            return Color.BLACK;
+        }
+
+        String[] raw = val1.split(",");
+        int red = Integer.parseInt(raw[0]);
+        int green = Integer.parseInt(raw[1]);
+        int blue = Integer.parseInt(raw[2]);
+
+        raw=val2.split(",");
+        red = (red+Integer.parseInt(raw[0]))/2;
+        green = (green+Integer.parseInt(raw[1]))/2;
+        blue = (green+Integer.parseInt(raw[2]))/2;
+
+        return new Color (red,green,blue);
+
+    }
 
     private Color extractColor(List<Property> properties, String cmdArg) {
         String val = null;
@@ -81,39 +115,6 @@ public class GraphicRenderer {
         else{
             return new Color(red, green, blue,0);
         }
-    }
-    private Color averageColor(List<Property> properties1, List<Property> properties2, String cmdArg){
-        String val1 = null;
-        String val2 = null;
-        for(Property p: properties1) {
-            if (p.getKey().equals("rgb_color")) {
-                System.out.println(p.getValue());
-                val1 = p.getValue();
-            }
-        }
-        for (Property p :properties2){
-            if (p.getKey().equals("rgb_color")) {
-                System.out.println(p.getValue());
-                val2 = p.getValue();
-            }
-        }
-
-        if(cmdArg.equals("-X")){
-            return Color.BLACK;
-        }
-
-        String[] raw = val1.split(",");
-        int red = Integer.parseInt(raw[0]);
-        int green = Integer.parseInt(raw[1]);
-        int blue = Integer.parseInt(raw[2]);
-
-        raw=val2.split(",");
-        red = (red+Integer.parseInt(raw[0]))/2;
-        green = (green+Integer.parseInt(raw[1]))/2;
-        blue = (green+Integer.parseInt(raw[2]))/2;
-
-        return new Color (red,green,blue);
-
     }
 
 }
