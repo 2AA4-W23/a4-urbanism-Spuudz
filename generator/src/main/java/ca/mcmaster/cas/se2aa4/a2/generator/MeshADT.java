@@ -93,7 +93,6 @@ public class MeshADT {
         GeometricShapeFactory squareGenFactory = new GeometricShapeFactory();
 
         for (int i = 0; i < squareCoords.size(); i++) {
-            squareGenFactory.setNumPoints(4);
             squareGenFactory.setCentre(squareCoords.get(i));
             squareGenFactory.setWidth(squareSize);
             squareGenFactory.setHeight(squareSize);
