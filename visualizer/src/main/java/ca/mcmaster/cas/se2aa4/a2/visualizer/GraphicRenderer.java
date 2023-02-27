@@ -16,11 +16,11 @@ import java.util.List;
 public class GraphicRenderer {
 
     private static final int THICKNESS = 3;
-    public void render(Mesh aMesh, Graphics2D canvas, String cmdArg) {
+    public void render(Mesh aMesh, Graphics2D canvas, String cmdArg) { //this method is responsible for printing out the polygons and vertices onto the canvas
         canvas.setColor(Color.BLACK);
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
-        for (Structs.Polygon p : aMesh.getPolygonsList()){
+        for (Structs.Polygon p : aMesh.getPolygonsList()){ //loop through the polygon list for the segment indexes
             int count=0;
             for(int polySegmentIDX : p.getSegmentIdxsList()){
                 System.out.println(p.getSegmentIdxsList().size());
@@ -36,7 +36,7 @@ public class GraphicRenderer {
             }   
             System.out.println(count);
         }
-        for (Vertex v: aMesh.getVerticesList()) {
+        for (Vertex v: aMesh.getVerticesList()) { //loop through the vertex list to print vertices and centroids
             double centre_x = v.getX() - (THICKNESS/2.0d);
             double centre_y = v.getY() - (THICKNESS/2.0d);
             Color old = canvas.getColor();
@@ -46,8 +46,8 @@ public class GraphicRenderer {
             canvas.setColor(old);
         }    
     }
-    
-    private Color averageColor(List<Property> properties1, List<Property> properties2, String cmdArg){
+
+    private Color averageColor(List<Property> properties1, List<Property> properties2, String cmdArg){ // this function finds the average color of the two vertices that make up each segment
         String val1 = null;
         String val2 = null;
         for(Property p: properties1) {
@@ -81,7 +81,7 @@ public class GraphicRenderer {
 
     }
 
-    private Color extractColor(List<Property> properties, String cmdArg) {
+    private Color extractColor(List<Property> properties, String cmdArg) { // this function is responsible for coloring the vertices
         String val = null;
         String cnt = null;
         for(Property p: properties) {
