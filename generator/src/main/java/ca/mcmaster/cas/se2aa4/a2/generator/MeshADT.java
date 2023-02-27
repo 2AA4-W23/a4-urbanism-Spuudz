@@ -31,28 +31,38 @@ public class MeshADT {
         if( gridType.equals("Irregular") ){
             List<org.locationtech.jts.geom.Polygon> polygonGen = lloydRelaxation(randomGen(numPolygons), numRelax);
             convert(polygonGen);
-            colorVertices(numPolygons);
+            colorVertices(gridType, numPolygons);
             neighborRelation("Irregular");
             
         }
         else if(gridType.equals("Grid")){
             List<org.locationtech.jts.geom.Polygon> polygonGen = squareGen(numPolygons);
             convert(polygonGen);
-            colorVertices(numPolygons);
+            colorVertices(gridType, numPolygons);
             neighborRelation("Grid");
         }
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(irregSegments).addAllPolygons(irregPolygons).build();
         
     }
-    private void colorVertices(int numPolygons){
+    private void colorVertices(String gridType, int numPolygons){
         Random bag = new Random();
         Property centroid;
         for(Vertex v: irregVertex){
-            if (irregVertex.indexOf(v) < numPolygons){
-                centroid = Property.newBuilder().setKey("centroid").setValue("True").build();
+            if(gridType.equals("Grid")){
+                if (irregVertex.indexOf(v) < Math.pow((int)Math.sqrt(numPolygons),2)){
+                    centroid = Property.newBuilder().setKey("centroid").setValue("True").build();
+                }
+                else {
+                    centroid = Property.newBuilder().setKey("centroid").setValue("False").build();
+                }
             }
             else {
-                centroid = Property.newBuilder().setKey("centroid").setValue("False").build();
+                if (irregVertex.indexOf(v) < numPolygons){
+                    centroid = Property.newBuilder().setKey("centroid").setValue("True").build();
+                }
+                else {
+                    centroid = Property.newBuilder().setKey("centroid").setValue("False").build();
+                }
             }
             int red = bag.nextInt(255);
             int green = bag.nextInt(255);
