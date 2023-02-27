@@ -44,9 +44,6 @@ public class MeshADT {
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(irregSegments).addAllPolygons(irregPolygons).build();
         
     }
-    
-   
-
     private void colorVertices(int numPolygons){
         Random bag = new Random();
         Property centroid;
@@ -66,9 +63,6 @@ public class MeshADT {
             verticesWithColors.add(colored);
         }
     }
-    
-    
-
     //For generating the square grid
     private List<org.locationtech.jts.geom.Polygon> squareGen(int numPolygons){
         VoronoiDiagramBuilder diagramBuilder = new VoronoiDiagramBuilder();
@@ -87,8 +81,6 @@ public class MeshADT {
             }
             y += squareSize;
         }
-
-
         List<org.locationtech.jts.geom.Polygon> producedPolygons = new ArrayList<>(); //list of produced polygons
         GeometricShapeFactory squareGenFactory = new GeometricShapeFactory();
 
@@ -106,9 +98,7 @@ public class MeshADT {
         centerCoords = squareCoords;
 
         return producedPolygons;
-
     }
-
     private List<org.locationtech.jts.geom.Polygon> randomGen(int numPolygons){
         VoronoiDiagramBuilder diagramBuilder = new VoronoiDiagramBuilder();
         diagramBuilder.setClipEnvelope(boundary);
@@ -128,7 +118,6 @@ public class MeshADT {
         diagramBuilder.setClipEnvelope(boundary);
         Geometry polygonCollection = diagramBuilder.getDiagram(geometryFactory); //generate voronoi diagram
         
-
         List<org.locationtech.jts.geom.Polygon> producedPolygons = new ArrayList<>(); //list of produced polygons
 
         if(polygonCollection instanceof GeometryCollection) {
@@ -183,7 +172,6 @@ public class MeshADT {
         return producedPolygons;
     }
 
-
     public void neighborRelation(String gridType){
         List<Vertex> neighborVertex = new ArrayList<>();
         DelaunayTriangulationBuilder neighbor = new DelaunayTriangulationBuilder();
@@ -198,26 +186,18 @@ public class MeshADT {
             neighborVertex.add(newVertex);
         }
 
- 
         for(int i = 0; i < irregPolygons.size(); i++){
             Polygon tempPoly = irregPolygons.get(i);
             if(gridType.equals("Grid")){
                 for(int j = 0; j < neighborVertex.size(); j+=4){
                     if(irregVertex.get(irregPolygons.get(i).getCentroidIdx()).equals( neighborVertex.get(j))){
-                        Double x1 = neighborVertex.get(j).getX();
-                        Double x2 = neighborVertex.get(j+1).getX();
-                        Double x3 = neighborVertex.get(j+2).getX();
             
-                        Double y1 = neighborVertex.get(j).getY();
-                        Double y2 = neighborVertex.get(j+1).getY();
-                        Double y3 = neighborVertex.get(j+2).getY();
-            
-                        double comp1x = Math.abs(x1-x2);
-                        double comp1y = Math.abs(y1-y2);
-                        double comp2x = Math.abs(x2-x3);
-                        double comp2y = Math.abs(y2-y3);
-                        double comp3x = Math.abs(x1-x3);
-                        double comp3y = Math.abs(y1-y3);
+                        double comp1x = Math.abs(neighborVertex.get(j).getX()-neighborVertex.get(j+1).getX());
+                        double comp1y = Math.abs(neighborVertex.get(j).getY()-neighborVertex.get(j+1).getY());
+                        double comp2x = Math.abs(neighborVertex.get(j+1).getX()-neighborVertex.get(j+2).getX());
+                        double comp2y = Math.abs(neighborVertex.get(j+1).getY()-neighborVertex.get(j+2).getY());
+                        double comp3x = Math.abs(neighborVertex.get(j).getX()-neighborVertex.get(j+2).getX());
+                        double comp3y = Math.abs(neighborVertex.get(j).getY()-neighborVertex.get(j+2).getY());
 
                         int v1 = findIndex(neighborVertex.get(j));
                         int v2 = findIndex(neighborVertex.get(j+1));
@@ -225,19 +205,16 @@ public class MeshADT {
         
                         Double sqaureSide = (double) squareSize;
                         if(comp1x != sqaureSide || comp1y != sqaureSide){
-                            System.out.println("1");
                             tempPoly = irregPolygons.get(v1);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v2).build();
                             irregPolygons.set(v1,tempPoly);
                         }
                         if(comp2x != sqaureSide || comp2y != sqaureSide){
-                            System.out.println("1");
                             tempPoly = irregPolygons.get(v2);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v3).build();
                             irregPolygons.set(v2,tempPoly);
                         }
                         if(comp3x != sqaureSide || comp3y != sqaureSide){
-                            System.out.println("1");
                             tempPoly = irregPolygons.get(v3);
                             tempPoly = Polygon.newBuilder(tempPoly).addNeighborIdxs(v1).build();
                             irregPolygons.set(v3,tempPoly);
@@ -299,7 +276,6 @@ public class MeshADT {
             
         }
 
-        
         int segCounter = 0;
         for (int i = 0; i < polySides.size(); i++) {
             Polygon tempPoly = Polygon.newBuilder().build();
@@ -311,10 +287,7 @@ public class MeshADT {
 
             irregPolygons.add(tempPoly);
         }
-
-
     }
-
 }
 
 
