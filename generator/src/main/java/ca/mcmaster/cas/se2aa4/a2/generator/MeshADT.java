@@ -20,7 +20,7 @@ public class MeshADT {
     private final Double width = 500.0;
     private final Double height = 500.0;
     Envelope boundary = new Envelope(0,width,0,height);
-    private final int squareSize = 20; //list to represent the indices of segments for squares generated not in odd x-y pairs
+    private int squareSize = 20; //list to represent the indices of segments for squares generated not in odd x-y pairs
     private List<Vertex> verticesWithColors = new ArrayList<>();
     private List<Vertex> irregVertex = new ArrayList<>();
     private List<Segment> irregSegments = new ArrayList<>();
@@ -36,7 +36,7 @@ public class MeshADT {
             
         }
         else if(gridType.equals("Grid")){
-            List<org.locationtech.jts.geom.Polygon> polygonGen = lloydRelaxation(squareGen(numPolygons), numRelax);
+            List<org.locationtech.jts.geom.Polygon> polygonGen = squareGen(numPolygons);
             convert(polygonGen);
             colorVertices(numPolygons);
             neighborRelation("Grid");
@@ -75,10 +75,10 @@ public class MeshADT {
         diagramBuilder.setClipEnvelope(boundary);
         int row = (int)Math.sqrt(numPolygons);
         Double x;
-        Double y = 10.0;
+        Double y = squareSize/2.0;
         Coordinate newCoord;
         for (int i = 0; i < row; i++) { //generate points
-            x = 10.0;
+            x = squareSize/2.0;
             for (int j = 0; j < row; j++) { //generate points
                 newCoord = new Coordinate(x,y);
                 System.out.println(newCoord);
@@ -99,6 +99,12 @@ public class MeshADT {
             squareGenFactory.setHeight(squareSize);
             producedPolygons.add(squareGenFactory.createRectangle());
         }
+
+        for(Coordinate coord:squareCoords){
+                Vertex newVertex = Vertex.newBuilder().setX(coord.getX()).setY(coord.getY()).build();
+                irregVertex.add(newVertex);
+        } 
+        centerCoords = squareCoords;
 
         return producedPolygons;
 
