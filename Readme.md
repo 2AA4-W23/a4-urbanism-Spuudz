@@ -22,6 +22,7 @@ It creates two jars:
 ```
 mosser@azrael A2 % java -jar generator/generator.jar -k grid -h 1080 -w 1920 -p 1000 -s 20 -o img/grid.mesh
 mosser@azrael A2 % java -jar generator/generator.jar -k irregular -h 1080 -w 1920 -p 1000 -s 20 -o img/irregular.mesh
+java -jar generator/target/2aa4.mesh.generator-jar-with-dependencies.jar -k irregular -h 1080 -w 1920 -p 1000 -s 20 -o img/irregular.mesh
 ```
 
 One can run the generator with `-help` as option to see the different command line arguments that are available
@@ -33,7 +34,11 @@ mosser@azrael A2 % java -jar visualizer/visualizer.jar -i img/grid.mesh -o img/g
 mosser@azrael A2 % java -jar visualizer/visualizer.jar -i img/grid.mesh -o img/grid_debug.svg -x
 mosser@azrael A2 % java -jar visualizer/visualizer.jar -i img/irregular.mesh -o img/irregular.svg   
 mosser@azrael A2 % java -jar visualizer/visualizer.jar -i img/irregular.mesh -o img/irregular_debug.svg -x
+java -jar visualizer/target/2aa4.mesh.visualizer-jar-with-dependencies.jar -i img/island.mesh -o img/island.svg
 ```
+
+### Generating an Island
+java -jar island/target/2aa4.mesh.island-jar-with-dependencies.jar -i img/irregular.mesh -o img/island.mesh
 
 Note: PDF versions of the SVG files were created with `rsvg-convert`.
 
