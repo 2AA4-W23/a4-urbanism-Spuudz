@@ -6,7 +6,7 @@ public class Main{
         Configuration config = new Configuration(args);
         Structs.Mesh aMesh = new MeshFactory().read(config.input());
         lagoon newLagoon = new lagoon(aMesh);
-        aMesh=newLagoon.color();
+        aMesh=newLagoon.identifyTiles();
         new MeshFactory().write(aMesh, "img/island.mesh");
     }
 }

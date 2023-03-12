@@ -3,7 +3,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 
 public class lagoon {
-    private int radius = 100;
+    private int radius = 200;
     private double xMid = 250;
     private double yMid = 250;
     public Structs.Mesh ogMesh;
@@ -57,18 +57,37 @@ public class lagoon {
         }
         return clone.build();
     }
-        /*for(Structs.Polygon poly: ogMesh.getPolygonsList()) {
-            Structs.Polygon.Builder pc = Structs.Polygon.newBuilder(poly);
-            String color = "100,21,100";
-            Structs.Property p = Structs.Property.newBuilder()
-            .setKey("rgb_color")
-            .setValue(color)
-            .build();
-            pc.addProperties(p);
-
-            clone.addPolygons(pc);
-        }*/
         
+    public Mesh identifyTiles(){
+        Structs.Mesh.Builder clone = Structs.Mesh.newBuilder();
+        clone.addAllVertices(ogMesh.getVerticesList());
+        clone.addAllSegments(ogMesh.getSegmentsList());
+        Structs.Polygon center = ogMesh.getPolygons(findCenter());
+        double centerX=ogMesh.getVertices(ogMesh.getPolygons(findCenter()).getCentroidIdx()).getX();
+        double centerY=ogMesh.getVertices(ogMesh.getPolygons(findCenter()).getCentroidIdx()).getY();
+
+        for(Structs.Polygon p : ogMesh.getPolygonsList()){
+            String color;
+            double x=ogMesh.getVertices(p.getCentroidIdx()).getX();
+            double y = ogMesh.getVertices(p.getCentroidIdx()).getY();
+            double distance = Math.sqrt(Math.pow(x-centerX,2) + Math.pow(y-centerY,2));
+            if(distance>radius){
+                color = "0,0,255";
+            }else{
+                color = "100,100,100";
+            }
+            Structs.Polygon.Builder pc = Structs.Polygon.newBuilder(p);
+
+                
+                Structs.Property pr = Structs.Property.newBuilder()
+                        .setKey("rgb_color")
+                        .setValue(color)
+                        .build();
+                pc.addProperties(pr);
+                clone.addPolygons(pc);
+        }
+        return clone.build();
+    }
     
 
 }
