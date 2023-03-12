@@ -27,7 +27,15 @@ public class lagoon {
     }
     
     public void color(){
-
+        for(Structs.Polygon poly: ogMesh.getPolygonsList()) {
+            Structs.Polygon.Builder pc = Structs.Polygon.newBuilder(poly);
+            String color = "208,21,243";
+            Structs.Property p = Structs.Property.newBuilder()
+            .setKey("rgb_color")
+            .setValue(color)
+            .build();
+            pc.addProperties(p);
+        }
     }
 
 }
