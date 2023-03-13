@@ -60,8 +60,8 @@ Functional features that have been properly tested.
 | F06   | Generate Irregular Grid | Dylan |20/02/23 |22/02/23 | D |
 | F07   | Compute Neighborhood Relations | Harman | 23/02/23 | 23/02/23 | D |
 | F08   | Control Generation through Command Line | Matthew | 23/02/23 | 24/02/23 | D |
-| F09 (MVP) | Create Lagoon Island  | All | 06/03/23 | | S |
-| F10 | Different island shapes | All | | | B (F09) |
+| F09 (MVP) | Create Lagoon Island  | All | 06/03/23 | 12/03/23 | D |
+| F10 | Different island shapes | All | 12/03/23 | | S |
 | F11 | elevation profiles | Dylan | | | B (F10) |
 | F12 | Lake Generation | Matthew/Dylan | | | B(F11) |
 | F13 | Rivers/Rivers Flow | Dylan | | | B(F11) |
