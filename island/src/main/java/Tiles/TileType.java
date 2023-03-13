@@ -1,6 +1,8 @@
 package Tiles;
 
-public interface TileType {
-    String getColor();
-
+public enum TileType {
+    Ocean,
+    Forest,
+    Lagoon,
+    Beach
 }
