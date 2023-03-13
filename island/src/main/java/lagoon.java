@@ -94,7 +94,7 @@ public class lagoon {
             double y = ogMesh.getVertices(p.getCentroidIdx()).getY();
             double distance = Math.sqrt(Math.pow(x-centerX,2) + Math.pow(y-centerY,2));
             if(distance>radius){
-                color = "0,0,255";
+                color = "0,71,100";
             }else if(distance<radius && distance>lagoonRad){
                 Boolean oceanNeighbor = false;
                 List <Integer> neighbors = p.getNeighborIdxsList();
@@ -111,10 +111,10 @@ public class lagoon {
                 if(oceanNeighbor){
                     color = "252,244,163";
                 }else{
-                    color = "0,255,0";
+                    color = "75,122,71";
                 }
             }else if(distance<lagoonRad){
-                color = "115,215,255";
+                color = "55,198,255";
             }else{
                 color = "231,215,201";
             }
