@@ -9,6 +9,24 @@ public class lagoon {
     public Structs.Mesh ogMesh;
     public lagoon(Structs.Mesh oldMesh){
         ogMesh = oldMesh;
+        xMid = xDimension()/2;
+        yMid = yDimension()/2;
+    }
+
+    public double xDimension(){
+        double max_x = Double.MIN_VALUE;
+        for (Structs.Vertex v: ogMesh.getVerticesList()) {
+            max_x = (Double.compare(max_x, v.getX()) < 0? v.getX(): max_x);
+        }
+        return Math.ceil(max_x);
+    }
+
+    public double yDimension(){
+        double max_y = Double.MIN_VALUE;
+        for (Structs.Vertex v: ogMesh.getVerticesList()) {
+            max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
+        }
+        return Math.ceil(max_y);
     }
 
     public int findCenter(){
@@ -40,9 +58,9 @@ public class lagoon {
         for(Structs.Polygon poly: ogMesh.getPolygonsList()) {
             String color;
             if(counter==center){
-                color ="250,10,250";
+                color ="231,215,201";
             }else{
-                color = "10,250,10";
+                color = "50,74,178";
             }
             Structs.Polygon.Builder pc = Structs.Polygon.newBuilder(poly);
 
@@ -72,9 +90,9 @@ public class lagoon {
             double y = ogMesh.getVertices(p.getCentroidIdx()).getY();
             double distance = Math.sqrt(Math.pow(x-centerX,2) + Math.pow(y-centerY,2));
             if(distance>radius){
-                color = "0,0,255";
+                color = "50,74,178";
             }else{
-                color = "100,100,100";
+                color = "231,215,201";
             }
             Structs.Polygon.Builder pc = Structs.Polygon.newBuilder(p);
 
