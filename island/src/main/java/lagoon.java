@@ -1,9 +1,13 @@
+import java.util.List;
+
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
+import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 
 public class lagoon {
     private int radius = 200;
+    private int lagoonRad = 100;
     private double xMid = 250;
     private double yMid = 250;
     public Structs.Mesh ogMesh;
@@ -86,11 +90,31 @@ public class lagoon {
 
         for(Structs.Polygon p : ogMesh.getPolygonsList()){
             String color;
-            double x=ogMesh.getVertices(p.getCentroidIdx()).getX();
+            double x = ogMesh.getVertices(p.getCentroidIdx()).getX();
             double y = ogMesh.getVertices(p.getCentroidIdx()).getY();
             double distance = Math.sqrt(Math.pow(x-centerX,2) + Math.pow(y-centerY,2));
             if(distance>radius){
-                color = "50,74,178";
+                color = "0,0,255";
+            }else if(distance<radius && distance>lagoonRad){
+                Boolean oceanNeighbor = false;
+                List <Integer> neighbors = p.getNeighborIdxsList();
+                for(int neighbor : neighbors){
+                    Polygon tempNeighbor = ogMesh.getPolygons(neighbor);
+                    int tempCentroid = tempNeighbor.getCentroidIdx();
+                    double tempX = ogMesh.getVertices(tempCentroid).getX();
+                    double tempY = ogMesh.getVertices(tempCentroid).getY();
+                    double tempDistance = Math.sqrt(Math.pow(tempX-centerX,2) + Math.pow(tempY-centerY,2));
+                    if(tempDistance > radius || tempDistance < lagoonRad){
+                        oceanNeighbor = true;
+                    }
+                }
+                if(oceanNeighbor){
+                    color = "252,244,163";
+                }else{
+                    color = "0,255,0";
+                }
+            }else if(distance<lagoonRad){
+                color = "115,215,255";
             }else{
                 color = "231,215,201";
             }
@@ -104,8 +128,11 @@ public class lagoon {
                 pc.addProperties(pr);
                 clone.addPolygons(pc);
         }
+
         return clone.build();
     }
+
+    
     
 
 }
