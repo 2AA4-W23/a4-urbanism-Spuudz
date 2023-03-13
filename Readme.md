@@ -22,7 +22,7 @@ It creates two jars:
 ```
 mosser@azrael A2 % java -jar generator/generator.jar -k grid -h 1080 -w 1920 -p 1000 -s 20 -o img/grid.mesh
 mosser@azrael A2 % java -jar generator/generator.jar -k irregular -h 1080 -w 1920 -p 1000 -s 20 -o img/irregular.mesh
-java -jar generator/target/2aa4.mesh.generator-jar-with-dependencies.jar -k irregular -h 1080 -w 1920 -p 1000 -s 20 -o img/irregular.mesh
+java -jar generator/target/2aa4.mesh.generator-jar-with-dependencies.jar -k irregular -h 500 -w 500 -p 1000 -s 20 -o img/irregular.mesh
 ```
 
 One can run the generator with `-help` as option to see the different command line arguments that are available
