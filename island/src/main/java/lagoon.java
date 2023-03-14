@@ -6,17 +6,31 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
+import configuration.Configuration;
+import shapes.*;
 
 public class lagoon {
     private int radius = 200;
     private int lagoonRad = 100;
-    private double xMid = 250;
-    private double yMid = 250;
+    private double xMid;
+    private double yMid;
     public Structs.Mesh ogMesh;
-    public lagoon(Structs.Mesh oldMesh){
+    private Configuration config;
+    public lagoon(Structs.Mesh oldMesh, Configuration config){
+        System.out.println(xMid+" lagoon 1"+yMid);
         ogMesh = oldMesh;
         xMid = xDimension()/2;
         yMid = yDimension()/2;
+        
+        this.config=config;
+    }
+
+    public Mesh identify(){
+        System.out.println(xMid+" lagoon 1"+yMid);
+        Shapes shape = ShapeSpecificationFactory.create(config);
+        System.out.println(xMid+" lagoon "+yMid);
+        Structs.Mesh islandShape = shape.identifyLand(ogMesh, ogMesh.getVertices(ogMesh.getPolygons(findCenter()).getCentroidIdx()).getX(), ogMesh.getVertices(ogMesh.getPolygons(findCenter()).getCentroidIdx()).getY(), xMid*2, yMid*2);
+        return islandShape;
     }
 
     public double xDimension(){
