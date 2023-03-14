@@ -14,14 +14,13 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import configuration.Configuration;
 import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
 
-public class Circle implements Shapes {
+public class Crescent implements Shapes {
 
-    private Mesh aMesh;
-    public Circle(Map<String, String> params){
-        
-    }
+    public Crescent(Map<String, String> params){}
+
 
     public Mesh identifyLand(Mesh currentMesh, double centerX, double centerY,double width, double height){
+        
         TileTypeChoose chooseTile = new TileTypeChoose();
         String tile = "";
         double radius;
@@ -40,32 +39,40 @@ public class Circle implements Shapes {
         //double centerY=currentMesh.getVertices(currentMesh.getPolygons(findCenter()).getCentroidIdx()).getY();
 
         for(Structs.Polygon p : currentMesh.getPolygonsList()){
-            String color;
+            String color = "";
             double x = currentMesh.getVertices(p.getCentroidIdx()).getX();
             double y = currentMesh.getVertices(p.getCentroidIdx()).getY();
             double distance = Math.sqrt(Math.pow(x-centerX,2) + Math.pow(y-centerY,2));
+            double crescentDistance = Math.sqrt(Math.pow(x-(centerX-(radius*0.8)),2) + Math.pow(y-centerY,2));
             if(distance>radius){
                 color = chooseTile.getColor(TileType.Ocean);
                 tile = chooseTile.getTile(TileType.Ocean);
             }else if(distance<radius){
-                Boolean oceanNeighbor = false;
-                List <Integer> neighbors = p.getNeighborIdxsList();
-                for(int neighbor : neighbors){
-                    Polygon tempNeighbor = currentMesh.getPolygons(neighbor);
-                    int tempCentroid = tempNeighbor.getCentroidIdx();
-                    double tempX = currentMesh.getVertices(tempCentroid).getX();
-                    double tempY = currentMesh.getVertices(tempCentroid).getY();
-                    double tempDistance = Math.sqrt(Math.pow(tempX-centerX,2) + Math.pow(tempY-centerY,2));
-                    if(tempDistance > radius){
-                        oceanNeighbor = true;
+                if(crescentDistance > radius){
+                    Boolean oceanNeighbor = false;
+                    List <Integer> neighbors = p.getNeighborIdxsList();
+                    for(int neighbor : neighbors){
+                        Polygon tempNeighbor = currentMesh.getPolygons(neighbor);
+                        int tempCentroid = tempNeighbor.getCentroidIdx();
+                        double tempX = currentMesh.getVertices(tempCentroid).getX();
+                        double tempY = currentMesh.getVertices(tempCentroid).getY();
+                        double tempDistance = Math.sqrt(Math.pow(tempX-centerX,2) + Math.pow(tempY-centerY,2));
+                        double tempCrescentDistance = Math.sqrt(Math.pow(tempX-(centerX-radius*0.8),2) + Math.pow(tempY-centerY,2));
+                        if(tempDistance > radius || tempCrescentDistance <= radius){
+                            oceanNeighbor = true;
+                        }
+                    }
+                    if(oceanNeighbor){
+                        color = chooseTile.getColor(TileType.Beach);
+                        tile = chooseTile.getTile(TileType.Beach);
+                    }else{
+                        color = chooseTile.getColor(TileType.Forest);
+                        tile = chooseTile.getTile(TileType.Forest);
                     }
                 }
-                if(oceanNeighbor){
-                    color = chooseTile.getColor(TileType.Beach);
-                    tile = chooseTile.getTile(TileType.Beach);
-                }else{
-                    color = chooseTile.getColor(TileType.Forest);
-                    tile = chooseTile.getTile(TileType.Forest);
+                else {
+                    color = chooseTile.getColor(TileType.Ocean);
+                    tile = chooseTile.getTile(TileType.Ocean);
                 }
             }else{
                 color = chooseTile.getColor(null);
@@ -89,6 +96,6 @@ public class Circle implements Shapes {
                 clone.addPolygons(pc);
         }
 
-        return clone.build();
-    }     
+        return clone.build();    
+    }
 }

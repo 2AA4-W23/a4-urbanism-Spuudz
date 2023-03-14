@@ -8,9 +8,9 @@ public class ShapeSpecificationFactory {
 
     static {
         bindings.put("circle", Circle.class);
-        bindings.put("square",Square.class);
-        //bindings.put("irregular", IrregularSpecification.class);
-    }
+        //bindings.put("square",Square.class);   
+        bindings.put("crescent", Crescent.class);/*  */
+     }
 
     public static Shapes create(Configuration configuration) {
         Map<String, String> options = configuration.export();
