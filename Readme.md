@@ -11,10 +11,11 @@
 mosser@azrael A2 % mvn install
 ```
 
-It creates two jars:
+It creates three jars:
 
   1. `generator/generator.jar` to generate meshes
-  2. `visualizer/visualizer.jar` to visualize such meshes as SVG files
+  2. `island/island.jar` to create an island on the mesh
+  3. `visualizer/visualizer.jar` to visualize such meshes as SVG files
 ## Examples of execution
 
 ### Generating a mesh, grid or irregular
