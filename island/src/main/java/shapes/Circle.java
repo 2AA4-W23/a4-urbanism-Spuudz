@@ -30,9 +30,9 @@ public class Circle implements Shapes {
         clone.addAllSegments(currentMesh.getSegmentsList());
         System.out.println(width+" Circles "+height);
         if(width>height){
-            radius = width/2.5; 
+            radius = height/2.5; 
         }else{
-            radius=height/2.5;
+            radius=width/2.5;
         }
         System.out.println(radius);
         //Structs.Polygon center = currentMesh.getPolygons(findCenter());
@@ -44,7 +44,7 @@ public class Circle implements Shapes {
             double x = currentMesh.getVertices(p.getCentroidIdx()).getX();
             double y = currentMesh.getVertices(p.getCentroidIdx()).getY();
             double distance = Math.sqrt(Math.pow(x-centerX,2) + Math.pow(y-centerY,2));
-            if(distance>radius){
+            if(distance>=radius){
                 color = chooseTile.getColor(TileType.Ocean);
                 tile = chooseTile.getTile(TileType.Ocean);
             }else if(distance<radius){

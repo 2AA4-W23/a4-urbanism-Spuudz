@@ -27,24 +27,18 @@ public class Crescent implements Shapes {
         Structs.Mesh.Builder clone = Structs.Mesh.newBuilder();
         clone.addAllVertices(currentMesh.getVerticesList());
         clone.addAllSegments(currentMesh.getSegmentsList());
-        System.out.println(width+" Circles "+height);
         if(width>height){
-            radius = width/2.5; 
+            radius = height/2.5; 
         }else{
-            radius=height/2.5;
+            radius=width/2.5;
         }
-        System.out.println(radius);
-        //Structs.Polygon center = currentMesh.getPolygons(findCenter());
-        //double centerX=currentMesh.getVertices(currentMesh.getPolygons(findCenter()).getCentroidIdx()).getX();
-        //double centerY=currentMesh.getVertices(currentMesh.getPolygons(findCenter()).getCentroidIdx()).getY();
-
         for(Structs.Polygon p : currentMesh.getPolygonsList()){
             String color = "";
             double x = currentMesh.getVertices(p.getCentroidIdx()).getX();
             double y = currentMesh.getVertices(p.getCentroidIdx()).getY();
             double distance = Math.sqrt(Math.pow(x-centerX,2) + Math.pow(y-centerY,2));
             double crescentDistance = Math.sqrt(Math.pow(x-(centerX-(radius*0.8)),2) + Math.pow(y-centerY,2));
-            if(distance>radius){
+            if(distance>=radius){
                 color = chooseTile.getColor(TileType.Ocean);
                 tile = chooseTile.getTile(TileType.Ocean);
             }else if(distance<radius){
