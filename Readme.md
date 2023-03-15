@@ -28,8 +28,10 @@ java -jar generator/target/2aa4.mesh.generator-jar-with-dependencies.jar -k grid
 One can run the generator with `-help` as option to see the different command line arguments that are available
 
 ### Generating an Island
+```
 java -jar island/target/2aa4.mesh.island-jar-with-dependencies.jar -i img/input.mesh -o img/island.mesh -s circle
 java -jar island/target/2aa4.mesh.island-jar-with-dependencies.jar -i img/input.mesh -o img/island.mesh -s crescent
+```
 
 
 ### Visualizing a mesh, (regular or debug mode)
