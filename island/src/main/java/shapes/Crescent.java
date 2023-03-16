@@ -3,6 +3,8 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.util.GeometricShapeFactory;
+
+import IslandADT.Island;
 import Tiles.TileTypeChoose;
 import Tiles.TileType;
 import java.util.List;
@@ -17,9 +19,11 @@ import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
 public class Crescent implements Shapes {
 
     public Crescent(Map<String, String> params){}
+    public Island identifyLand(Island currentMesh, double centerX, double centerY,double width, double height){
+        return currentMesh;
+    }
 
-
-    public Mesh identifyLand(Mesh currentMesh, double centerX, double centerY,double width, double height){
+    /*public Mesh identifyLand(Island currentMesh, double centerX, double centerY,double width, double height){
         
         TileTypeChoose chooseTile = new TileTypeChoose();
         String tile = "";
@@ -89,4 +93,5 @@ public class Crescent implements Shapes {
 
         return clone.build();    
     }
+    */
 }

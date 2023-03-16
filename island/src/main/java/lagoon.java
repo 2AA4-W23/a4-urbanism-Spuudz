@@ -1,5 +1,7 @@
 import java.util.List;
 
+import IslandADT.Island;
+import IslandADT.Tile;
 import Tiles.TileType;
 import Tiles.TileTypeChoose;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
@@ -17,34 +19,36 @@ public class lagoon {
     private double yMid;
     public Structs.Mesh ogMesh;
     private Configuration config;
-    public lagoon(Structs.Mesh oldMesh, Configuration config){
-        System.out.println(xMid+" lagoon 1"+yMid);
-        ogMesh = oldMesh;
+    private Island island;
+    public lagoon(Island oldMesh, Configuration config){
+        System.out.println(xMid+" lagoon 1 "+yMid);
+        island = oldMesh;
         xMid = xDimension()/2;
         yMid = yDimension()/2;
         
         this.config=config;
     }
 
-    public Mesh identify(){
-        System.out.println(xMid+" lagoon 1"+yMid);
+    public Island identify(){
+        System.out.println(xMid+" lagoon 2 "+yMid);
         Shapes shape = ShapeSpecificationFactory.create(config);
-        System.out.println(xMid+" lagoon "+yMid);
-        Structs.Mesh islandShape = shape.identifyLand(ogMesh, ogMesh.getVertices(ogMesh.getPolygons(findCenter()).getCentroidIdx()).getX(), ogMesh.getVertices(ogMesh.getPolygons(findCenter()).getCentroidIdx()).getY(), xMid*2, yMid*2);
+        System.out.println(xMid+" lagoon 3 "+yMid);
+        Island islandShape = shape.identifyLand(island, island.getVertices(island.getTiles(findCenter()).getCentroidIdx()).getX(), island.getVertices(island.getTiles(findCenter()).getCentroidIdx()).getY(), xMid*2, yMid*2);
         return islandShape;
     }
 
     public double xDimension(){
         double max_x = Double.MIN_VALUE;
-        for (Structs.Vertex v: ogMesh.getVerticesList()) {
+        for (IslandADT.Vertex v: island.getVerticesList()) {
             max_x = (Double.compare(max_x, v.getX()) < 0? v.getX(): max_x);
         }
+        System.out.println(Math.ceil(max_x));
         return Math.ceil(max_x);
     }
 
     public double yDimension(){
         double max_y = Double.MIN_VALUE;
-        for (Structs.Vertex v: ogMesh.getVerticesList()) {
+        for (IslandADT.Vertex v: island.getVerticesList()) {
             max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
         }
         return Math.ceil(max_y);
@@ -54,10 +58,10 @@ public class lagoon {
         int middleIndex=0;
         double smallestDistance=500;
         int counter =0;
-        for(Structs.Polygon poly : ogMesh.getPolygonsList()){
-            int tempCentroid = poly.getCentroidIdx();
-            double x=ogMesh.getVertices(tempCentroid).getX();
-            double y = ogMesh.getVertices(tempCentroid).getY();
+        for(Tile t : island.getTileList()){
+            int tempCentroid = t.getCentroidIdx();
+            double x=island.getVertices(tempCentroid).getX();
+            double y = island.getVertices(tempCentroid).getY();
             double distance = Math.sqrt(Math.pow(x-xMid,2) + Math.pow(y-yMid,2));
             
             if (distance < smallestDistance){

@@ -1,6 +1,8 @@
 package ca.mcmaster.cas.se2aa4.a2.generator.export;
 
 import ca.mcmaster.cas.se2aa4.a2.generator.adt.*;
+import ca.mcmaster.cas.se2aa4.a2.generator.export.enricher.Enricher;
+import ca.mcmaster.cas.se2aa4.a2.generator.export.enricher.RandomEnricher;
 import ca.mcmaster.cas.se2aa4.a2.io.*;
 
 import java.util.*;
@@ -16,6 +18,7 @@ public class Exporter {
         registerPolygons(mesh, result, segments, vertices);
         return result.build();
     }
+
 
     private void registerPolygons(Mesh mesh, Structs.Mesh.Builder result,
                                   Map<PairOfVertex, Integer> segments, Map<Vertex, Integer> vertices) {
