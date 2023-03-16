@@ -68,9 +68,6 @@ public class Crescent implements Shapes {
                     color = chooseTile.getColor(TileType.Ocean);
                     tile = chooseTile.getTile(TileType.Ocean);
                 }
-            }else{
-                color = chooseTile.getColor(null);
-                tile = chooseTile.getTile(null);
             }
 
             Structs.Polygon.Builder pc = Structs.Polygon.newBuilder(p);

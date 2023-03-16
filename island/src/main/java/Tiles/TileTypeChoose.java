@@ -32,6 +32,10 @@ public class TileTypeChoose {
                 color = "252,244,163";
                 tileProperty = "Beach";
                 break;
+            case Lake:
+                color = "100,149,237";
+                tileProperty = "Lake";
+                break;
             default:
                 color = "231,215,201";
                 tileProperty = "null";

@@ -8,6 +8,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import configuration.Configuration;
 import shapes.*;
+import water.*;
 
 public class lagoon {
     private int radius = 200;

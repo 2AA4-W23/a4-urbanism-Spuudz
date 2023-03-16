@@ -8,7 +8,8 @@ public class Configuration {
 
     public static final String OUTPUT = "o";
     public static final String INPUT = "i";
-    public static final String SHAPE = "s";
+    public static final String SHAPE = "shape";
+    public static final String LAKES = "lakes";
 
     private CommandLine cli;
     public Configuration(String[] args) {
@@ -35,6 +36,10 @@ public class Configuration {
         return this.cli.getOptionValue(SHAPE, "Circle");
     }
 
+    public String lakes(){
+        return this.cli.getOptionValue(LAKES, "5");
+    }
+
     public Map<String, String> export() {
         Map<String, String> result = new HashMap<>();
         for(Option o: cli.getOptions()){
@@ -48,6 +53,7 @@ public class Configuration {
         options.addOption(new Option(INPUT, true, "Input file (SVG)"));
         options.addOption(new Option(OUTPUT, true, "Output file (MESH)"));
         options.addOption(new Option(SHAPE, true, "the island shape"));
+        options.addOption(new Option (LAKES, true, "Number of lakes to be generated"));
         return options;
     }
 

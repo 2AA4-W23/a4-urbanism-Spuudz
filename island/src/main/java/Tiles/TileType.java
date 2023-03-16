@@ -4,5 +4,6 @@ public enum TileType {
     Ocean,
     Forest,
     Lagoon,
-    Beach
+    Beach,
+    Lake
 }
