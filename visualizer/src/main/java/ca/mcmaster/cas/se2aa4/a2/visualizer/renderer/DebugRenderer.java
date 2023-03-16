@@ -48,6 +48,7 @@ public class DebugRenderer implements Renderer {
             Structs.Vertex centroid = aMesh.getVertices(p.getCentroidIdx());
             for(Integer neigbourIdx: p.getNeighborIdxsList()){
                 Structs.Polygon neighbour = aMesh.getPolygons(neigbourIdx);
+                System.out.println(neighbour.getCentroidIdx());
                 Structs.Vertex neighbourCentroid = aMesh.getVertices(neighbour.getCentroidIdx());
                 if(!drawn.contains(Set.of(p, neighbour))){
                     drawLink(centroid, neighbourCentroid, canvas);
