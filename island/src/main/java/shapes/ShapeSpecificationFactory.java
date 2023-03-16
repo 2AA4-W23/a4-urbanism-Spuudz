@@ -10,6 +10,7 @@ public class ShapeSpecificationFactory {
         bindings.put("circle", Circle.class);
         //bindings.put("square",Square.class);   
         bindings.put("crescent", Crescent.class);/*  */
+        bindings.put("square", Square.class);
      }
 
     public static Shapes create(Configuration configuration) {
