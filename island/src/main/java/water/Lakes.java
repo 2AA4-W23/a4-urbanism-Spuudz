@@ -4,12 +4,9 @@ import java.util.Map;
 import configuration.Configuration;
 import java.util.Random;
 
-import Tiles.TileType;
 import Tiles.TileTypeChoose;
-import ca.mcmaster.cas.se2aa4.a2.io.Structs;
-import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
-import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
-import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
+import Tiles.TileType;
+import IslandADT.*;
 
 public class Lakes {
     private int numOfLakes;
@@ -19,61 +16,43 @@ public class Lakes {
         numOfLakes = Integer.parseInt(options.get(Configuration.LAKES));
     }
 
-    public int numOfLandTiles(Mesh aMesh){
-        String tile = "";
+    public int numOfLandTiles(Island anIsland){
+        Map<String, String> tile;
         int count = 0;
-        for(Polygon p : aMesh.getPolygonsList()){
-            for(Property property : p.getPropertiesList()){
-                if((property.getKey()).equals("tile_type")){
-                    tile = property.getValue();
-                }
-            }
-            if(tile.equals("Forest")){count++;}
+        for(Tile t : anIsland.getTileList()){
+            tile = t.getProperties();
+            if(tile.get("tile_type").equals("Forest")){count++;}
         }
         return count;
     }
 
-    public Mesh generateLakes(Mesh aMesh){
+    public Island generateLakes(Island anIsland){
         Random rand = new Random();
-        String tileType = "";
+        String tileType;
         TileTypeChoose tile = new TileTypeChoose();
-        Structs.Mesh.Builder clone = Structs.Mesh.newBuilder();
-        clone.addAllVertices(aMesh.getVerticesList());
-        clone.addAllSegments(aMesh.getSegmentsList());
+        Island clone = new Island();
+        int landTiles = numOfLandTiles(anIsland);
+        clone.register(anIsland.getTileList(), anIsland.getVerticesList(), anIsland.getEdgesList());
+
         int currentNum = 0;
 
-        while(currentNum < numOfLakes){
-            for(Polygon p : aMesh.getPolygonsList()){
-                Structs.Polygon.Builder pc = Structs.Polygon.newBuilder(p);
-                for(Property property : p.getPropertiesList()){
-                    if(property.getKey().equals("tile_type")){
-                        tileType = property.getValue();
-                    }
-                }
+        while(currentNum < numOfLakes && currentNum < landTiles){
+            for(Tile t : anIsland.getTileList()){
+                tileType = t.getProperties().get("tile_type");
                 if(tileType.equals("Forest")){
-                    int random = rand.nextInt(5)+1;
+                    int random = rand.nextInt(10)+1;
                     if(currentNum < numOfLakes){
                         if(random == 1){
-                            Structs.Property tt = Structs.Property.newBuilder()
-                                    .setKey("tile_type")
-                                    .setValue(tile.getColor(TileType.Lake))
-                                    .build();
-                            pc.setProperties(0,tt);
-
-                            Structs.Property pr = Structs.Property.newBuilder()
-                                    .setKey("rgb_color")
-                                    .setValue(tile.getColor(TileType.Lake))
-                                    .build();
-                            pc.setProperties(1,pr);
-
+                            t.setProperty("tile_type", tile.getTile(TileType.Lake));
+                            t.setProperty("rgb_color", tile.getColor(TileType.Lake));
                             currentNum++;
                         }
                     }
                 }
                 System.out.println(currentNum);
-                clone.addPolygons(pc);
+                clone.addTile(t);
             }
         }
-        return clone.build();
+        return clone;
      }
 }

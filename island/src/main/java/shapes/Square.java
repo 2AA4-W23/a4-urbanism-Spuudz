@@ -7,6 +7,7 @@ import Tiles.TileTypeChoose;
 import Tiles.TileType;
 import java.util.List;
 import java.util.Map;
+import IslandADT.Island;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
@@ -18,9 +19,9 @@ public class Square implements Shapes {
 
     public Square(Map<String, String> params){}
 
-    public Mesh identifyLand(Mesh currentMesh, double centerX, double centerY,double width, double height){
+    public Island identifyLand(Island Island, double centerX, double centerY,double width, double height){
         
-        TileTypeChoose chooseTile = new TileTypeChoose();
+        /*TileTypeChoose chooseTile = new TileTypeChoose();
         String tile = "";
         double squareWidth;
         Structs.Mesh.Builder clone = Structs.Mesh.newBuilder();
@@ -85,5 +86,7 @@ public class Square implements Shapes {
         }
 
         return clone.build();    
+        */
+        return Island;
     }
 }

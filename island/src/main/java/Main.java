@@ -26,6 +26,9 @@ public class Main{
         newIsland=importMesh.convert();
         lagoon newLagoon = new lagoon(newIsland,config);
         newIsland = newLagoon.identify();
+
+        Lakes newLake = new Lakes(config);
+        newIsland = newLake.generateLakes(newIsland);
         System.out.println(newIsland);
         
         export exporter = new export();
