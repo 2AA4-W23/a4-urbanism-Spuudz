@@ -10,6 +10,7 @@ public class ColorProperty implements PropertyAccess<Color> {
     @Override
     public Optional<Color> extract(List<Property> props) {
         String value = new Reader(props).get("rgb_color");
+        //String elevation = new Reader(props).get("elevation");
         if (value == null)
             return Optional.empty();
         String[] raw = value.split(",");

@@ -4,6 +4,8 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import configuration.*;
+import elevation.AltimetricProfileFactory;
+import elevation.AltimetricProfiles;
 import exporter.export;
 import importMesh.Importer;
 import shapes.ShapeSpecificationFactory;
@@ -27,9 +29,11 @@ public class Main{
         lagoon newLagoon = new lagoon(newIsland,config);
         newIsland = newLagoon.identify();
 
-        Lakes newLake = new Lakes(config);
+        /*Lakes newLake = new Lakes(config);
         newIsland = newLake.generateLakes(newIsland);
-        System.out.println(newIsland);
+        System.out.println(newIsland);*/
+        AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
+        newIsland = profile.assignElevation(newIsland);
         
         export exporter = new export();
         aMesh=exporter.run(newIsland);

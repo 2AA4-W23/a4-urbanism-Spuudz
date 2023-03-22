@@ -10,6 +10,7 @@ public class Configuration {
     public static final String INPUT = "i";
     public static final String SHAPE = "shape";
     public static final String LAKES = "lakes";
+    public static final String PROFILE = "altitude";
 
     private CommandLine cli;
     public Configuration(String[] args) {
@@ -26,6 +27,9 @@ public class Configuration {
 
     public String input() {
         return this.cli.getOptionValue(INPUT,"input.mesh");
+    }
+    public String profile() {
+        return this.cli.getOptionValue(PROFILE,"volcano");
     }
 
     public String output() {
@@ -54,6 +58,7 @@ public class Configuration {
         options.addOption(new Option(OUTPUT, true, "Output file (MESH)"));
         options.addOption(new Option(SHAPE, true, "the island shape"));
         options.addOption(new Option (LAKES, true, "Number of lakes to be generated"));
+        options.addOption(new Option (PROFILE, true, "selected elevation profile"));
         return options;
     }
 

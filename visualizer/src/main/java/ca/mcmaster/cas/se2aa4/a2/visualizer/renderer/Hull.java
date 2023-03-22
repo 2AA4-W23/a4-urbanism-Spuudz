@@ -12,7 +12,6 @@ public class Hull implements Iterable<Structs.Vertex> {
     }
 
     public void add(Structs.Segment v, Structs.Mesh mesh) {
-        System.out.println("segment vertex index: "+v.getV1Idx());
         Structs.Vertex v1 = mesh.getVertices(v.getV1Idx());
         Structs.Vertex v2 = mesh.getVertices(v.getV2Idx());
         if(this.vertices.isEmpty()) {
