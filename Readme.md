@@ -71,7 +71,7 @@ Functional features that have been properly tested.
 | F08   | Control Generation through Command Line | Matthew | 23/02/23 | 24/02/23 | D |
 | F09 (MVP) | Create Lagoon Island  | All | 06/03/23 | 12/03/23 | D |
 | F10 | Different island shapes | All | 12/03/23 | 22/03/23 | F |
-| F11 | elevation profiles | Dylan | 3/17/22 | | S |
+| F11 | elevation profiles | Dylan | 3/17/23 | 3/22/23 | D |
 | F12 | Lake Generation | Matthew | | | B(F11) |
 | F13 | Rivers/Rivers Flow | Dylan | | | B(F11) |
 | F14 | Aquifers | Matthew | | | B(F10) |
