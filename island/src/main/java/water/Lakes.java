@@ -49,7 +49,6 @@ public class Lakes {
                         }
                     }
                 }
-                System.out.println(currentNum);
                 clone.addTile(t);
             }
         }

@@ -10,7 +10,9 @@ public class Configuration {
     public static final String INPUT = "i";
     public static final String SHAPE = "shape";
     public static final String LAKES = "lakes";
+    public static final String AQUIFERS = "aquifers";
     public static final String PROFILE = "altitude";
+    public static final String SOILPROFILE = "soil";
 
     private CommandLine cli;
     public Configuration(String[] args) {
@@ -41,7 +43,14 @@ public class Configuration {
     }
 
     public String lakes(){
-        return this.cli.getOptionValue(LAKES, "5");
+        return this.cli.getOptionValue(LAKES, "2");
+    }
+    public String aquifers(){
+        return this.cli.getOptionValue(AQUIFERS, "2");
+    }
+
+    public String soil_profile(){
+        return this.cli.getOptionValue(SOILPROFILE, "arid");
     }
 
     public Map<String, String> export() {
@@ -58,7 +67,9 @@ public class Configuration {
         options.addOption(new Option(OUTPUT, true, "Output file (MESH)"));
         options.addOption(new Option(SHAPE, true, "the island shape"));
         options.addOption(new Option (LAKES, true, "Number of lakes to be generated"));
+        options.addOption(new Option (AQUIFERS, true, "number of aquifers to be generated"));
         options.addOption(new Option (PROFILE, true, "selected elevation profile"));
+        options.addOption(new Option (SOILPROFILE, true, "selected soil profile"));
         return options;
     }
 
