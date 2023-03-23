@@ -72,12 +72,12 @@ Functional features that have been properly tested.
 | F09 (MVP) | Create Lagoon Island  | All | 06/03/23 | 12/03/23 | D |
 | F10 | Different island shapes | All | 12/03/23 | 22/03/23 | F |
 | F11 | elevation profiles | Dylan | 3/17/23 | 3/22/23 | D |
-| F12 | Lake Generation | Matthew | | | B(F11) |
-| F13 | Rivers/Rivers Flow | Dylan | | | B(F11) |
-| F14 | Aquifers | Matthew | | | B(F10) |
+| F12 | Lake Generation | Matthew | 16/3/23 | | S |
+| F13 | Rivers/Rivers Flow | Dylan | | | P |
+| F14 | Aquifers | Matthew | 17/3/23 | | S |
 | F15 | Soil Absorption | Matthew | | | B(F14, F13, F12) | 
 | F16 | Biomes | Harman | | | B(F17) |
-| F17 | Whittaker Diagrams | Harman | | | B(10) |
+| F17 | Whittaker Diagrams | Harman | | | P |
 | F18 | Reproducability | All | | | B(F10-17) |  
 
 
