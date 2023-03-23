@@ -11,10 +11,7 @@ public class Arid implements SoilProfiles {
         int humidity;
         anIsland = defaultHumidity(anIsland);
         for(Tile t : anIsland.getTileList()){
-            if(t.getProperties().get("tile_type").equals("Ocean")){
-                t.setProperty("humidity", "0,71,100");
-            }
-            else if(t.getProperties().get("humidity").equals("0")){
+            if(t.getProperties().get("humidity").equals("0")){
                 distance = distanceFromWater(anIsland, t);
                 System.out.println(distance);
                 humidity = (int)(100 - distance*3);
@@ -24,10 +21,7 @@ public class Arid implements SoilProfiles {
                 else if (humidity <= 0){
                     humidity = 0;
                 }
-                t.setProperty("humidity", Integer.toString(humidity) + "," + Integer.toString(humidity) + "," + Integer.toString(humidity));
-            }
-            else {
-                t.setProperty("humidity", "255,255,255");
+                t.setProperty("humidity", Integer.toString(humidity));
             }
         }
         return anIsland;
@@ -49,7 +43,10 @@ public class Arid implements SoilProfiles {
 
     public Island defaultHumidity(Island anIsland){
         for(Tile t : anIsland.getTileList()){
-            if(!(t.getProperties().get("tile_type").equals("Lake") || t.getProperties().get("tile_type").equals("Aquifer"))){
+            if(t.getProperties().get("tile_type").equals("Ocean")){
+                t.setProperty("humidity","99");
+            }
+            else if(!(t.getProperties().get("tile_type").equals("Lake") || t.getProperties().get("tile_type").equals("Aquifer"))){
                 t.setProperty("humidity","0");
             }
             else {
