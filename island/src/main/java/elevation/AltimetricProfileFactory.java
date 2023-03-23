@@ -8,6 +8,7 @@ public class AltimetricProfileFactory {
 
     static {
         bindings.put("volcano", Volcano.class);
+        bindings.put("hills",Hills.class);
 
      }
 

@@ -13,6 +13,7 @@ public class Island implements Iterable<Tile>{
     private List<Tile> Tiles;
     private List<Vertex> vertices;
     private List<Edge> edges;
+    private List<Tile> landTiles = new ArrayList<>();
 
     public Island() {
         this.Tiles = new ArrayList<>();
@@ -53,6 +54,9 @@ public class Island implements Iterable<Tile>{
         return Tiles.get(index);
     }
 
+    public void addLandTile(Tile t){
+        landTiles.add(t);
+    }
 
     @Override
     public Iterator<Tile> iterator() {

@@ -20,7 +20,7 @@ public class Volcano implements AltimetricProfiles {
             maxAltitude = width/2;
         }
 
-        int centreIDX = findCentreIdx(island);
+        int centreIDX = findStartIdx(island);
         for(Tile t : island.getTileList()){
             if(t.getProperties().get("tile_type").equals("Ocean")){
                 t.setProperty("elevation", "0");
@@ -75,7 +75,7 @@ public class Volcano implements AltimetricProfiles {
         return Math.ceil(max_y);
 
     }
-    private int findCentreIdx(Island island){
+    public int findStartIdx(Island island){
         int islandTile=0;
         double totalX=0;
         double totalY=0;
