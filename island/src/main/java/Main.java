@@ -40,11 +40,11 @@ public class Main{
         SoilProfiles soil_profile = new SoilProfileFactory().create(config);
         newIsland = soil_profile.assignHumidity(newIsland);
 
-/*         AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
-        newIsland = profile.assignElevation(newIsland); */
+        AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
+        newIsland = profile.assignElevation(newIsland);
         
         export exporter = new export();
         aMesh=exporter.run(newIsland);
-        new MeshFactory().write(aMesh, "img/island.mesh");
+        new MeshFactory().write(aMesh, "img/island.meshS");
     }
 }

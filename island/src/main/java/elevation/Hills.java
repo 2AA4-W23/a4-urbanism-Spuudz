@@ -7,8 +7,8 @@ import java.util.Set;
 import IslandADT.*;
 
 public class Hills implements AltimetricProfiles {
-    double maxAltitude=50;
-    int numHills=5;
+    private static final double maxAltitude=50;
+    private static final int numHills=5;
 
     public Hills(Map<String, String> params){
 
@@ -21,18 +21,18 @@ public class Hills implements AltimetricProfiles {
         }
     
         for(int i : hilltops){
-            island.getTiles(i).setProperty("elevation", (Integer.toString((int)maxAltitude))+","+Integer.toString((int)maxAltitude)+","+Integer.toString((int)maxAltitude));
+            island.getTiles(i).setProperty("elevation", (Integer.toString((int)maxAltitude)));
         }
 
         for(Tile t : island.getTileList()){
             if(t.getProperties().get("tile_type").equals("Ocean")){
-                t.setProperty("elevation", "255,255,255");
+                t.setProperty("elevation", "0");
             }else{
                 double elevation = maxAltitude-(nearestDistance(hilltops, island, t)/5);
                 if(elevation<0){
                     elevation=1;
                 }
-                t.setProperty("elevation", Integer.toString((int)elevation)+","+Integer.toString((int)elevation)+","+Integer.toString((int)elevation));
+                t.setProperty("elevation", Integer.toString((int)elevation));
             }
 
         }
