@@ -30,9 +30,8 @@ public class Main{
         lagoon newLagoon = new lagoon(newIsland,config);
         newIsland = newLagoon.identify();
 
-        /*Lakes newLake = new Lakes(config);
+        Lakes newLake = new Lakes(config);
         newIsland = newLake.generateLakes(newIsland);
-        System.out.println(newIsland);*/
         AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
         newIsland = profile.assignElevation(newIsland);
         
