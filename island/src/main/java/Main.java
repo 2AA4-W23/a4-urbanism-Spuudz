@@ -7,7 +7,8 @@ import configuration.*;
 import elevation.AltimetricProfileFactory;
 import elevation.AltimetricProfiles;
 import exporter.export;
-import importMesh.Importer;
+import importer.Importer;
+import importer.importInterface;
 import shapes.ShapeSpecificationFactory;
 import shapes.Shapes;
 import water.*;
@@ -24,7 +25,7 @@ public class Main{
         //aMesh=newLagoon.identify();
         
         Island newIsland = new Island();
-        Importer importMesh = new Importer(aMesh);
+        importInterface importMesh = new Importer(aMesh);
         newIsland=importMesh.convert();
         lagoon newLagoon = new lagoon(newIsland,config);
         newIsland = newLagoon.identify();

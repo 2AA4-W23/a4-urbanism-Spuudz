@@ -1,4 +1,4 @@
-package importMesh;
+package importer;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.Set.*;
 import java.util.List;
 
-public class Importer {
+public class Importer implements importInterface {
 
     private Mesh aMesh;
     private List<IslandADT.Vertex> verticeList;
@@ -36,7 +36,7 @@ public class Importer {
         return newIsland;
     }
 
-    private void buildVertices(){
+    public void buildVertices(){
         verticeList=new ArrayList<IslandADT.Vertex>();
         int count = 0;
         for(Vertex v : aMesh.getVerticesList()){
@@ -46,7 +46,7 @@ public class Importer {
         }
     }
 
-    private void buildEdges(){
+    public void buildEdges(){
         edgeList = new ArrayList<IslandADT.Edge>();
         for (Segment s : aMesh.getSegmentsList()){
             IslandADT.Edge newEdge = new IslandADT.Edge(verticeList.get(s.getV1Idx()), verticeList.get(s.getV2Idx()));
@@ -55,7 +55,7 @@ public class Importer {
 
     }
 
-    private void buildTiles(){
+    public void buildTiles(){
         tileList = new ArrayList<IslandADT.Tile>();
         for (Polygon p : aMesh.getPolygonsList()){
             List<IslandADT.Vertex> vertices = new ArrayList<IslandADT.Vertex>();
