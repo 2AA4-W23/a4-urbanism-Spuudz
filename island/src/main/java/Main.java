@@ -11,6 +11,7 @@ import importer.Importer;
 import importer.importInterface;
 import shapes.ShapeSpecificationFactory;
 import shapes.Shapes;
+import soil.*;
 import water.*;
 import IslandADT.*;
 
@@ -30,11 +31,17 @@ public class Main{
         lagoon newLagoon = new lagoon(newIsland,config);
         newIsland = newLagoon.identify();
 
-        /*Lakes newLake = new Lakes(config);
+        Lakes newLake = new Lakes(config);
         newIsland = newLake.generateLakes(newIsland);
-        System.out.println(newIsland);*/
-        AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
-        newIsland = profile.assignElevation(newIsland);
+
+        Aquifers newAquifer = new Aquifers(config);
+        newIsland = newAquifer.generateAquifers(newIsland);
+
+        SoilProfiles soil_profile = new SoilProfileFactory().create(config);
+        newIsland = soil_profile.assignHumidity(newIsland);
+
+/*         AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
+        newIsland = profile.assignElevation(newIsland); */
         
         export exporter = new export();
         aMesh=exporter.run(newIsland);
