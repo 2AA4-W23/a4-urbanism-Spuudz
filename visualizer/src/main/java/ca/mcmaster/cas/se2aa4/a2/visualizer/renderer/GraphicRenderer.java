@@ -42,7 +42,6 @@ public class GraphicRenderer implements Renderer {
             if(thickness.equals(Optional.of(-1))){
                 continue;
             }else if(count==0){
-                System.out.println(thic);
                 Stroke stroke = new BasicStroke(0.4f*thic);
                 canvas.setStroke(stroke);
                 path.moveTo(aMesh.getVertices(s.getV1Idx()).getX(), aMesh.getVertices(s.getV1Idx()).getY());

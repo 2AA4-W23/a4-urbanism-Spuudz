@@ -8,6 +8,8 @@ import java.util.Random;
 import java.util.Set;
 
 import IslandADT.*;
+import Tiles.TileType;
+import Tiles.TileTypeChoose;
 public class River {
     private Set<Integer>sourceIdxs = new HashSet<>();
     int numRivers;
@@ -65,20 +67,24 @@ public class River {
         System.out.println("starting: "+startIDX);
         int thickness = rand.nextInt(3)+1;
         boolean riverSource=true;
+        TileTypeChoose tile = new TileTypeChoose();
         while(true){
             if(startIDX==-1){
+                
                 return clone;
             }
             Tile t = clone.getTiles(startIDX);
             List<Integer> neighbour = t.getNeighborsIdxList();
             int nextIDX = lowestElevationIDX(t, neighbour, clone.getTileList());
             if(nextIDX==-1){
+                t.setProperty("tile_type", tile.getTile(TileType.Lake));
+                t.setProperty("rgb_color", tile.getColor(TileType.Lake));
                 return clone;
 
             }
-            if(clone.getTiles(startIDX).getProperties().get("humidity").equals("100")){
+            if(clone.getTiles(startIDX).getProperties().get("humidity").equals("100")){ //if on a water source end the river
                 return clone;
-            }else if(clone.getTiles(nextIDX).getProperties().get("humidity").equals("100")){
+            }else if(clone.getTiles(nextIDX).getProperties().get("humidity").equals("100")){ //the segment will end on a water source
                 
                 Edge newEdge = new Edge(clone.getTiles(startIDX).getCentroid(), clone.getTiles(nextIDX).getCentroid());
                 sourceIdxs.add(nextIDX);
@@ -98,7 +104,7 @@ public class River {
                 return clone;
             }
 
-
+            //normal river segment
             
             double humidity1 = Double.parseDouble(t.getProperties().get("humidity"));
             Edge newEdge = new Edge(clone.getTiles(startIDX).getCentroid(), clone.getTiles(nextIDX).getCentroid());
@@ -118,7 +124,13 @@ public class River {
                 newEdge.setProperty("riverSource", "true");
                 riverSource=false;
             }
+            if(island.getEdgesList().contains(newEdge)){
+                int idx = island.getEdgesList().indexOf(newEdge);
+                int originalThickness=Integer.parseInt(island.getEdgesList().get(idx).getProperties().get("river"));
+                thickness+=originalThickness;
 
+            }
+            System.out.println(thickness);
             newEdge.setProperty("river",Integer.toString(thickness));
             clone.addEdge(newEdge);  
             sourceIdxs.add(nextIDX);
