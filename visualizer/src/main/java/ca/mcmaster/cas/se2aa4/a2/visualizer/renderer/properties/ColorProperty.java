@@ -11,6 +11,7 @@ public class ColorProperty implements PropertyAccess<Color> {
     public Optional<Color> extract(List<Property> props) {
         String value = new Reader(props).get("rgb_color");
         //String elevation = new Reader(props).get("elevation");
+        //int ele = Integer.parseInt(elevation);
         if (value == null)
             return Optional.empty();
         String[] raw = value.split(",");
@@ -18,5 +19,6 @@ public class ColorProperty implements PropertyAccess<Color> {
         int green = Integer.parseInt(raw[1]);
         int blue = Integer.parseInt(raw[2]);
         return Optional.of(new Color(red, green, blue));
+        //return Optional.of(new Color(ele,ele,ele));
     }
 }

@@ -2,8 +2,10 @@ package ca.mcmaster.cas.se2aa4.a2.visualizer.renderer;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
+import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.renderer.properties.ColorProperty;
+import ca.mcmaster.cas.se2aa4.a2.visualizer.renderer.properties.RiverProperty;
 
 import java.awt.Graphics2D;
 import java.awt.Stroke;
@@ -21,11 +23,34 @@ public class GraphicRenderer implements Renderer {
         Stroke stroke = new BasicStroke(0.2f);
         canvas.setStroke(stroke);
         drawPolygons(aMesh,canvas);
+        drawRiverSegments(aMesh, canvas);
     }
 
     private void drawPolygons(Mesh aMesh, Graphics2D canvas) {
         for(Structs.Polygon p: aMesh.getPolygonsList()){
             drawAPolygon(p, aMesh, canvas);
+        }
+    }
+
+    private void drawRiverSegments(Mesh aMesh, Graphics2D canvas){
+        canvas.setColor(new Color(0,71,100));
+        int count=0;
+        for(Segment s : aMesh.getSegmentsList()){
+            Path2D path = new Path2D.Float();
+            Optional<Integer> thickness = new RiverProperty().extract(s.getPropertiesList());
+            Integer thic = Integer.valueOf(thickness.get());
+            if(thickness.equals(Optional.of(-1))){
+                continue;
+            }else if(count==0){
+                System.out.println(thic);
+                Stroke stroke = new BasicStroke(0.4f*thic);
+                canvas.setStroke(stroke);
+                path.moveTo(aMesh.getVertices(s.getV1Idx()).getX(), aMesh.getVertices(s.getV1Idx()).getY());
+                path.lineTo(aMesh.getVertices(s.getV2Idx()).getX(), aMesh.getVertices(s.getV2Idx()).getY());
+                path.closePath();
+                canvas.draw(path);
+            }
+            
         }
     }
 
