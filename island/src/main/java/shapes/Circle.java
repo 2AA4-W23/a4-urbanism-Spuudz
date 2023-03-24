@@ -19,6 +19,9 @@ public class Circle implements Shapes {
     public Circle(Map<String, String> params){
         
     }
+    public Circle(){
+        
+    }
 
     public Island identifyLand(Island currentIsland, double centerX, double centerY,double width, double height){
         String tile = "";
