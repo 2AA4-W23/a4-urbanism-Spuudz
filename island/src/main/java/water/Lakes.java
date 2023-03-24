@@ -33,6 +33,7 @@ public class Lakes {
         Island clone = new Island();
         int landTiles = numOfLandTiles(anIsland);
         clone.register(anIsland.getTileList(), anIsland.getVerticesList(), anIsland.getEdgesList());
+        clone.setLandTiles(anIsland.getLandTiles());
 
         int currentNum = 0;
 

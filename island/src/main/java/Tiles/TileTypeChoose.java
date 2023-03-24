@@ -33,7 +33,7 @@ public class TileTypeChoose {
                 tileProperty = "Beach";
                 break;
             case Lake:
-                color = "100,149,237";
+                color = "0,71,100";
                 tileProperty = "Lake";
                 break;
             case Aquifer:

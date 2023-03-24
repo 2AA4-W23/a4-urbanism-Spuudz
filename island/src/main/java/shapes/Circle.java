@@ -23,52 +23,61 @@ public class Circle implements Shapes {
     public Island identifyLand(Island currentIsland, double centerX, double centerY,double width, double height){
         String tile = "";
         double radius;
-        Island clone = new Island();
-        clone.register(currentIsland.getTileList(), currentIsland.getVerticesList(),currentIsland.getEdgesList());
-        System.out.println(width+" Circles "+height);
         if(width>height){
             radius = height/2.5; 
         }else{
             radius=width/2.5;
         }
-        System.out.println(radius);
         //Structs.Polygon center = currentIsland.getPolygons(findCenter());
         //double centerX=currentIsland.getVertices(currentIsland.getPolygons(findCenter()).getCentroidIdx()).getX();
         //double centerY=currentIsland.getVertices(currentIsland.getPolygons(findCenter()).getCentroidIdx()).getY();
-
+        int idx=0;
         for(Tile t : currentIsland.getTileList()){
 
             String color;
             double x = currentIsland.getVertices(t.getCentroidIdx()).getX();
             double y = currentIsland.getVertices(t.getCentroidIdx()).getY();
             double distance = distanceFromCentre(x, y, centerX, centerY);
-            t=assignType(t, radius, distance);
+            int type = assignType(radius, distance);
+            if(type==0){
+
+                TileTypeChoose chooseTile = new TileTypeChoose();
+                color = chooseTile.getColor(TileType.Forest);
+                tile = chooseTile.getTile(TileType.Forest);
+                t.setProperty("tile_type", tile);
+                t.setProperty("rgb_color",color);
+
+                currentIsland.addLandTile(idx);
+            }else{
+                assignOcean(t);
+            }
+            idx++;
         }
-        return clone;
+        System.out.println("land tile size:"+currentIsland.getLandTiles().size());
+        return currentIsland;
     }
     public double distanceFromCentre(double x, double y, double centerX, double centerY){
         return Math.sqrt(Math.pow(x-centerX,2) + Math.pow(y-centerY,2));
 
     }
-    public Tile assignType(Tile t,double radius, double distance){
-        String color;
-        TileTypeChoose chooseTile = new TileTypeChoose();
-        String tile;
+    public int assignType(double radius, double distance){
         if(distance>=radius){
-            color = chooseTile.getColor(TileType.Ocean);
-            tile = chooseTile.getTile(TileType.Ocean);
-        }else if(distance<radius){
-                color = chooseTile.getColor(TileType.Forest);
-                tile = chooseTile.getTile(TileType.Forest);
+            return -1;
         }else{
-            color = chooseTile.getColor(null);
-            tile = chooseTile.getTile(null);
+            return 0;
         }
-        t.setProperty("tile_type", tile);
-        t.setProperty("rgb_color",color);
     
 
-    return t;
+
+
+    }
+    public Tile assignOcean(Tile t){
+        TileTypeChoose chooseTile = new TileTypeChoose();
+        String color = chooseTile.getColor(TileType.Ocean);
+        String tile = chooseTile.getTile(TileType.Ocean);
+        t.setProperty("tile_type", tile);
+        t.setProperty("rgb_color",color);
+        return t;
 
     }
 }
