@@ -73,7 +73,7 @@ Functional features that have been properly tested.
 | F10 | Different island shapes | All | 12/03/23 | 22/03/23 | F |
 | F11 | elevation profiles | Dylan | 3/17/23 | 3/22/23 | D |
 | F12 | Lake Generation | Matthew | 16/3/23 | | S |
-| F13 | Rivers/Rivers Flow | Dylan | | | P |
+| F13 | Rivers/Rivers Flow | Dylan | 24/03/23 | | S |
 | F14 | Aquifers | Matthew | 17/3/23 | | S |
 | F15 | Soil Absorption | Matthew | | | B(F14, F13, F12) | 
 | F16 | Biomes | Harman | | | B(F17) |

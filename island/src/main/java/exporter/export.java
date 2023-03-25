@@ -23,7 +23,9 @@ public class export {
         Map<Edge, Integer> segments = registerSegments(island, result, vertices);
         registerPolygons(island, result, segments, vertices);*/
         makeVertices(island, result);
+        System.out.println(1);
         makeSegments(island, result);
+        System.out.println(2);
         makePolygons(island, result);
         return result.build();
     }
@@ -47,6 +49,15 @@ public class export {
             Structs.Segment s = Structs.Segment.newBuilder()
                     .setV1Idx(e.V1IDX())
                     .setV2Idx(e.V2IDX()).build();
+            Structs.Segment.Builder pc = Structs.Segment.newBuilder(s);
+            for(Map.Entry<String, String> entry : e.getProperties().entrySet()){
+                Structs.Property tt = Structs.Property.newBuilder()
+                        .setKey(entry.getKey())
+                        .setValue(entry.getValue())
+                        .build();
+                pc.addProperties(tt);
+            }
+            s=pc.build();
             exported[count]=s;
             count++;
         }

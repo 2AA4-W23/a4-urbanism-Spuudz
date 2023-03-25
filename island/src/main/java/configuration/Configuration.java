@@ -13,6 +13,7 @@ public class Configuration {
     public static final String AQUIFERS = "aquifers";
     public static final String PROFILE = "altitude";
     public static final String SOILPROFILE = "soil";
+    public static final String RIVERS = "rivers";
 
     private CommandLine cli;
     public Configuration(String[] args) {
@@ -52,6 +53,9 @@ public class Configuration {
     public String soil_profile(){
         return this.cli.getOptionValue(SOILPROFILE, "arid");
     }
+    public String rivers(){
+        return this.cli.getOptionValue(RIVERS, "1");
+    }
 
     public Map<String, String> export() {
         Map<String, String> result = new HashMap<>();
@@ -70,6 +74,7 @@ public class Configuration {
         options.addOption(new Option (AQUIFERS, true, "number of aquifers to be generated"));
         options.addOption(new Option (PROFILE, true, "selected elevation profile"));
         options.addOption(new Option (SOILPROFILE, true, "selected soil profile"));
+        options.addOption(new Option (RIVERS, true, "number of rivers"));
         return options;
     }
 

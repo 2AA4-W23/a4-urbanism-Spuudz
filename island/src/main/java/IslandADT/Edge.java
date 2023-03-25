@@ -3,15 +3,26 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Edge {
     private final List<Vertex> vertices;
+    private Map<String, String> properties=new HashMap<>();
 
     public Edge(Vertex v1, Vertex v2) {
         this.vertices = new ArrayList<>();
         vertices.add(v1);
         vertices.add(v2);
+    }
+
+    public void setProperty(String key, String value){
+        properties.put(key,value);
+    }
+    public Map<String,String> getProperties(){
+        return java.util.Collections.unmodifiableMap(properties);
+
     }
 
     public int V1IDX(){

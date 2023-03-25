@@ -31,20 +31,31 @@ public class Main{
         lagoon newLagoon = new lagoon(newIsland,config);
         newIsland = newLagoon.identify();
 
+
         Lakes newLake = new Lakes(config);
         newIsland = newLake.generateLakes(newIsland);
+
 
         Aquifers newAquifer = new Aquifers(config);
         newIsland = newAquifer.generateAquifers(newIsland);
 
+
         SoilProfiles soil_profile = new SoilProfileFactory().create(config);
         newIsland = soil_profile.assignHumidity(newIsland);
 
+
         AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
         newIsland = profile.assignElevation(newIsland);
+
+
+        System.out.println(newIsland.getEdgesList().size());
+
+        River addRivers = new River(config);
+        newIsland = addRivers.generateRivers(newIsland);
+        System.out.println(newIsland.getEdgesList().size());
         
         export exporter = new export();
         aMesh=exporter.run(newIsland);
-        new MeshFactory().write(aMesh, "img/island.meshS");
+        new MeshFactory().write(aMesh, "img/island.mesh");
     }
 }

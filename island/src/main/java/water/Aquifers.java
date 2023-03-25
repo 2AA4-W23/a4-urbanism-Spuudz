@@ -17,6 +17,7 @@ public class Aquifers {
     public Island generateAquifers(Island anIsland){
         Island clone = new Island();
         clone.register(anIsland.getTileList(), anIsland.getVerticesList(), anIsland.getEdgesList());
+        clone.setLandTiles(anIsland.getLandTiles());
         Random rand = new Random();
         TileTypeChoose tile = new TileTypeChoose();
         int currentNum = 0;
