@@ -1,6 +1,7 @@
 package soil;
 import java.util.HashMap;
 import java.util.Map;
+import IslandADT.*;
 import configuration.Configuration;
 
 public class SoilProfileFactory {
@@ -20,7 +21,19 @@ public class SoilProfileFactory {
             throw new IllegalArgumentException(e);
         }
     }
-    
 
-
+    public Island defaultHumidity(Island anIsland){
+        for(Tile t : anIsland.getTileList()){
+            if(t.getProperties().get("tile_type").equals("Ocean")){
+                t.setProperty("humidity","99");
+            }
+            else if(!(t.getProperties().get("tile_type").equals("Lake") || t.getProperties().get("tile_type").equals("Aquifer"))){
+                t.setProperty("humidity","0");
+            }
+            else {
+                t.setProperty("humidity","100");
+            }
+        }
+        return anIsland;
+    }
 }
