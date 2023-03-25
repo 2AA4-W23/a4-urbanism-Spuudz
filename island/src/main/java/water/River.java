@@ -38,8 +38,10 @@ public class River {
         int count=0;
         for(int i : landTiles){
             int chance = rand.nextInt(landTiles.size()-count)+1;
-            if(chance==1){
+            System.out.println(chance);
+            if(chance<=2){
                 if(sourceIdxs.contains(i)){
+                    System.out.println(i);
                     continue;
                 }
                 sourceIdxs.add(i);
@@ -54,6 +56,7 @@ public class River {
         Island clone = new Island();
         clone.register(island.getTileList(), island.getVerticesList(), island.getEdgesList());
         clone.setLandTiles(island.getLandTiles());
+        System.out.println(clone.getLandTiles().size());
         Random rand = new Random();
         int startIDX = assignStart(clone.getLandTiles());
         while(true){

@@ -14,10 +14,6 @@ public class Hills implements AltimetricProfiles {
 
     }
 
-    public Hills(Map<String, String> params){
-
-    }
-
     public Island assignElevation(Island island){
         if(numHills>island.getLandTiles().size()){
             numHills=island.getLandTiles().size()/3;
