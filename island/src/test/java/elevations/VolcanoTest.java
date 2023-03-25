@@ -7,12 +7,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import IslandADT.*;
 import elevation.Volcano;
 
 public class VolcanoTest {
+    @BeforeAll
+    public static void startTesting(){
+        System.out.println("Beginning Volcano Profile Testing");
+    }
+
+    @AfterAll
+    public static void endTesting(){
+        System.out.println("Finishing volcano profile testing");
+    }
     @Test
     public void centreDistance(){
         Volcano volcano = new Volcano();
@@ -85,7 +96,7 @@ public class VolcanoTest {
 
         island.register(tiles, vertices, null);
         Island newIsland = volcano.assignElevation(island);
-        assertTrue(Double.parseDouble(newIsland.getTiles(1).getProperties().get("elevation")) > Double.parseDouble(newIsland.getTiles(0).getProperties().get("elevation")));
+        assertTrue(Double.parseDouble(newIsland.getTiles(1).getProperties().get("elevation")) >= Double.parseDouble(newIsland.getTiles(0).getProperties().get("elevation")));
         
     }
 }

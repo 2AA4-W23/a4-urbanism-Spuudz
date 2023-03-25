@@ -20,6 +20,9 @@ public class Volcano implements AltimetricProfiles {
         }else{
             maxAltitude = width/2;
         }
+        if(maxAltitude<200){
+            maxAltitude=250;
+        }
 
         int centreIDX = findStartIdx(island);
         for(Tile t : island.getTileList()){
