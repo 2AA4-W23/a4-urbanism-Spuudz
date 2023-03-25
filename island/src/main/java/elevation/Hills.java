@@ -8,13 +8,23 @@ import IslandADT.*;
 
 public class Hills implements AltimetricProfiles {
     private static final double maxAltitude=50;
-    private static final int numHills=5;
+    private static int numHills=5;
+
+    public Hills(){
+
+    }
 
     public Hills(Map<String, String> params){
 
     }
 
     public Island assignElevation(Island island){
+        if(numHills>island.getLandTiles().size()){
+            numHills=island.getLandTiles().size()/3;
+            if(numHills==0){
+                numHills=1;
+            }
+        }
         Set<Integer> hilltops = new HashSet<>();
         while(hilltops.size()<numHills){
             hilltops.add(findStartIdx(island));
