@@ -1,11 +1,7 @@
 package soil;
-
-import java.util.Map;
 import IslandADT.*;
 
-public class Arid implements SoilProfiles {
-    public Arid(Map <String,String> params){}
-
+public class Moist implements SoilProfiles{
     public Island assignHumidity(Island anIsland){
         SoilProfileFactory soil = new SoilProfileFactory();
         double distance = 0.0;
@@ -14,7 +10,8 @@ public class Arid implements SoilProfiles {
         for(Tile t : anIsland.getTileList()){
             if(t.getProperties().get("humidity").equals("0")){
                 distance = distanceFromWater(anIsland, t);
-                humidity = (int)(100 - distance*3);
+                System.out.println(distance);
+                humidity = (int)(100 - distance/5);
                 if(humidity >= 100){
                     humidity = 99;
                 }
