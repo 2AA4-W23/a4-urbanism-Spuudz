@@ -10,6 +10,7 @@ public class Volcano implements AltimetricProfiles {
     public Volcano(Map<String, String> params){
 
     }
+    public Volcano(){}
     public Island assignElevation(Island island){
         double maxAltitude;
         double width=width(island);
@@ -46,7 +47,7 @@ public class Volcano implements AltimetricProfiles {
 
 
 
-    private double distanceFromCentre(int centerIDX, Island island, Tile t){
+    public double distanceFromCentre(int centerIDX, Island island, Tile t){
         double centerX = island.getTiles(centerIDX).getCentroid().getX();
         //System.out.println(centerX);
         double centerY = island.getTiles(centerIDX).getCentroid().getY();
