@@ -82,7 +82,7 @@ public class River {
             Tile t = clone.getTiles(startIDX);
             List<Integer> neighbour = t.getNeighborsIdxList();
             int nextIDX = lowestElevationIDX(t, neighbour, clone.getTileList());
-            if(nextIDX==-1){
+            if(nextIDX==-1 && (!t.getProperties().get("tile_type").equals("ocean"))){
                 t.setProperty("tile_type", tile.getTile(TileType.Lake));
                 t.setProperty("rgb_color", tile.getColor(TileType.Lake));
                 return clone;
