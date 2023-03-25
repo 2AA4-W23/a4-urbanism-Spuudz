@@ -29,9 +29,7 @@ public class Volcano implements AltimetricProfiles {
             if(t.getProperties().get("tile_type").equals("Ocean")){
                 t.setProperty("elevation", "0");
             }else{
-                System.out.println("distance centre: "+distanceFromCentre(centreIDX, island, t));
                 int elevationValue = (int) (maxAltitude-((distanceFromCentre(centreIDX, island, t))));
-                System.out.println("normal elevations:"+elevationValue);
                 if(elevationValue<=3){
                     Random rand = new Random();
                     int eValue  = rand.nextInt(3)+1;
@@ -52,9 +50,7 @@ public class Volcano implements AltimetricProfiles {
 
     public double distanceFromCentre(int centerIDX, Island island, Tile t){
         double centerX = island.getTiles(centerIDX).getCentroid().getX();
-        //System.out.println(centerX);
         double centerY = island.getTiles(centerIDX).getCentroid().getY();
-        //System.out.println(centerY);
 
         return Math.sqrt(Math.pow(t.getCentroid().getX()-centerX,2)+Math.pow(t.getCentroid().getY()-centerY,2));
 
@@ -66,7 +62,6 @@ public class Volcano implements AltimetricProfiles {
         for (IslandADT.Vertex v: island.getVerticesList()) {
             max_x = (Double.compare(max_x, v.getX()) < 0? v.getX(): max_x);
         }
-        System.out.println(Math.ceil(max_x));
         return Math.ceil(max_x);
 
     } 
@@ -97,7 +92,6 @@ public class Volcano implements AltimetricProfiles {
 
         double centerX = totalX/islandTile;
         double centerY = totalY/islandTile;
-        System.out.println("center x: "+centerX+" center y: "+centerY);
         double minDistance=Double.MAX_VALUE;
         int count=0;
         int centerIDX=0;

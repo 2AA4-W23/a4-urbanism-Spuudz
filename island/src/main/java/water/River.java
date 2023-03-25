@@ -12,11 +12,14 @@ import Tiles.TileType;
 import Tiles.TileTypeChoose;
 public class River {
     private Set<Integer>sourceIdxs = new HashSet<>();
-    int numRivers;
-    int riverHumidity=10;
+    private int numRivers;
+    private static final int riverHumidity=10;
     public River(Configuration config){
         Map<String, String> options = config.export();
         numRivers = Integer.parseInt(options.get(Configuration.RIVERS));
+    }
+    public River(){
+        
     }
 
     public Island generateRivers(Island island){
@@ -52,7 +55,7 @@ public class River {
         return -1;
     }
 
-    private Island generateARiver(Island island){
+    public Island generateARiver(Island island){
         Island clone = new Island();
         clone.register(island.getTileList(), island.getVerticesList(), island.getEdgesList());
         clone.setLandTiles(island.getLandTiles());
