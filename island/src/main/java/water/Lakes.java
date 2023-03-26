@@ -16,6 +16,7 @@ public class Lakes {
         Map<String, String> options = config.export();
         numOfLakes = Integer.parseInt(options.get(Configuration.LAKES));
     }
+    public Lakes(int num){numOfLakes = num;}
 
     public int numOfLandTiles(Island anIsland){
         Map<String, String> tile;
@@ -57,7 +58,7 @@ public class Lakes {
                     continue;
                 }
                 else{
-                clone.addTile(t);
+                    clone.addTile(t);
                 }
             }
         }

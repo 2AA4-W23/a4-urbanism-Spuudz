@@ -13,6 +13,7 @@ public class Aquifers {
         Map<String, String> options = config.export();
         numOfAquifers = Integer.parseInt(options.get(Configuration.AQUIFERS));
     }
+    public Aquifers(int num){numOfAquifers = num;}
 
     public Island generateAquifers(Island anIsland){
         Island clone = new Island();

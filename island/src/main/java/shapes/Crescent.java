@@ -7,6 +7,7 @@ import IslandADT.*;
 public class Crescent implements Shapes {
 
     public Crescent(Map<String, String> params){}
+    public Crescent(){}
 
     public Island identifyLand(Island currentIsland, double centerX, double centerY,double width, double height){
         double radius;
