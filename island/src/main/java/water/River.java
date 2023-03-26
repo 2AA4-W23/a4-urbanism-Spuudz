@@ -82,11 +82,14 @@ public class River {
             Tile t = clone.getTiles(startIDX);
             List<Integer> neighbour = t.getNeighborsIdxList();
             int nextIDX = lowestElevationIDX(t, neighbour, clone.getTileList());
-            if(nextIDX==-1 && (!t.getProperties().get("tile_type").equals("ocean"))){
+            if(nextIDX==-1 && !(t.getProperties().get("tile_type").equals("Ocean"))){
+                System.out.println(t.getProperties().get("tile_type").equals("Ocean"));
                 t.setProperty("tile_type", tile.getTile(TileType.Lake));
                 t.setProperty("rgb_color", tile.getColor(TileType.Lake));
                 return clone;
 
+            }else if(nextIDX==-1){
+                return clone;
             }
             if(clone.getTiles(startIDX).getProperties().get("humidity").equals("100")){ //if on a water source end the river
                 return clone;

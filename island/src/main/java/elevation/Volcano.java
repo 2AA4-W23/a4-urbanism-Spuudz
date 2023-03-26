@@ -30,10 +30,8 @@ public class Volcano implements AltimetricProfiles {
                 t.setProperty("elevation", "0");
             }else{
                 int elevationValue = (int) (maxAltitude-((distanceFromCentre(centreIDX, island, t))));
-                if(elevationValue<=3){
-                    Random rand = new Random();
-                    int eValue  = rand.nextInt(3)+1;
-                    t.setProperty("elevation", Integer.toString(eValue));
+                if(elevationValue<=0){
+                    t.setProperty("elevation", "1");
                 }else{
                     t.setProperty("elevation", Integer.toString(elevationValue));
                 }
