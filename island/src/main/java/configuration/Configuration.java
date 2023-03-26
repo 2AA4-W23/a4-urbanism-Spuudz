@@ -9,7 +9,7 @@ public class Configuration {
     public static final String OUTPUT = "o";
     public static final String INPUT = "i";
     public static final String SHAPE = "shape";
-    public static final String WHITTAKER = "whittaker";
+    public static final String WHITTAKER = "biome";
     public static final String LAKES = "lakes";
     public static final String AQUIFERS = "aquifers";
     public static final String PROFILE = "altitude";
