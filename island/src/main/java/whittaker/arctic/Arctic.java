@@ -1,14 +1,14 @@
-package whittaker.jungle;
+package whittaker.arctic;
 
 import java.util.Map;
-import whittaker.jungle.jungleBiomes.*;
 import IslandADT.Island;
 import IslandADT.Tile;
 import whittaker.Whittaker;
+import whittaker.arctic.articBiomes.*;
 
-public class Jungle implements Whittaker{
+public class Arctic implements Whittaker{
     
-    public Jungle(Map<String, String> params){}
+    public Arctic(Map<String, String> params){}
 
     @Override
     public Island genWhittaker(Island currentIsland) {
@@ -24,27 +24,27 @@ public class Jungle implements Whittaker{
             double humid = Double.parseDouble(tile.get("humidity"));
 
             if(!(tile.get("tile_type").equals("Ocean") || tile.get("tile_type").equals("Lake"))){
-                int biome = (int)Math.floor(Math.random() * (5 - 1 + 1) + 1);
-                Beach beach = new Beach();
-                Tropical tropical = new Tropical();
-                Montane montane = new Montane();
-                Temperate temperate = new Temperate();
-                Flooded flooded = new Flooded();
-                if((elevation >= 200.0) || (humid >= 80.0)){
-                    color = montane.getColor();
-                    type = montane.getBiome();
+                Alpine alpine = new Alpine();
+                Glacier glacier = new Glacier();
+                Boreal boreal = new Boreal();
+                subArtic subArtic = new subArtic();
+                Tundra tundra = new Tundra();
+
+                if((elevation >= 200.0) || (humid <= 20.0)){
+                    color = glacier.getColor();
+                    type = glacier.getBiome();
                 }else if((humid < 60.0 && humid >= 40.0) || (elevation < 200.0 && elevation >= 140.0)){
-                    color = flooded.getColor();
-                    type = flooded.getBiome();
+                    color = tundra.getColor();
+                    type = tundra.getBiome();
                 }else if((humid < 80.0 && humid >= 60.0) || (elevation < 140.0 && elevation >= 100.0)){
-                    color = tropical.getColor();
-                    type = tropical.getBiome();
+                    color = boreal.getColor();
+                    type = boreal.getBiome();
                 }else if((humid < 40.0 && humid >= 20.0) || (elevation < 100.0 && elevation >= 60.0)){
-                    color = temperate.getColor();
-                    type = temperate.getBiome();
+                    color = subArtic.getColor();
+                    type = subArtic.getBiome();                  
                 }else{
-                    color = beach.getColor();
-                    type = beach.getBiome();
+                    color = alpine.getColor();
+                    type = alpine.getBiome();
                 }
 
                 t.setProperty("rgb_color",color);
@@ -55,3 +55,4 @@ public class Jungle implements Whittaker{
         return clone;
     }
 }
+

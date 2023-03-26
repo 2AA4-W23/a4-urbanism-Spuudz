@@ -2,8 +2,10 @@ package whittaker.desert;
 
 import java.util.Map;
 import IslandADT.Island;
+import whittaker.desert.desertBiomes.*;
 import IslandADT.Tile;
 import whittaker.Whittaker;
+import whittaker.desert.desertBiomes.Dunes;
 
 public class Desert implements Whittaker{
     
@@ -23,17 +25,27 @@ public class Desert implements Whittaker{
             double humid = Double.parseDouble(tile.get("humidity"));
 
             if(!(tile.get("tile_type").equals("Ocean") || tile.get("tile_type").equals("Lake"))){
-
-                if((humid >= 80.0) || (elevation >= 80.0)){
-                    
-                }else if((humid < 80.0 && humid >= 60.0) || (elevation < 80.0 && elevation >= 60.0)){
-                    
-                }else if((humid < 60.0 && humid >= 40.0) || (elevation < 60.0 && elevation >= 40.0)){
-                    
-                }else if((humid < 40.0 && humid >= 20.0) || (elevation < 40.0 && elevation >= 20.0)){
-                    
+                Dunes dunes = new Dunes();
+                Mesa mesa = new Mesa();
+                Oasis oasis = new Oasis();
+                SaltFlats saltflats = new SaltFlats();
+                Savanna savanna = new Savanna();
+                
+                if((elevation >= 200.0) || (humid >= 80.0)){
+                    color = mesa.getColor();
+                    type = mesa.getBiome();
+                }else if((humid < 60.0 && humid >= 40.0) && (elevation < 100.0 && elevation >= 60.0) ){
+                    color = oasis.getColor();
+                    type = oasis.getBiome();
+                }else if((humid < 80.0 && humid >= 60.0) || (elevation < 140.0 && elevation >= 100.0)){
+                    color = saltflats.getColor();
+                    type = saltflats.getBiome();
+                }else if((humid < 40.0 && humid >= 20.0) || (elevation < 200.0 && elevation >= 140.0)){
+                    color = savanna.getColor();
+                    type = savanna.getBiome();
                 }else{
-                    
+                    color = dunes.getColor();
+                    type = dunes.getBiome();
                 }
 
                 t.setProperty("rgb_color",color);

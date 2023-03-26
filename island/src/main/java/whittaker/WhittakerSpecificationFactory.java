@@ -1,4 +1,6 @@
 package whittaker;
+import whittaker.arctic.Arctic;
+import whittaker.desert.Desert;
 import whittaker.jungle.Jungle;
 
 import java.util.HashMap;
@@ -10,8 +12,8 @@ public class WhittakerSpecificationFactory {
 
     static {
         bindings.put("jungle", Jungle.class);  
-        /*bindings.put("wasteland", Wasteland.class);
-        bindings.put("square", Square.class);*/
+        bindings.put("arctic", Arctic.class);
+        bindings.put("desert", Desert.class);
      }
 
     public static Whittaker create(Configuration configuration) {

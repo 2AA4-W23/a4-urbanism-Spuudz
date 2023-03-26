@@ -42,7 +42,6 @@ java -jar island/target/2aa4.mesh.island-jar-with-dependencies.jar -i img/input.
 
 ```
 
-
 ### Visualizing a mesh, (regular or debug mode)
 
 ```
