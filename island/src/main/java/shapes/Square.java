@@ -31,6 +31,7 @@ public class Square implements Shapes {
         double yTop = centerY - squareWidth;
         double yBottom = centerY + squareWidth;
 
+        int idx = 0;
         for(Tile t : currentIsland.getTileList()){
             String color = "";
             double x = currentIsland.getVertices(t.getCentroidIdx()).getX();
@@ -39,6 +40,7 @@ public class Square implements Shapes {
             if((xLeft < x && xRight > x) && (yTop < y && yBottom > y)){
                 color = chooseTile.getColor(TileType.Forest);
                 tile = chooseTile.getTile(TileType.Forest);
+                currentIsland.addLandTile(idx);
                      
             }else{
                 color = chooseTile.getColor(TileType.Ocean);
@@ -47,6 +49,8 @@ public class Square implements Shapes {
 
             t.setProperty("tile_type",tile);
             t.setProperty("rgb_color",color);
+
+            idx++;
         }   
         return clone;
     }
