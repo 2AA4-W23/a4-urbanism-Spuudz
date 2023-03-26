@@ -31,6 +31,8 @@ public class Main{
         lagoon newLagoon = new lagoon(newIsland,config);
         newIsland = newLagoon.identify();
 
+        AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
+        newIsland = profile.assignElevation(newIsland);
 
         Lakes newLake = new Lakes(config);
         newIsland = newLake.generateLakes(newIsland);
@@ -42,11 +44,6 @@ public class Main{
 
         SoilProfiles soil_profile = new SoilProfileFactory().create(config);
         newIsland = soil_profile.assignHumidity(newIsland);
-
-
-        AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
-        newIsland = profile.assignElevation(newIsland);
-
 
         System.out.println(newIsland.getEdgesList().size());
 

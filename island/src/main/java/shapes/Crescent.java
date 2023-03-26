@@ -11,6 +11,7 @@ public class Crescent implements Shapes {
     public Island identifyLand(Island currentIsland, double centerX, double centerY,double width, double height){
         double radius;
         Island clone = new Island();
+        int idx = 0;
         clone.register(currentIsland.getTileList(), currentIsland.getVerticesList(),currentIsland.getEdgesList());
 
         if(width>height){
@@ -24,12 +25,13 @@ public class Crescent implements Shapes {
             double y = currentIsland.getVertices(t.getCentroidIdx()).getY();
             double distance = Math.sqrt(Math.pow(x-centerX,2) + Math.pow(y-centerY,2));
             double crescentDistance = Math.sqrt(Math.pow(x-(centerX-(radius*0.8)),2) + Math.pow(y-centerY,2));
-            t = assignType(t, distance, crescentDistance, radius);
+            t = assignType(t, distance, crescentDistance, radius, currentIsland, idx);
+            idx++;
         }
 
         return clone;    
     }
-    public Tile assignType(Tile t, double distance, double crescentDistance, double radius){
+    public Tile assignType(Tile t, double distance, double crescentDistance, double radius, Island anIsland, int idx){
         String color = "";
         TileTypeChoose chooseTile = new TileTypeChoose();
         String tile = "";
@@ -40,6 +42,7 @@ public class Crescent implements Shapes {
             if(crescentDistance > radius){
                     color = chooseTile.getColor(TileType.Forest);
                     tile = chooseTile.getTile(TileType.Forest);
+                    anIsland.addLandTile(idx);
             }
             else {
                 color = chooseTile.getColor(TileType.Ocean);
