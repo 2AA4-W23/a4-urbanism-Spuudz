@@ -29,8 +29,7 @@ One can run the generator with `-help` as option to see the different command li
 
 ### Generating an Island
 ```
-java -jar island/target/2aa4.mesh.island-jar-with-dependencies.jar -i img/input.mesh -o img/island.mesh -shape circle -altitude volcano
-java -jar island/target/2aa4.mesh.island-jar-with-dependencies.jar -i img/input.mesh -o img/island.mesh -shape crescent -altitude volcano
+java -jar island/target/2aa4.mesh.island-jar-with-dependencies.jar -i img/input.mesh -o img/island.mesh -shape circle -lakes 10 -altitude hills -soil temperate -aquifers 5 -rivers 5 -biome arctic
 
 ```
 ### Necessary Command Line Arguments for Island
