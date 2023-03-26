@@ -11,6 +11,7 @@ import importMesh.Importer;
 import shapes.ShapeSpecificationFactory;
 import shapes.Shapes;
 import water.*;
+import whittaker.*;
 import IslandADT.*;
 
 import java.util.HashSet;
@@ -34,6 +35,10 @@ public class Main{
         System.out.println(newIsland);*/
         AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
         newIsland = profile.assignElevation(newIsland);
+
+        Whittaker newDiagram = new WhittakerSpecificationFactory().create(config);
+        newDiagram.genWhittaker(newIsland);
+
         
         export exporter = new export();
         aMesh=exporter.run(newIsland);

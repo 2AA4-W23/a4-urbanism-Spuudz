@@ -11,6 +11,7 @@ public class Configuration {
     public static final String SHAPE = "shape";
     public static final String LAKES = "lakes";
     public static final String PROFILE = "altitude";
+    public static final String WHITTAKER = "biome";
 
     private CommandLine cli;
     public Configuration(String[] args) {
@@ -44,6 +45,10 @@ public class Configuration {
         return this.cli.getOptionValue(LAKES, "5");
     }
 
+    public String biome(){
+        return this.cli.getOptionValue(WHITTAKER, "jungle");
+    }
+
     public Map<String, String> export() {
         Map<String, String> result = new HashMap<>();
         for(Option o: cli.getOptions()){
@@ -59,6 +64,7 @@ public class Configuration {
         options.addOption(new Option(SHAPE, true, "the island shape"));
         options.addOption(new Option (LAKES, true, "Number of lakes to be generated"));
         options.addOption(new Option (PROFILE, true, "selected elevation profile"));
+        options.addOption(new Option (WHITTAKER, true, "selected whittaker diagram"));
         return options;
     }
 
