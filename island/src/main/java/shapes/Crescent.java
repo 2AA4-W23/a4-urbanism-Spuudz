@@ -40,8 +40,8 @@ public class Crescent implements Shapes {
             tile = chooseTile.getTile(TileType.Ocean);
         }else if(distance<radius){
             if(crescentDistance > radius){
-                    color = chooseTile.getColor(TileType.Forest);
-                    tile = chooseTile.getTile(TileType.Forest);
+                    color = chooseTile.getColor(TileType.Land);
+                    tile = chooseTile.getTile(TileType.Land);
                     anIsland.addLandTile(idx);
             }
             else {

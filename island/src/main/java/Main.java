@@ -34,8 +34,8 @@ public class Main{
         Island newIsland = new Island();
         importInterface importMesh = new Importer(aMesh);
         newIsland=importMesh.convert();
-        lagoon newLagoon = new lagoon(newIsland,config);
-        newIsland = newLagoon.identify();
+        landIdentifier newShape = new landIdentifier(newIsland,config);
+        newIsland = newShape.identify();
 
         AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
         newIsland = profile.assignElevation(newIsland,seed);

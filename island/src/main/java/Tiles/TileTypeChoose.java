@@ -20,17 +20,9 @@ public class TileTypeChoose {
                 color = "0,71,100";
                 tileProperty = "Ocean";
                 break;
-            case Forest:
+            case Land:
                 color = "75,122,71";
                 tileProperty = "Forest";
-                break;
-            case Lagoon:
-                color = "55,198,255";
-                tileProperty = "Lagoon";
-                break;
-            case Beach:
-                color = "252,244,163";
-                tileProperty = "Beach";
                 break;
             case Lake:
                 color = "0,71,100";
