@@ -30,18 +30,41 @@ public class Arctic implements Whittaker{
                 subArtic subArtic = new subArtic();
                 Tundra tundra = new Tundra();
 
-                if((elevation >= 200.0) || (humid <= 20.0)){
-                    color = glacier.getColor();
-                    type = glacier.getBiome();
-                }else if((humid < 60.0 && humid >= 40.0) || (elevation < 200.0 && elevation >= 140.0)){
-                    color = alpine.getColor();
-                    type = alpine.getBiome();
-                }else if((humid < 80.0 && humid >= 60.0) || (elevation < 140.0 && elevation >= 100.0)){
-                    color = boreal.getColor();
-                    type = boreal.getBiome();
-                }else if((humid < 40.0 && humid >= 20.0) || (elevation < 100.0 && elevation >= 60.0)){
-                    color = subArtic.getColor();
-                    type = subArtic.getBiome();                  
+                if((elevation >= 200.0)){
+                    if(humid >= 80){
+                        color = boreal.getColor();
+                        type = boreal.getBiome();
+                    }else{
+                        color = glacier.getColor();
+                        type = glacier.getBiome();
+                    }
+                }else if((elevation < 200.0 && elevation >= 140.0)){
+                    if(humid >= 70){
+                        color = boreal.getColor();
+                        type = boreal.getBiome();
+                    }else if(humid < 70 && humid >= 20){
+                        color = alpine.getColor();
+                        type = alpine.getBiome();
+                    }else{
+                        color = subArtic.getColor();
+                        type = subArtic.getBiome(); 
+                    }
+                }else if((elevation < 140.0 && elevation >= 100.0)){
+                    if(humid >= 50){
+                        color = boreal.getColor();
+                        type = boreal.getBiome();
+                    }else{
+                        color = alpine.getColor();
+                        type = alpine.getBiome();
+                    }
+                }else if((elevation < 100.0 && elevation >= 60.0)){
+                    if(humid >= 50){
+                        color = alpine.getColor();
+                        type = alpine.getBiome();
+                    }else{
+                        color = subArtic.getColor();
+                        type = subArtic.getBiome(); 
+                    }                
                 }else{
                     color = tundra.getColor();
                     type = tundra.getBiome();

@@ -31,18 +31,41 @@ public class Jungle implements Whittaker{
                 Temperate temperate = new Temperate();
                 Flooded flooded = new Flooded();
 
-                if((elevation >= 200.0) || (humid >= 80.0)){
-                    color = montane.getColor();
-                    type = montane.getBiome();
-                }else if((humid < 60.0 && humid >= 40.0) || (elevation < 200.0 && elevation >= 140.0)){
-                    color = flooded.getColor();
-                    type = flooded.getBiome();
-                }else if((humid < 80.0 && humid >= 60.0) || (elevation < 140.0 && elevation >= 100.0)){
-                    color = tropical.getColor();
-                    type = tropical.getBiome();
-                }else if((humid < 40.0 && humid >= 20.0) || (elevation < 100.0 && elevation >= 60.0)){
-                    color = temperate.getColor();
-                    type = temperate.getBiome();
+                if((elevation >= 200.0)){
+                    if(humid >= 60){
+                        color = montane.getColor();
+                        type = montane.getBiome();
+                    }else{
+                        color = tropical.getColor();
+                        type = tropical.getBiome();
+                    }
+                }else if((elevation < 200.0 && elevation >= 140.0)){
+                    if(humid >= 50){
+                        color = flooded.getColor();
+                        type = flooded.getBiome();
+                    }else if(humid < 50 && humid >= 20){
+                        color = tropical.getColor();
+                        type = tropical.getBiome();
+                    }else{
+                        color = temperate.getColor();
+                        type = temperate.getBiome(); 
+                    }
+                }else if((elevation < 140.0 && elevation >= 100.0)){
+                    if(humid >= 50){
+                        color = flooded.getColor();
+                        type = flooded.getBiome();
+                    }else{
+                        color = tropical.getColor();
+                        type = tropical.getBiome();
+                    }
+                }else if((elevation < 100.0 && elevation >= 60.0)){
+                    if(humid >= 50){
+                        color = tropical.getColor();
+                        type = tropical.getBiome();
+                    }else{
+                        color = beach.getColor();
+                        type = beach.getBiome(); 
+                    }                
                 }else{
                     color = beach.getColor();
                     type = beach.getBiome();
