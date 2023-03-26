@@ -8,6 +8,8 @@ public class AltimetricProfileFactory {
 
     static {
         bindings.put("volcano", Volcano.class);
+        bindings.put("hills",Hills.class);
+        bindings.put("plateau",Plateau.class);
 
      }
 
@@ -16,7 +18,7 @@ public class AltimetricProfileFactory {
         // This code can be simplified with a switch case over the kind of mesh
         try {
             Class klass = bindings.get(options.get(Configuration.PROFILE));
-            return (AltimetricProfiles) klass.getDeclaredConstructor(Map.class).newInstance(options);
+            return (AltimetricProfiles) klass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }

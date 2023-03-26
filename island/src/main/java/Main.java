@@ -7,11 +7,14 @@ import configuration.*;
 import elevation.AltimetricProfileFactory;
 import elevation.AltimetricProfiles;
 import exporter.export;
-import importMesh.Importer;
+import importer.Importer;
+import importer.importInterface;
 import shapes.ShapeSpecificationFactory;
 import shapes.Shapes;
+import soil.*;
 import water.*;
-import whittaker.*;
+import whittaker.Whittaker;
+import whittaker.WhittakerSpecificationFactory;
 import IslandADT.*;
 
 import java.util.HashSet;
@@ -25,20 +28,33 @@ public class Main{
         //aMesh=newLagoon.identify();
         
         Island newIsland = new Island();
-        Importer importMesh = new Importer(aMesh);
+        importInterface importMesh = new Importer(aMesh);
         newIsland=importMesh.convert();
         lagoon newLagoon = new lagoon(newIsland,config);
         newIsland = newLagoon.identify();
 
-        /*Lakes newLake = new Lakes(config);
-        newIsland = newLake.generateLakes(newIsland);
-        System.out.println(newIsland);*/
         AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
         newIsland = profile.assignElevation(newIsland);
 
-        Whittaker newDiagram = new WhittakerSpecificationFactory().create(config);
-        newDiagram.genWhittaker(newIsland);
+        Lakes newLake = new Lakes(config);
+        newIsland = newLake.generateLakes(newIsland);
 
+
+        Aquifers newAquifer = new Aquifers(config);
+        newIsland = newAquifer.generateAquifers(newIsland);
+
+
+        SoilProfiles soil_profile = new SoilProfileFactory().create(config);
+        newIsland = soil_profile.assignHumidity(newIsland);
+
+        System.out.println(newIsland.getEdgesList().size());
+
+        River addRivers = new River(config);
+        newIsland = addRivers.generateRivers(newIsland);
+        System.out.println(newIsland.getEdgesList().size());
+
+        Whittaker newWhittaker = new WhittakerSpecificationFactory().create(config);
+        newIsland = newWhittaker.genWhittaker(newIsland);
         
         export exporter = new export();
         aMesh=exporter.run(newIsland);

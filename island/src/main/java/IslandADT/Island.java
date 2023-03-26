@@ -13,6 +13,7 @@ public class Island implements Iterable<Tile>{
     private List<Tile> Tiles;
     private List<Vertex> vertices;
     private List<Edge> edges;
+    private List<Integer> landTiles = new ArrayList<>();
 
     public Island() {
         this.Tiles = new ArrayList<>();
@@ -31,6 +32,17 @@ public class Island implements Iterable<Tile>{
     public void addTile(Tile newTile){
 
     }
+    public void setLandTiles( List<Integer> landTiles){
+        this.landTiles=landTiles;
+    }
+
+    public List<Integer> getLandTiles(){
+        return java.util.Collections.unmodifiableList(landTiles);
+    }
+
+    public void addEdge(Edge e){
+        edges.add(e);
+    }
 
     public List<Vertex> getVerticesList(){
         return java.util.Collections.unmodifiableList(vertices);
@@ -41,7 +53,7 @@ public class Island implements Iterable<Tile>{
     }
 
     public List<Edge> getEdgesList(){
-        return java.util.Collections.unmodifiableList(edges);
+        return edges;
     }
     
 
@@ -53,6 +65,9 @@ public class Island implements Iterable<Tile>{
         return Tiles.get(index);
     }
 
+    public void addLandTile(int t){
+        landTiles.add(t);
+    }
 
     @Override
     public Iterator<Tile> iterator() {

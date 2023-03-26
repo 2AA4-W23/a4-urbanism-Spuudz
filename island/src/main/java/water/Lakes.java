@@ -1,5 +1,6 @@
 package water;
 
+import java.util.List;
 import java.util.Map;
 import configuration.Configuration;
 import java.util.Random;
@@ -33,6 +34,7 @@ public class Lakes {
         Island clone = new Island();
         int landTiles = numOfLandTiles(anIsland);
         clone.register(anIsland.getTileList(), anIsland.getVerticesList(), anIsland.getEdgesList());
+        clone.setLandTiles(anIsland.getLandTiles());
 
         int currentNum = 0;
 
@@ -45,14 +47,32 @@ public class Lakes {
                         if(random == 1){
                             t.setProperty("tile_type", tile.getTile(TileType.Lake));
                             t.setProperty("rgb_color", tile.getColor(TileType.Lake));
+                            clone.addTile(t);
+                            lakeSpread(t, clone);
                             currentNum++;
                         }
                     }
                 }
-                System.out.println(currentNum);
+                else if(tileType.equals("Lake")){
+                    continue;
+                }
+                else{
                 clone.addTile(t);
+                }
             }
         }
         return clone;
+     }
+     public void lakeSpread(Tile lake, Island clone){
+        List<Integer> neighbors = lake.getNeighborsIdxList();
+        TileTypeChoose tile = new TileTypeChoose();
+        for(int idx : neighbors){
+            Tile t = clone.getTiles(idx);
+            if(t.getProperties().get("elevation").equals(lake.getProperties().get("elevation"))){
+                t.setProperty("tile_type", tile.getTile(TileType.Lake));
+                t.setProperty("rgb_color", tile.getColor(TileType.Lake));
+                clone.addTile(t);
+            }
+        }
      }
 }

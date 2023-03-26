@@ -21,7 +21,6 @@ public class lagoon {
     private Configuration config;
     private Island island;
     public lagoon(Island oldMesh, Configuration config){
-        System.out.println(xMid+" lagoon 1 "+yMid);
         island = oldMesh;
         xMid = xDimension()/2;
         yMid = yDimension()/2;
@@ -30,9 +29,7 @@ public class lagoon {
     }
 
     public Island identify(){
-        System.out.println(xMid+" lagoon 2 "+yMid);
         Shapes shape = ShapeSpecificationFactory.create(config);
-        System.out.println(xMid+" lagoon 3 "+yMid);
         Island islandShape = shape.identifyLand(island, island.getVertices(island.getTiles(findCenter()).getCentroidIdx()).getX(), island.getVertices(island.getTiles(findCenter()).getCentroidIdx()).getY(), xMid*2, yMid*2);
         return islandShape;
     }
