@@ -9,6 +9,8 @@ public class SoilProfileFactory {
 
     static {
         bindings.put("arid", Arid.class);
+        bindings.put("moist", Moist.class);
+        bindings.put("temperate", Temperate.class);
      }
 
     public static SoilProfiles create(Configuration configuration) {
@@ -16,7 +18,7 @@ public class SoilProfileFactory {
         // This code can be simplified with a switch case over the kind of mesh
         try {
             Class klass = bindings.get(options.get(Configuration.SOILPROFILE));
-            return (SoilProfiles) klass.getDeclaredConstructor(Map.class).newInstance(options);
+            return (SoilProfiles) klass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }

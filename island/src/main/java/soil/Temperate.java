@@ -3,6 +3,8 @@ package soil;
 import IslandADT.*;
 
 public class Temperate implements SoilProfiles{
+    public Temperate(){}
+
     public Island assignHumidity(Island anIsland){
         SoilProfileFactory soil = new SoilProfileFactory();
         double distance = 0.0;
@@ -12,7 +14,7 @@ public class Temperate implements SoilProfiles{
             if(t.getProperties().get("humidity").equals("0")){
                 distance = distanceFromWater(anIsland, t);
                 System.out.println(distance);
-                humidity = (int)(100 - distance);
+                humidity = (int)(100*0.75 - distance/2);
                 if(humidity >= 100){
                     humidity = 99;
                 }
