@@ -25,7 +25,7 @@ public class Crescent implements Shapes {
             double y = currentIsland.getVertices(t.getCentroidIdx()).getY();
             double distance = Math.sqrt(Math.pow(x-centerX,2) + Math.pow(y-centerY,2));
             double crescentDistance = Math.sqrt(Math.pow(x-(centerX-(radius*0.8)),2) + Math.pow(y-centerY,2));
-            t = assignType(t, distance, crescentDistance, radius, currentIsland, idx);
+            t = assignType(t, distance, crescentDistance, radius, clone, idx);
             idx++;
         }
 

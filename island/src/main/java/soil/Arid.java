@@ -13,7 +13,7 @@ public class Arid implements SoilProfiles {
         for(Tile t : anIsland.getTileList()){
             if(t.getProperties().get("humidity").equals("0")){
                 distance = distanceFromWater(anIsland, t);
-                humidity = (int)(100*0.4 - distance/3);
+                humidity = (int)(100*0.45 - distance/3);
                 if(humidity >= 100){
                     humidity = 99;
                 }
