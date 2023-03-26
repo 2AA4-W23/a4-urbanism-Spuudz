@@ -36,7 +36,12 @@ java -jar island/target/2aa4.mesh.island-jar-with-dependencies.jar -i img/input.
 ### Necessary Command Line Arguments for Island
 ```
 -shape : circle OR square OR crescent
--altitude : volcano
+-altitude : volcano OR hills OR plateau
+-lakes : number of lakes
+-aquifers : number of aquifers
+-rivers : number of rivers
+-soil : arid OR temperate OR moist
+-biome : arctic OR desert OR jungle
 -i input file name
 -0 output mesh name
 
