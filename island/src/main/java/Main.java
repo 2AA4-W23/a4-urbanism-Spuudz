@@ -9,6 +9,7 @@ import elevation.AltimetricProfiles;
 import exporter.export;
 import importer.Importer;
 import importer.importInterface;
+import seeds.Seed;
 import shapes.ShapeSpecificationFactory;
 import shapes.Shapes;
 import soil.*;
@@ -22,7 +23,10 @@ import java.util.Set;
 import java.util.Set.*;
 public class Main{
     public static void main(String[] args) throws Exception{
+
         Configuration config = new Configuration(args);
+        Seed seed = new Seed(config);
+
         Structs.Mesh aMesh = new MeshFactory().read(config.input());
         //lagoon newLagoon = new lagoon(aMesh,config);
         //aMesh=newLagoon.identify();
@@ -34,7 +38,10 @@ public class Main{
         newIsland = newLagoon.identify();
 
         AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
-        newIsland = profile.assignElevation(newIsland);
+        newIsland = profile.assignElevation(newIsland,seed);
+        seed=profile.returnSeed();
+        System.out.println(seed.getSeed());
+        
 
         Lakes newLake = new Lakes(config);
         newIsland = newLake.generateLakes(newIsland);
@@ -47,11 +54,8 @@ public class Main{
         SoilProfiles soil_profile = new SoilProfileFactory().create(config);
         newIsland = soil_profile.assignHumidity(newIsland);
 
-        System.out.println(newIsland.getEdgesList().size());
-
         River addRivers = new River(config);
         newIsland = addRivers.generateRivers(newIsland);
-        System.out.println(newIsland.getEdgesList().size());
 
         Whittaker newWhittaker = new WhittakerSpecificationFactory().create(config);
         newIsland = newWhittaker.genWhittaker(newIsland);

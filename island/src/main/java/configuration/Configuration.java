@@ -15,6 +15,7 @@ public class Configuration {
     public static final String PROFILE = "altitude";
     public static final String SOILPROFILE = "soil";
     public static final String RIVERS = "rivers";
+    public static final String SEED = "seed";
 
     private CommandLine cli;
     public Configuration(String[] args) {
@@ -31,6 +32,9 @@ public class Configuration {
 
     public String input() {
         return this.cli.getOptionValue(INPUT,"input.mesh");
+    }
+    public String seed() {
+        return this.cli.getOptionValue(SEED,"");
     }
     public String profile() {
         return this.cli.getOptionValue(PROFILE,"volcano");
@@ -81,6 +85,7 @@ public class Configuration {
         options.addOption(new Option (SOILPROFILE, true, "selected soil profile"));
         options.addOption(new Option (RIVERS, true, "number of rivers"));
         options.addOption(new Option (WHITTAKER, true,"whittaker diagram"));
+        options.addOption(new Option (SEED, true,"seed for the island"));
         return options;
     }
 
