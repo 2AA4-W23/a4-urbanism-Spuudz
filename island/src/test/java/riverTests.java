@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import IslandADT.*;
 import elevation.Volcano;
+import seeds.Seed;
 import water.River;
 public class riverTests {
     @BeforeAll
@@ -25,10 +26,11 @@ public class riverTests {
 
     @Test
     public static void riverTest(){
+        Seed seed = new Seed();
         Island island = registerTestIsland();
         River newRiver = new River();
 
-        island = newRiver.generateARiver(island);
+        island = newRiver.generateARiver(island,seed);
 
         assertTrue(island.getEdgesList().size()>0);
 
@@ -40,6 +42,7 @@ public class riverTests {
     }
 
     public static Island registerTestIsland(){
+        Seed seed = new Seed();
         Island island = new Island();
         Volcano volcano = new Volcano();
         List<Vertex> vertices= new ArrayList<>();
@@ -63,6 +66,6 @@ public class riverTests {
 
         island.register(tiles, vertices, null);
 
-        return volcano.assignElevation(island);
+        return volcano.assignElevation(island,seed);
     } 
 }

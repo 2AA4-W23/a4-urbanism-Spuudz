@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import IslandADT.*;
 import elevation.Volcano;
+import seeds.Seed;
 
 public class VolcanoTest {
     @BeforeAll
@@ -48,16 +49,18 @@ public class VolcanoTest {
     public void testCentrePolyon(){
         Volcano volcano = new Volcano();
         Island island = new Island();
+        
         island=registerTestIsland();
         assertEquals(1, volcano.findStartIdx(island));
     }
 
     @Test
     public void testAltitude(){
+        Seed seed = new Seed();
         Volcano volcano = new Volcano();
         Island island = new Island();
         island=registerTestIsland();
-        Island newIsland = volcano.assignElevation(island);
+        Island newIsland = volcano.assignElevation(island,seed);
         assertTrue(Double.parseDouble(newIsland.getTiles(1).getProperties().get("elevation")) >= Double.parseDouble(newIsland.getTiles(0).getProperties().get("elevation")));
         
     }

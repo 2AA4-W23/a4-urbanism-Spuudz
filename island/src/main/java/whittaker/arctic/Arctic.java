@@ -30,7 +30,7 @@ public class Arctic implements Whittaker{
                 subArtic subArtic = new subArtic();
                 Tundra tundra = new Tundra();
 
-                if((elevation >= 200.0) || (humid <= 20.0)){
+                if((elevation >= 200.0)){
                     color = glacier.getColor();
                     type = glacier.getBiome();
                 }else if((humid < 60.0 && humid >= 40.0) || (elevation < 200.0 && elevation >= 140.0)){

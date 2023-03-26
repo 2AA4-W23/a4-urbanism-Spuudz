@@ -40,7 +40,6 @@ public class Main{
         AltimetricProfiles profile = new AltimetricProfileFactory().create(config);
         newIsland = profile.assignElevation(newIsland,seed);
         seed=profile.returnSeed();
-        System.out.println(seed.getSeed());
         
 
         Lakes newLake = new Lakes(config);
@@ -55,7 +54,14 @@ public class Main{
         newIsland = soil_profile.assignHumidity(newIsland);
 
         River addRivers = new River(config);
-        newIsland = addRivers.generateRivers(newIsland);
+        newIsland = addRivers.generateRivers(newIsland,seed);
+        if(seed.input()){
+            seed=addRivers.returnSeed();
+        }else{
+            seed.addToSeed(addRivers.returnSeed().getSeed());
+        }
+        
+        System.out.println(seed.getSeed());
 
         Whittaker newWhittaker = new WhittakerSpecificationFactory().create(config);
         newIsland = newWhittaker.genWhittaker(newIsland);

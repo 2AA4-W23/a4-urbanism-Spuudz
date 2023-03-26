@@ -4,14 +4,15 @@ import java.util.Random;
 import java.util.Map;
 
 import IslandADT.*;
+import seeds.Seed;
 
 public class Volcano implements AltimetricProfiles {
-
+    private Seed newSeed=new Seed();
     public Volcano(Map<String, String> params){
 
     }
     public Volcano(){}
-    public Island assignElevation(Island island){
+    public Island assignElevation(Island island, Seed seed){
         double maxAltitude;
         double width=width(island);
         double height = height(island);
@@ -44,7 +45,14 @@ public class Volcano implements AltimetricProfiles {
 
     }
 
-
+    public Seed returnSeed(){
+        String seed="";
+        for(int i=0;i<30;i++){
+            seed+="0";
+        }
+        newSeed.addToSeed(seed);
+        return newSeed;
+    }
 
     public double distanceFromCentre(int centerIDX, Island island, Tile t){
         double centerX = island.getTiles(centerIDX).getCentroid().getX();
@@ -103,5 +111,8 @@ public class Volcano implements AltimetricProfiles {
 
         }
         return centerIDX;
+    }
+    public int findStartIdx(Seed seed){
+        return -1;
     }
 }

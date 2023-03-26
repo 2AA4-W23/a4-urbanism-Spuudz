@@ -2,14 +2,16 @@ package elevation;
 
 import java.util.Map;
 import IslandADT.*;
+import seeds.Seed;
 
 public class Plateau implements AltimetricProfiles {
     private static final double maxAltitude = 250;
+    private Seed newSeed=new Seed();
     public Plateau(){
 
     }
 
-    public Island assignElevation(Island island){
+    public Island assignElevation(Island island,Seed seed){
         Island clone = new Island();
         clone.register(island.getTileList(), island.getVerticesList(), island.getEdgesList());
         clone.setLandTiles(island.getLandTiles());
@@ -75,7 +77,6 @@ public class Plateau implements AltimetricProfiles {
 
         double centerX = totalX/islandTile;
         double centerY = totalY/islandTile;
-        System.out.println("center x: "+centerX+" center y: "+centerY);
         double minDistance=Double.MAX_VALUE;
         int count=0;
         int centerIDX=0;
@@ -89,6 +90,17 @@ public class Plateau implements AltimetricProfiles {
 
         }
         return centerIDX;
+    }
+    public int findStartIdx(Seed seed){
+        return -1;
+    }
+    public Seed returnSeed(){
+        String seed="";
+        for(int i=0;i<30;i++){
+            seed+="0";
+        }
+        newSeed.addToSeed(seed);
+        return newSeed;
     }
 
     private double distanceFromCentre(int centerIDX, Island island, Tile t){

@@ -5,16 +5,22 @@ import java.util.Random;
 import java.util.Set;
 
 import IslandADT.*;
+import seeds.Seed;
 
 public class Hills implements AltimetricProfiles {
-    private static final double maxAltitude=50;
+    private static final double maxAltitude=150;
     private static int numHills=5;
+    private Seed newSeed = new Seed();
 
     public Hills(){
 
     }
 
-    public Island assignElevation(Island island){
+    public Seed returnSeed(){
+        return newSeed;
+    }
+    public Island assignElevation(Island island,Seed seed){
+        
         if(numHills>island.getLandTiles().size()){
             numHills=island.getLandTiles().size()/3;
             if(numHills==0){
@@ -22,8 +28,21 @@ public class Hills implements AltimetricProfiles {
             }
         }
         Set<Integer> hilltops = new HashSet<>();
-        while(hilltops.size()<numHills){
-            hilltops.add(findStartIdx(island));
+        
+        if(seed.input()){ //if there is an input seed
+            System.out.println("hello");
+            for(int i=0;i<numHills;i++){
+                int idx = findStartIdx(seed);
+                System.out.println("hills idx"+idx);
+                hilltops.add(idx);
+            }
+            newSeed=seed;
+        }else{
+            while(hilltops.size()<numHills){
+                int idx=findStartIdx(island);
+                newSeed.addToSeed(Integer.toString(idx));
+                hilltops.add(idx);
+            }
         }
     
         for(int i : hilltops){
@@ -34,7 +53,7 @@ public class Hills implements AltimetricProfiles {
             if(t.getProperties().get("tile_type").equals("Ocean")){
                 t.setProperty("elevation", "0");
             }else{
-                double elevation = maxAltitude-(nearestDistance(hilltops, island, t)/5);
+                double elevation = maxAltitude-(nearestDistance(hilltops, island, t)/3);
                 if(elevation<0){
                     elevation=1;
                 }
@@ -68,6 +87,10 @@ public class Hills implements AltimetricProfiles {
             }
 
         }
+        
+    }
+    public int findStartIdx(Seed seed){
+        return seed.returnCurrent();
         
     }
     

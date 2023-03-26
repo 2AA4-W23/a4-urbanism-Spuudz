@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import configuration.Configuration;
+import seeds.Seed;
+
 import java.util.Random;
 import java.util.Set;
 
@@ -14,6 +16,7 @@ public class River {
     private Set<Integer>sourceIdxs = new HashSet<>();
     private int numRivers;
     private static final int riverHumidity=10;
+    private Seed newSeed = new Seed();
     public River(Configuration config){
         Map<String, String> options = config.export();
         numRivers = Integer.parseInt(options.get(Configuration.RIVERS));
@@ -22,13 +25,13 @@ public class River {
         
     }
 
-    public Island generateRivers(Island island){
+    public Island generateRivers(Island island,Seed seed){
         Island clone = new Island();
         clone.register(island.getTileList(), island.getVerticesList(), island.getEdgesList());
         clone.setLandTiles(island.getLandTiles());
 
         for(int i=0;i<numRivers;i++){
-            clone = generateARiver(clone);
+            clone = generateARiver(clone,seed);
         }
         return clone;
         
@@ -41,10 +44,8 @@ public class River {
         int count=0;
         for(int i : landTiles){
             int chance = rand.nextInt(landTiles.size()-count)+1;
-            System.out.println(chance);
             if(chance<=2){
                 if(sourceIdxs.contains(i)){
-                    System.out.println(i);
                     continue;
                 }
                 sourceIdxs.add(i);
@@ -55,23 +56,33 @@ public class River {
         return -1;
     }
 
-    public Island generateARiver(Island island){
+    public Island generateARiver(Island island,Seed seed){
         Island clone = new Island();
         clone.register(island.getTileList(), island.getVerticesList(), island.getEdgesList());
         clone.setLandTiles(island.getLandTiles());
-        System.out.println(clone.getLandTiles().size());
-        Random rand = new Random();
-        int startIDX = assignStart(clone.getLandTiles());
-        while(true){
-            if(clone.getTiles(startIDX).getProperties().get("humidity").equals("100")){
-                startIDX = assignStart(clone.getLandTiles());
-            }else{
-                break;
+        int startIDX;
+        int thickness;
+        if(seed.input()){
+            startIDX = seed.returnCurrent();
+            thickness=seed.returnCurrent();
+            
+        }else{
+            startIDX = assignStart(clone.getLandTiles());
+            while(true){
+                if(clone.getTiles(startIDX).getProperties().get("humidity").equals("100")){
+                    startIDX = assignStart(clone.getLandTiles());
+                }else{
+                    break;
+                }
             }
+            Random rand = new Random();
+            thickness = rand.nextInt(3)+1;
+            newSeed.addToSeed(Integer.toString(startIDX));
+            newSeed.addToSeed(Integer.toString(thickness));
         }
         
-        System.out.println("starting: "+startIDX);
-        int thickness = rand.nextInt(3)+1;
+        
+        
         boolean riverSource=true;
         TileTypeChoose tile = new TileTypeChoose();
         while(true){
@@ -83,7 +94,6 @@ public class River {
             List<Integer> neighbour = t.getNeighborsIdxList();
             int nextIDX = lowestElevationIDX(t, neighbour, clone.getTileList());
             if(nextIDX==-1 && !(t.getProperties().get("tile_type").equals("Ocean"))){
-                System.out.println(t.getProperties().get("tile_type").equals("Ocean"));
                 t.setProperty("tile_type", tile.getTile(TileType.Lake));
                 t.setProperty("rgb_color", tile.getColor(TileType.Lake));
                 return clone;
@@ -139,7 +149,6 @@ public class River {
                 thickness+=originalThickness;
 
             }
-            System.out.println(thickness);
             newEdge.setProperty("river",Integer.toString(thickness));
             clone.addEdge(newEdge);  
             sourceIdxs.add(nextIDX);
@@ -168,5 +177,8 @@ public class River {
         return idx;
 
         
+    }
+    public Seed returnSeed(){
+        return newSeed;
     }
 }

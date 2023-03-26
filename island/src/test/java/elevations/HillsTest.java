@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import IslandADT.*;
 import elevation.Hills;
+import seeds.Seed;
+
 import java.util.List;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -35,11 +37,12 @@ public class HillsTest {
 
     @Test
     public void assignElevation(){
+        Seed seed = new Seed();
         Hills hills = new Hills();
         Island island = new Island();
         
         island=registerTestIsland();
-        island=hills.assignElevation(island);
+        island=hills.assignElevation(island,seed);
         assertFalse(Integer.parseInt(island.getTiles(0).getProperties().get("elevation"))==(Integer.parseInt(island.getTiles(1).getProperties().get("elevation")))&&(Integer.parseInt(island.getTiles(2).getProperties().get("elevation")))==Integer.parseInt(island.getTiles(0).getProperties().get("elevation")));
 
     }
