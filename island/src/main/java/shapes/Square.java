@@ -38,8 +38,8 @@ public class Square implements Shapes {
             double y = currentIsland.getVertices(t.getCentroidIdx()).getY();
 
             if((xLeft < x && xRight > x) && (yTop < y && yBottom > y)){
-                color = chooseTile.getColor(TileType.Forest);
-                tile = chooseTile.getTile(TileType.Forest);
+                color = chooseTile.getColor(TileType.Land);
+                tile = chooseTile.getTile(TileType.Land);
                 currentIsland.addLandTile(idx);
                      
             }else{

@@ -45,8 +45,8 @@ public class Circle implements Shapes {
             if(type==0){
 
                 TileTypeChoose chooseTile = new TileTypeChoose();
-                color = chooseTile.getColor(TileType.Forest);
-                tile = chooseTile.getTile(TileType.Forest);
+                color = chooseTile.getColor(TileType.Land);
+                tile = chooseTile.getTile(TileType.Land);
                 t.setProperty("tile_type", tile);
                 t.setProperty("rgb_color",color);
 
@@ -84,3 +84,4 @@ public class Circle implements Shapes {
 
     }
 }
+    
