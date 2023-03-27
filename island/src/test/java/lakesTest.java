@@ -38,15 +38,15 @@ public class lakesTest {
         
         Tile t = new Tile();
         t.addCentroid(vertices.get(0));
-        t.setProperty("tile_type", "Forest");
+        t.setProperty("tile_type", "Land");
         tiles.add(t);
         Tile t2 = new Tile();
         t2.addCentroid(vertices.get(1));
-        t2.setProperty("tile_type", "Forest");
+        t2.setProperty("tile_type", "Land");
         tiles.add(t2);
         Tile t3 = new Tile();
         t3.addCentroid(vertices.get(2));
-        t3.setProperty("tile_type", "Forest");
+        t3.setProperty("tile_type", "Land");
         tiles.add(t3);
 
         island.register(tiles, vertices, null);

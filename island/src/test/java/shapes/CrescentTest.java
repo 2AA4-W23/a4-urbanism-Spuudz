@@ -30,7 +30,7 @@ public class CrescentTest {
         testIsland = registerTestIsland();
         Tile t = testIsland.getTiles(0);
 
-        assertEquals("Forest", shape.assignType(t, 0, 2, 1, testIsland, 0).getProperties().get("tile_type"));
+        assertEquals("Land", shape.assignType(t, 0, 2, 1, testIsland, 0).getProperties().get("tile_type"));
     }
 
 

@@ -24,7 +24,7 @@ public class aquiferTests {
         
         Tile t = new Tile();
         t.addCentroid(vertices.get(0));
-        t.setProperty("tile_type", "Forest");
+        t.setProperty("tile_type", "Land");
         tiles.add(t);
 
         island.register(tiles, vertices, null);
