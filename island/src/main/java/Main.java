@@ -43,11 +43,25 @@ public class Main{
         
 
         Lakes newLake = new Lakes(config);
-        newIsland = newLake.generateLakes(newIsland);
+        if(seed.input()){
+            newIsland = newLake.generateLakes(newIsland, seed);
+            seed = newLake.returnSeed();
+        }
+        else{
+            newIsland = newLake.generateLakes(newIsland);
+            seed.addToSeed(newLake.returnSeed().getSeed());
+        }
 
 
         Aquifers newAquifer = new Aquifers(config);
-        newIsland = newAquifer.generateAquifers(newIsland);
+        if(seed.input()){
+            newIsland = newAquifer.generateAquifers(newIsland, seed);
+            seed = newAquifer.returnSeed();
+        }
+        else{
+            newIsland = newAquifer.generateAquifers(newIsland);
+            seed.addToSeed(newAquifer.returnSeed().getSeed());
+        }
 
 
         SoilProfiles soil_profile = new SoilProfileFactory().create(config);
