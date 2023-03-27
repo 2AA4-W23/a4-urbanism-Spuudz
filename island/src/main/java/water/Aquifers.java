@@ -28,8 +28,6 @@ public class Aquifers {
             Tile t = anIsland.getTiles(index);
             t.setProperty("tile_type", tile.getTile(TileType.Aquifer));
 
-            newSeed.addToSeed(Integer.toString(index));
-
             clone.addTile(t);
         }
         return clone;

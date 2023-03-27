@@ -42,8 +42,6 @@ public class Lakes {
             t.setProperty("tile_type", tile.getTile(TileType.Lake));
             t.setProperty("rgb_color", tile.getColor(TileType.Lake));
 
-            newSeed.addToSeed(Integer.toString(index));
-
             clone.addTile(t);
         }
         return clone;
