@@ -22,7 +22,7 @@ public class Square implements Shapes {
         clone.register(currentIsland.getTileList(), currentIsland.getVerticesList(),currentIsland.getEdgesList());
 
         if(width>height){
-            squareWidth = width/3.14; 
+            squareWidth = width/3.14;//easter egg 
         }else{
             squareWidth =height/3.14;
         }
@@ -40,7 +40,7 @@ public class Square implements Shapes {
             if((xLeft < x && xRight > x) && (yTop < y && yBottom > y)){
                 color = chooseTile.getColor(TileType.Land);
                 tile = chooseTile.getTile(TileType.Land);
-                currentIsland.addLandTile(idx);
+                clone.addLandTile(idx);
                      
             }else{
                 color = chooseTile.getColor(TileType.Ocean);

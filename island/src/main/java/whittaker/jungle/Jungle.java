@@ -9,6 +9,7 @@ import whittaker.Whittaker;
 public class Jungle implements Whittaker{
     
     public Jungle(Map<String, String> params){}
+    public Jungle(){}
 
     @Override
     public Island genWhittaker(Island currentIsland) {

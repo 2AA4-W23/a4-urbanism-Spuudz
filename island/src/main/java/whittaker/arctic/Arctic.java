@@ -9,6 +9,7 @@ import whittaker.arctic.articBiomes.*;
 public class Arctic implements Whittaker{
     
     public Arctic(Map<String, String> params){}
+    public Arctic(){}
 
     @Override
     public Island genWhittaker(Island currentIsland) {

@@ -10,6 +10,7 @@ import whittaker.desert.desertBiomes.Dunes;
 public class Desert implements Whittaker{
     
     public Desert(Map<String, String> params){}
+    public Desert(){}
 
     @Override
     public Island genWhittaker(Island currentIsland) {

@@ -22,7 +22,7 @@ public class TileTypeChoose {
                 break;
             case Land:
                 color = "75,122,71";
-                tileProperty = "Forest";
+                tileProperty = "Land";
                 break;
             case Lake:
                 color = "0,71,100";
