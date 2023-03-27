@@ -80,7 +80,7 @@ Functional features that have been properly tested.
 | F13 | Rivers/Rivers Flow | Dylan | 24/03/23 | | S |
 | F14 | Aquifers | Matthew | 17/03/23 | 23/03/23 | D |
 | F15 | Soil Absorption | Matthew | 23/03/23 | 26/03/23 | D | 
-| F16 | Biomes | Harman | | | B(F17) |
+| F16 | Biomes | Harman | 23/03/23| 26/03/23 | D |
 | F17 | Whittaker Diagrams | Harman | 21/03/23 | 26/03/23 | D |
 | F18 | Reproducability | All | | | B(F10-17) |  
 
