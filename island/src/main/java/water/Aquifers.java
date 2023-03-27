@@ -30,6 +30,7 @@ public class Aquifers {
 
             clone.addTile(t);
         }
+        newSeed = seed;
         return clone;
     }
 

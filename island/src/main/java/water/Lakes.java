@@ -41,9 +41,11 @@ public class Lakes {
             Tile t = anIsland.getTiles(index);
             t.setProperty("tile_type", tile.getTile(TileType.Lake));
             t.setProperty("rgb_color", tile.getColor(TileType.Lake));
+            lakeSpread(t, clone);
 
             clone.addTile(t);
         }
+        newSeed = seed;
         return clone;
     }
 
@@ -95,7 +97,6 @@ public class Lakes {
                 t.setProperty("tile_type", tile.getTile(TileType.Lake));
                 t.setProperty("rgb_color", tile.getColor(TileType.Lake));
                 clone.addTile(t);
-                newSeed.addToSeed(Integer.toString(idx));
             }
         }
      }

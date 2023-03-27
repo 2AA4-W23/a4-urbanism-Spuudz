@@ -65,6 +65,7 @@ public class River {
         if(seed.input()){
             startIDX = seed.returnCurrent();
             thickness=seed.returnCurrent();
+            newSeed = seed;
             
         }else{
             startIDX = assignStart(clone.getLandTiles());
