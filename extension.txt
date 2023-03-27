@@ -1,2 +1,2 @@
-- Add seed for lakes and Aquifers
-- Finish last 2 questions
+- Fix seed issues and bugs
+- Finish last 2 questions of report
