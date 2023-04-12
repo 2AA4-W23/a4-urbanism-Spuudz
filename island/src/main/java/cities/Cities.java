@@ -4,24 +4,30 @@ import configuration.Configuration;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.ArrayList;
 
 import GraphADT.*;
-import findPath.*;
+import java.util.ArrayList;
+
 import IslandADT.*;
+import IslandADT.Edge;
 
 public class Cities {
     private int numOfCities;
     private List<Integer> landEdges = new ArrayList<Integer>();
     private List<Integer> landVertices = new ArrayList<Integer>();
     private List<Integer> cityIndex = new ArrayList<Integer>();
+    private int capitalIndex;
 
     public Cities(Configuration config){
         Map<String,String> options = config.export();
         numOfCities = Integer.parseInt(options.get(Configuration.CITIES));
     }
 
-    public void getLandVertices(Island anIsland){
+    public int getCapitalIndex(){
+        return capitalIndex;
+    }
+
+    private void getLandVertices(Island anIsland){
         for(int landIndex : anIsland.getLandTiles()){
             Tile landTile = anIsland.getTiles(landIndex);
             for(int index : landTile.getEdgeIdxs()){
@@ -52,6 +58,7 @@ public class Cities {
 
             if(count == 0){
                 v.setProperty("city", "5");
+                this.capitalIndex = index;
             }
             else{
                 v.setProperty("city", Integer.toString(citySize));
@@ -60,6 +67,18 @@ public class Cities {
             count++;
         }
 
+        for(List<Integer> L : findCityPaths(anIsland)){
+            System.out.println(L);
+            for(int x = 0; x < L.size()-1; x++){
+                IslandADT.Vertex v1 = anIsland.getVertices(landVertices.get(L.get(x)));
+                IslandADT.Vertex v2 = anIsland.getVertices(landVertices.get(L.get(x+1)));
+
+                IslandADT.Edge e = new Edge(v1, v2);
+                e.setProperty("city", "1");
+
+                anIsland.addEdge(e);
+            }
+        }
         return anIsland;
 
     }
@@ -79,5 +98,18 @@ public class Cities {
             }
         }
         return cityIndexList;
+    }
+
+    private List<List<Integer>> findCityPaths(Island anIsland){
+        Graph G = new Graph();
+        List<List<Integer>> pathList = new ArrayList<List<Integer>>();
+
+        StarNetwork network = new StarNetwork();
+
+        G = network.convertToGraph(landVertices,landEdges,anIsland);
+
+        pathList = network.shortestPath(G, cityIndex, capitalIndex);
+
+        return pathList;
     }
 }

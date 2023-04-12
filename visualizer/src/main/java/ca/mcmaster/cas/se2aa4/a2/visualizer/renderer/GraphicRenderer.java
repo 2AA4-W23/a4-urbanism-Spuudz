@@ -14,6 +14,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
+import java.net.PortUnreachableException;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ public class GraphicRenderer implements Renderer {
         drawPolygons(aMesh,canvas);
         drawRiverSegments(aMesh, canvas);
         drawCities(aMesh, canvas);
+        drawRoadSegments(aMesh, canvas);
     }
 
     private void drawPolygons(Mesh aMesh, Graphics2D canvas) {
@@ -51,13 +53,30 @@ public class GraphicRenderer implements Renderer {
                 path.lineTo(aMesh.getVertices(s.getV2Idx()).getX(), aMesh.getVertices(s.getV2Idx()).getY());
                 path.closePath();
                 canvas.draw(path);
-            }
-            
+            }      
+        }
+    }
+
+    private void drawRoadSegments(Mesh aMesh, Graphics2D canvas){
+        System.out.println("here!");
+        for(Segment s : aMesh.getSegmentsList()){
+            Path2D path = new Path2D.Float();
+            Optional<Integer> thickness = new CityProperty().extract(s.getPropertiesList());
+            if(thickness.equals(Optional.of(-1))){
+                continue;
+            }else {
+                canvas.setColor(new Color(255,0,0));
+                Stroke stroke = new BasicStroke(0.4f);
+                canvas.setStroke(stroke);
+                path.moveTo(aMesh.getVertices(s.getV1Idx()).getX(), aMesh.getVertices(s.getV1Idx()).getY());
+                path.lineTo(aMesh.getVertices(s.getV2Idx()).getX(), aMesh.getVertices(s.getV2Idx()).getY());
+                path.closePath();
+                canvas.draw(path);
+            }      
         }
     }
 
     private void drawCities(Mesh aMesh, Graphics2D canvas){
-        canvas.setColor(new Color(255,0,0));
 
         for(Vertex v : aMesh.getVerticesList()){
             Optional<Integer> citySize = new CityProperty().extract(v.getPropertiesList());
@@ -67,7 +86,12 @@ public class GraphicRenderer implements Renderer {
                 continue;
             }
             else {
-                System.out.println(thickInteger);
+                if(thickInteger == 5){
+                    canvas.setColor(new Color(0,0,255));
+                }
+                else {
+                    canvas.setColor(new Color(255,0,0));
+                }
                 Stroke stroke = new BasicStroke(0.2f*(thickInteger*5));
                 canvas.setStroke(stroke);
                 Ellipse2D.Double circle = new Ellipse2D.Double(v.getX() - (0.2f*(thickInteger*2)/2),v.getY() - (0.2f*(thickInteger*5)/2), 0.2f*(thickInteger*5), 0.2f*(thickInteger*5));

@@ -9,11 +9,20 @@ public class Node {
     private final int x, y;
     private final int index;
     private List<Integer> neighborList = new ArrayList<Integer>();
+    private int refIndex;
 
     public Node(float x, float y,int index){
         this.x=convert(x);
         this.y=convert(y);
         this.index=index;
+    }
+
+    public void setRefIndex(int index){
+        this.refIndex = index;
+    }
+
+    public int getRefIndex(){
+        return refIndex;
     }
 
     public void setNeighbors(List<Integer> neighbors){
