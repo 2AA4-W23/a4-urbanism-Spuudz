@@ -13,7 +13,7 @@
   </parent>
 
   <version>1.0</version>
-  <artifactId>2aa4.mesh.pathfinder</artifactId>
+  <artifactId>pathfinder</artifactId>
   <name>McMaster :: CAS :: 2AA4 :: A2 :: Pathfinder</name>
 
   <dependencies>
