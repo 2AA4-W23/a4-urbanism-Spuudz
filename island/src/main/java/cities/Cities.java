@@ -68,7 +68,6 @@ public class Cities {
         }
 
         for(List<Integer> L : findCityPaths(anIsland)){
-            System.out.println(L);
             for(int x = 0; x < L.size()-1; x++){
                 IslandADT.Vertex v1 = anIsland.getVertices(landVertices.get(L.get(x)));
                 IslandADT.Vertex v2 = anIsland.getVertices(landVertices.get(L.get(x+1)));

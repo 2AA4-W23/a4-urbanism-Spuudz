@@ -27,8 +27,8 @@ public class GraphicRenderer implements Renderer {
         canvas.setStroke(stroke);
         drawPolygons(aMesh,canvas);
         drawRiverSegments(aMesh, canvas);
-        drawCities(aMesh, canvas);
         drawRoadSegments(aMesh, canvas);
+        drawCities(aMesh, canvas);
     }
 
     private void drawPolygons(Mesh aMesh, Graphics2D canvas) {
@@ -58,7 +58,6 @@ public class GraphicRenderer implements Renderer {
     }
 
     private void drawRoadSegments(Mesh aMesh, Graphics2D canvas){
-        System.out.println("here!");
         for(Segment s : aMesh.getSegmentsList()){
             Path2D path = new Path2D.Float();
             Optional<Integer> thickness = new CityProperty().extract(s.getPropertiesList());
