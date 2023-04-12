@@ -4,6 +4,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
+import ca.mcmaster.cas.se2aa4.a2.visualizer.renderer.properties.CityProperty;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.renderer.properties.ColorProperty;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.renderer.properties.RiverProperty;
 
@@ -11,6 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.util.Iterator;
 import java.util.Optional;
@@ -24,6 +26,7 @@ public class GraphicRenderer implements Renderer {
         canvas.setStroke(stroke);
         drawPolygons(aMesh,canvas);
         drawRiverSegments(aMesh, canvas);
+        drawCities(aMesh, canvas);
     }
 
     private void drawPolygons(Mesh aMesh, Graphics2D canvas) {
@@ -52,6 +55,28 @@ public class GraphicRenderer implements Renderer {
             
         }
     }
+
+    private void drawCities(Mesh aMesh, Graphics2D canvas){
+        canvas.setColor(new Color(255,0,0));
+
+        for(Vertex v : aMesh.getVerticesList()){
+            Optional<Integer> citySize = new CityProperty().extract(v.getPropertiesList());
+            Integer thickInteger = Integer.valueOf(citySize.get());
+
+            if(citySize.equals(Optional.of(-1))){
+                continue;
+            }
+            else {
+                System.out.println(thickInteger);
+                Stroke stroke = new BasicStroke(0.2f*(thickInteger*5));
+                canvas.setStroke(stroke);
+                Ellipse2D.Double circle = new Ellipse2D.Double(v.getX() - (0.2f*(thickInteger*2)/2),v.getY() - (0.2f*(thickInteger*5)/2), 0.2f*(thickInteger*5), 0.2f*(thickInteger*5));
+                canvas.fill(circle);
+                canvas.draw(circle);
+            }
+        }
+    }
+
 
     private void drawAPolygon(Structs.Polygon p, Mesh aMesh, Graphics2D canvas) {
         Hull hull = new Hull();

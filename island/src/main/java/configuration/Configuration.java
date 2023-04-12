@@ -16,6 +16,7 @@ public class Configuration {
     public static final String SOILPROFILE = "soil";
     public static final String RIVERS = "rivers";
     public static final String SEED = "seed";
+    public static final String CITIES = "cities";
 
     private CommandLine cli;
     public Configuration(String[] args) {
@@ -65,6 +66,9 @@ public class Configuration {
     public String rivers(){
         return this.cli.getOptionValue(RIVERS, "1");
     }
+    public String cities(){
+        return this.cli.getOptionValue(CITIES,"3");
+    }
 
     public Map<String, String> export() {
         Map<String, String> result = new HashMap<>();
@@ -86,6 +90,7 @@ public class Configuration {
         options.addOption(new Option (RIVERS, true, "number of rivers"));
         options.addOption(new Option (WHITTAKER, true,"whittaker diagram"));
         options.addOption(new Option (SEED, true,"seed for the island"));
+        options.addOption(new Option (CITIES, true,"number of cities to be generated"));
         return options;
     }
 

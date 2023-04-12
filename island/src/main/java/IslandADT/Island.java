@@ -44,6 +44,10 @@ public class Island implements Iterable<Tile>{
         edges.add(e);
     }
 
+    public void setVertex(Vertex v){
+        vertices.set(v.getIndex(),v);
+    }
+
     public List<Vertex> getVerticesList(){
         return java.util.Collections.unmodifiableList(vertices);
     }
@@ -54,6 +58,10 @@ public class Island implements Iterable<Tile>{
 
     public List<Edge> getEdgesList(){
         return edges;
+    }
+
+    public Edge getEdge(int index){
+        return edges.get(index);
     }
     
 

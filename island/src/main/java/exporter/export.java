@@ -35,6 +35,15 @@ public class export {
         int count=0;
         for(Vertex v : island.getVerticesList()){
             Structs.Vertex ve = Structs.Vertex.newBuilder().setX(v.x()).setY(v.y()).build();
+            Structs.Vertex.Builder pc = Structs.Vertex.newBuilder(ve);
+            for(Map.Entry<String, String> entry : v.getProperties().entrySet()){
+                Structs.Property tt = Structs.Property.newBuilder()
+                        .setKey(entry.getKey())
+                        .setValue(entry.getValue())
+                        .build();
+                pc.addProperties(tt);
+            }
+            ve=pc.build();
             vertices[count]= ve;
             count++;
         }

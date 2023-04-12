@@ -17,6 +17,7 @@ import water.*;
 import whittaker.Whittaker;
 import whittaker.WhittakerSpecificationFactory;
 import IslandADT.*;
+import cities.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -79,6 +80,9 @@ public class Main{
 
         Whittaker newWhittaker = new WhittakerSpecificationFactory().create(config);
         newIsland = newWhittaker.genWhittaker(newIsland);
+
+        Cities city = new Cities(config);
+        newIsland = city.generateCities(newIsland);
         
         export exporter = new export();
         aMesh=exporter.run(newIsland);

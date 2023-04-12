@@ -1,15 +1,26 @@
 package IslandADT;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Vertex {
     private static final int precision = 2;
     private final int x, y;
     private final int index;
+    private Map<String, String> properties = new HashMap<>();
 
     public Vertex(float x, float y,int index){
         this.x=convert(x);
         this.y=convert(y);
         this.index=index;
+    }
+    
+    public void setProperty(String key, String value){
+        properties.put(key,value);
+    }
+    public Map<String,String> getProperties(){
+        return java.util.Collections.unmodifiableMap(properties);
+
     }
 
     public float x() {
