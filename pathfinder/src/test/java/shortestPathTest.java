@@ -27,6 +27,33 @@ public class shortestPathTest {
         assertEquals(path, d.shortestPath(g, g.getNode(0), g.getNode(6)));
     }
 
+    @Test
+    public void testShortestPathAdjacentNodes(){
+        Graph g = new Graph();
+        g = createTestGraph();
+
+        ShortestPath d = new ShortestPath();
+
+        List<Integer> path = new ArrayList<Integer>();
+        path.add(0);
+        path.add(1);
+
+        assertEquals(path, d.shortestPath(g, g.getNode(0), g.getNode(1)));
+    }
+
+    @Test
+    public void testShortestPathSameNode(){
+        Graph g = new Graph();
+        g = createTestGraph();
+
+        ShortestPath d = new ShortestPath();
+
+        List<Integer> path = new ArrayList<Integer>();
+        path.add(0);
+        
+        assertEquals(path, d.shortestPath(g, g.getNode(0), g.getNode(0)));
+    }
+
 
     public Graph createTestGraph(){
         Node n1 = new Node(0, 0,0);

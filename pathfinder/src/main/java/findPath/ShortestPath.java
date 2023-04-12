@@ -69,7 +69,7 @@ public class ShortestPath implements FindPath{
         
         List<Integer> shortestPath = new ArrayList<Integer>();
         Node currentNode = n2;
-
+        
         while(currentNode != n1){
             shortestPath.add(currentNode.getIndex());
             currentNode = path.get(currentNode.getIndex());
