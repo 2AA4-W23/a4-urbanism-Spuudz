@@ -5,6 +5,9 @@
   - Harman Bassi [bassih3@mcmaster.ca]
   - Matthew Bradbury [bradbm1@mcmaster.ca]
 
+## Code Ownership
+  - Code Ownership over specific features in the island generation library can be seen below in the backlog. The pathfinder library was created entirely by Matthew Bradbury with the exception of the Shortest Path algorithm, in which the implementation was based off of pseudocode of Dijkstra's Algorithm from our 2CO3 course. The generation, IO, and visualizer libraries were provided by our course professor, Dr. Mosser. 
+ 
 ## How to install?
 
 ```
@@ -65,14 +68,6 @@ Functional features that have been properly tested.
 
 | Id | Feature title | Who? | Start | End | Status |
 |:--:|---------------|------|-------|-----|--------|
-| F01   |  Draw Segments Between Vertices with color being average of vertices |  Matthew, Dylan, Harman    |  01/02/23  | 08/02/23 | D |
-| F02   |  Creating Mesh ADT | Matthew, Dylan | 09/02/23 | 15/02/23 | D |
-| F03   | Producing full meshes | Dylan, Harman | 09/02/23 | 15/02/23 | D |
-| F04   | Playing with rendering (color and thickness for polygons) | Matthew, Harman | 17/02/23 | 17/02/23 | D | 
-| F05   | Visualization Mode | Matthew | 17/02/23 | 25/02/23 | D |
-| F06   | Generate Irregular Grid | Dylan |20/02/23 |22/02/23 | D |
-| F07   | Compute Neighborhood Relations | Harman | 23/02/23 | 23/02/23 | D |
-| F08   | Control Generation through Command Line | Matthew | 23/02/23 | 24/02/23 | D |
 | F09 (MVP) | Create Lagoon Island  | All | 06/03/23 | 12/03/23 | D |
 | F10 | Different island shapes | All | 12/03/23 | 22/03/23 | F |
 | F11 | elevation profiles | Dylan | 3/17/23 | 3/22/23 | D |
