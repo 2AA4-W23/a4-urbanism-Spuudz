@@ -6,7 +6,7 @@
   - Matthew Bradbury [bradbm1@mcmaster.ca]
 
 ## Code Ownership
-  - Code Ownership over specific features in the island generation library can be seen below in the backlog. The pathfinder library was created entirely by Matthew Bradbury with the exception of the Shortest Path algorithm, in which the implementation was based off of pseudocode of Dijkstra's Algorithm from our 2CO3 course. The generation, IO, and visualizer libraries were provided by our course professor, Dr. Mosser. 
+  - Code Ownership over specific features in the island generation library can be seen below in the backlog. The pathfinder library was created entirely by Matthew Bradbury with the exception of the Shortest Path algorithm, in which the implementation was based off of pseudocode of Dijkstra's Algorithm from our 2CO3 course. The generation and IO libraries were provided by our course professor, Dr. Mosser. The visualizer library was mostly provided by Dr. Mosser, with the function to visualize rivers being attributed to Dylan Garner, and the functions to visualize cities and paths being attributed to Matthew Bradbury.
  
 ## How to install?
 
